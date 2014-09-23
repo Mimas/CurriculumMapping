@@ -26,7 +26,7 @@
                     {{ $row['_type'] }}
                 </div>
                 <div class="unit-20">
-                    <a href="/edit/{{$row['_source']['admin']['uuid']}}" class="iframe btn btn-small btn-blue"><i class="fa fa-cog"></i> Edit</a>
+                    <a href="/edit/{{$row['_source']['admin']['uuid']}}" class="iframe btn btn-small btn-blue">Edit&nbsp;<i class="fa fa-cog"></i></a>
                 </div>
             </div>
         <?php

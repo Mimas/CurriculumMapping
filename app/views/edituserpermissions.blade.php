@@ -31,7 +31,7 @@ form {
               <?php 
               } 
               ?>
-              <button class="btn">Save</button>
+              <button class="btn btn-yellow">Save&nbsp;<i class="fa fa-check"></i></button>
            </form>
        </fieldset>
 

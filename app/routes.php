@@ -58,16 +58,24 @@ Route::get('/edit/{uuid?}', function($uuid = '')
    	return View::make('edit')->with( array('data'=>$meta, 'status'=>$status));
 });
 
+Route::when('/admin*', 'admin');
+Route::filter('admin', function()
+{
+  if (! Bentleysoft\Helper::userHasAccess(array('site.admin'))) {
+    return \Illuminate\Support\Facades\Redirect::to('/login');
+  }
+});
+Route::controller('admin', 'AdminController');
+
+
 Route::when('/*', 'access');
 Route::filter('access', function()
 {
-    if (! Bentleysoft\Helper::userHasAccess(array('site.admin'))) {
+    if (! Bentleysoft\Helper::userHasAccess(array('resource.manage'))) {
         return \Illuminate\Support\Facades\Redirect::to('/login');
     }
 });
 
-Route::when('admin*', 'admin');
-Route::controller('admin', 'AdminController');
 
 Route::any('/logout', 'LoginController@actionLogout');
 Route::any('/login/reset', 'LoginController@actionReset');

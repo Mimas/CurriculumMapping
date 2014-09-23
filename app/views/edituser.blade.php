@@ -5,8 +5,8 @@ form {
   display: inline;
 }
 </style>
-<div class="units-row">
-    <div class="unit-66 unit-centered">
+<div class="units-row top44">
+    <div class="unit-100 unit-centered">
         @if(Session::has('success'))
         <div class="error row-fluid">
         </div>
@@ -32,12 +32,12 @@ form {
                   <input type="password" name="password2" class="width-40 <?php if ($errors->has('password2')) echo 'input-error'; ?>" />
               </label>
               <p>
-                <a href="/admin/permissions/{{$user->id}}" rel="shadowbox">Manage  permissions</a>
+                <a href="/admin/permissions/{{$user->id}}" class="colorbox btn btn-small btn-blue">Permissions&nbsp;<i class="fa fa-edit"></i></a>
               </p>
                <label>Activated
                   <input type="checkbox" value="1" class="" name="activated" <?php if ($user->activated) echo 'checked="checked"' ?> />
               </label>
-              <button class="btn">Save</button>
+              <button class="btn btn-yellow">Save&nbsp;<i class="fa fa-check"></i></button>
            </form>
        </fieldset>
 

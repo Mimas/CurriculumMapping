@@ -9,11 +9,11 @@ class AdminController extends BaseController {
 	| @author Petros Diveris
 	| 
 	*/
-    public $lang = 'en';
+  public $lang = 'en';
 
-    public function __construct() {
-      $this->lang = Input::get('lang', 'en');
-    }
+  public function __construct() {
+    $this->lang = Input::get('lang', 'en');
+  }
 
 	public function getIndex() {
     $view = 'dashboard';

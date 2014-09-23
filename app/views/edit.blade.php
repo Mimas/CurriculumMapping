@@ -53,7 +53,7 @@
                     </label>
                 </div>
                 <div class="unit-100 text-right">
-                    <button class="btn btn-small btn-yellow"><i class="fa fa-check"></i> Save</button>
+                    <button class="btn btn-small btn-yellow">Save <i class="fa fa-check"></i> </button>
                 </div>
             </div>
         </div>
