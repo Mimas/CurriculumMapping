@@ -13,21 +13,51 @@
 
 Route::get('/', function()
 {
+
+
     $query = Input::get('q', '*');
     $data = Bentleysoft\ES\Service::browse(0, 20, $query);
     return View::make('main')->with( array('data'=>$data));
 });
 
-Route::get('/edit/{uuid?}', function($uuid)
+Route::post('/edit/{uuid?}', function($uuid = '')
+{
+    $uuid = Input::get('uuid');
+    $result = Mapping::where('uuid','=', $uuid)->get();
+    if (! ($result && count($result)>0) ) {
+        $meta = new Mapping;
+        $meta->uuid = $uuid;
+    } else {
+        $meta = $result[0];
+    }
+
+    $meta->subject_area = Input::get('subject_area');
+    $meta->level = Input::get('level');
+    $meta->content_usage = Input::get('content_usage');
+
+    if ($meta->save()) {
+        $status = array('close'=>true,);
+
+    } else {
+        $status = array();   // add messages, handling etc..
+    }
+    return View::make('edit')->with( array('data'=>$meta, 'status'=>$status));
+});
+
+
+
+Route::get('/edit/{uuid?}', function($uuid = '')
 {
    // $meta = Mapping::where('uuid','=', '$uuid')->get();
     $result = Mapping::where('uuid','=', $uuid)->get();
-    if ($result) {
+    if ($result && count($result)>0) {
     	$meta = $result[0];
     } else {
     	$meta = new Mapping;
+        $meta->uuid = $uuid;
     }
-   	return View::make('edit')->with( array('data'=>$meta));;
+    $status = array();
+   	return View::make('edit')->with( array('data'=>$meta, 'status'=>$status));
 });
 
 Route::get('/pako', function()
