@@ -13,8 +13,6 @@
 
 Route::get('/', function()
 {
-
-
     $query = Input::get('q', '*');
     $data = Bentleysoft\ES\Service::browse(0, 20, $query);
     return View::make('main')->with( array('data'=>$data));
@@ -60,10 +58,21 @@ Route::get('/edit/{uuid?}', function($uuid = '')
    	return View::make('edit')->with( array('data'=>$meta, 'status'=>$status));
 });
 
-Route::get('/pako', function()
+Route::when('/*', 'access');
+Route::filter('access', function()
 {
-    $query = Input::get('q', '*');
-    $data = Bentleysoft\ES\Service::browse(0, 20, $query);
-
-    return View::make('pako')->with( array('data'=>$data));
+    if (! Bentleysoft\Helper::userHasAccess(array('site.admin'))) {
+        return \Illuminate\Support\Facades\Redirect::to('/login');
+    }
 });
+
+Route::when('admin*', 'admin');
+Route::controller('admin', 'AdminController');
+
+Route::any('/logout', 'LoginController@actionLogout');
+Route::any('/login/reset', 'LoginController@actionReset');
+Route::any('/login/change', 'LoginController@actionChange');
+
+Route::controller('login', 'LoginController');
+
+

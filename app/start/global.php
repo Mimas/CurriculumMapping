@@ -45,10 +45,17 @@ Log::useFiles(storage_path().'/logs/laravel.log');
 | shown, which includes a detailed stack trace during debug.
 |
 */
-
 App::error(function(Exception $exception, $code)
 {
 	Log::error($exception);
+  /////  $output = View::make($view, array('lang' => $this->lang));
+  $message = $exception->getMessage();
+
+  if (!Config::get('app.debug')) {
+    $message = substr($message, 0, stripos($message, 'Stack'));
+  }
+
+  return Response::view('errors.exception', array('message'=>$message), $code);
 });
 
 /*
