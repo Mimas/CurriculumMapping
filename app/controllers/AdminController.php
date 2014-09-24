@@ -49,10 +49,16 @@ class AdminController extends BaseController {
     echo "edit haha";
   }
 
+  /**
+  * GET request responder for user permissions
+  * PD, 2013-1024
+  */
   public function getPermissions($id = 4) {
-  	    try {    
+  	try {    
       $user = Sentry::findUserById(intVal($id));
-    } catch (Exception $e) {
+    } 
+    catch (Exception $e) {
+      // todo: THROW exception!
     }
 
     $classes = DB::table('permissions')
@@ -64,7 +70,12 @@ class AdminController extends BaseController {
 
     $permissions = DB::table('permissions')->orderBy('id')->get();
 
-    $output = View::make('edituserpermissions', array('lang'=>$this->lang, 'user'=>$user, 'classes'=>$classes, 'permissions'=>$permissions));
+    $output = View::make('edituserpermissions', 
+                            array('lang'=>$this->lang, 
+                                  'user'=>$user, 
+                                  'classes'=>$classes, 
+                                  'permissions'=>$permissions));
+    
     return $output;
   }
 
@@ -79,8 +90,7 @@ class AdminController extends BaseController {
   *
   */
   public function getUser($id = 0) {
-
-    try {    
+   try {    
       $user = Sentry::findUserById(intVal($id));
 
     } catch (Exception $e) {
@@ -191,8 +201,9 @@ class AdminController extends BaseController {
 
 
    /**
-   * The method below is just a bootstrap for creating a user
    *
+   * The method below is just a bootstrap for creating a user
+   * 
    */
    public function getSeed() {
       echo 'done...';

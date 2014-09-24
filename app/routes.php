@@ -10,39 +10,34 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+Route::when('admin*', 'admin');
+Route::filter('admin', function() {
+  if (!Bentleysoft\Helper::userHasAccess(array('application.admin'))) {
+    return \Illuminate\Support\Facades\Redirect::to('/login');
+  }
+});
 
+Route::controller('admin', 'AdminController');
+
+Route::when('redis*', 'redis');
+Route::filter('redis', function()
+{
+    if (! Bentleysoft\Helper::userHasAccess(array('redis.admin'))) {
+        // \Illuminate\Support\Facades\Redirect::to('login');
+        return \Illuminate\Support\Facades\Redirect::to('/login');
+    }
+});
+Route::controller('redis', 'RedisController');
+
+/**
+* MAIN area
+*/
 Route::get('/', function()
 {
     $query = Input::get('q', '*');
     $data = Bentleysoft\ES\Service::browse(0, 20, $query);
     return View::make('main')->with( array('data'=>$data));
 });
-
-Route::post('/edit/{uuid?}', function($uuid = '')
-{
-    $uuid = Input::get('uuid');
-    $result = Mapping::where('uuid','=', $uuid)->get();
-    if (! ($result && count($result)>0) ) {
-        $meta = new Mapping;
-        $meta->uuid = $uuid;
-    } else {
-        $meta = $result[0];
-    }
-
-    $meta->subject_area = Input::get('subject_area');
-    $meta->level = Input::get('level');
-    $meta->content_usage = Input::get('content_usage');
-
-    if ($meta->save()) {
-        $status = array('close'=>true,);
-
-    } else {
-        $status = array();   // add messages, handling etc..
-    }
-    return View::make('edit')->with( array('data'=>$meta, 'status'=>$status));
-});
-
-
 
 Route::get('/edit/{uuid?}', function($uuid = '')
 {
@@ -58,22 +53,87 @@ Route::get('/edit/{uuid?}', function($uuid = '')
    	return View::make('edit')->with( array('data'=>$meta, 'status'=>$status));
 });
 
-Route::when('/admin*', 'admin');
-Route::filter('admin', function()
+Route::post('/edit/{uuid?}', function($uuid = '')
 {
-  if (! Bentleysoft\Helper::userHasAccess(array('site.admin'))) {
-    return \Illuminate\Support\Facades\Redirect::to('/login');
-  }
+    $uuid = Input::get('uuid');
+    $result = Mapping::where('uuid','=', $uuid)->get();
+    if (! ($result && count($result)>0) ) {
+        $meta = new Mapping;
+        $meta->uuid = $uuid;
+    } else {
+        $meta = $result[0];
+    }
+   // TODO: validate
+
+    $meta->subject_area = Input::get('subject_area');
+    $meta->level = Input::get('level');
+    $meta->content_usage = Input::get('content_usage');
+
+    if ($meta->save()) {
+        $status = array('close'=>true,);
+
+    } else {
+        // TODO: Error handing        
+        $status = array();   // add messages, handling etc..
+    }
+    return View::make('edit')->with( array('data'=>$meta, 'status'=>$status));
 });
-Route::controller('admin', 'AdminController');
+
+/*
+here
+*/
+
+Route::post('/subject/{id?}', function($id = '')
+{
+    if ($id);
+
+    $id = Input::get('id', -1);
+    $subject = Subjectarea::find($id);
+
+    // TODO: validate
+
+    // find record
+    if (! ($subject ) ) {
+        $subject = new Subjectarea;
+    } else {
+        $subject->area = Input::get('area');
+        $subject->stuff = Input::get('stuff');
+    }
+
+    // try save
+    if ($subject->save()) {
+        $status = array('close'=>true,);
+    } else {
+        // TODO: Error handing
+        $status = array();
+    }
+    return View::make('edit')->with( array('data'=>$subject, 'status'=>$status));
+});
+
+Route::get('/subject/{id?}', function($id = '')
+{
+    $subject = Subjectarea::find($id);
+    return View::make('subject')->with( array('data'=>$subject, 'status'=>array()));
+});
+
+
+/* 
+here
+*/
 
 
 Route::when('/*', 'access');
-Route::filter('access', function()
+Route::filter('access', function() {
+  if (! Bentleysoft\Helper::userHasAccess(array('resource.manage'))) {
+    return \Illuminate\Support\Facades\Redirect::to('/login');
+  }
+});
+
+Route::get('/subjectareas', function()
 {
-    if (! Bentleysoft\Helper::userHasAccess(array('resource.manage'))) {
-        return \Illuminate\Support\Facades\Redirect::to('/login');
-    }
+    $subjectAreas = Subjectarea::where('id', '>', '0')->get();
+
+    return View::make('subjectareas')->with( array('data'=>$subjectAreas));
 });
 
 
@@ -82,5 +142,3 @@ Route::any('/login/reset', 'LoginController@actionReset');
 Route::any('/login/change', 'LoginController@actionChange');
 
 Route::controller('login', 'LoginController');
-
-

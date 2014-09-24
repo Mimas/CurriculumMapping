@@ -1,9 +1,9 @@
 @extends('layouts.standard')
 @section('content')
     <form method="get" action="/" class="forms">
-        <div class="units-row">
+        <div class="units-row top44">
             <div class="unit-90">
-                <div class="input-groups">
+                <div class="input-groups spacer">
                     <input type="text" name="q" placeholder="Search" value="{{Input::get('q','')}}" />
                     <span class="btn-append">
                         <button class="btn">Go</button>

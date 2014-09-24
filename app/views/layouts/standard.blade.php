@@ -10,22 +10,43 @@
             font-family:'Lato', sans-serif;
             color: #999;
         }
+
         .units-row {
             margin-bottom: 7px !important;
         }
+
         .wrap {
             margin: auto;
             width: 80%;
             max-width: 1200px;
         }
+
         .welcome {
-          margin-top: 44px;
+          margin-top: 32px;
         }
+
         .dashboard {
-          margin-top: 44px;
+          margin-top: 32px;
         }
+
         .top44 {
-          margin-top: 44px;
+          margin-top: 32px;
+        }
+
+        ul.horizontal
+        {
+          margin-left: 0px;
+          list-style: none !important;
+          text-align: left !important;
+        }
+        ul.horizontal li {
+          display: inline;
+        }
+        .menu {
+          padding-top: 11px;
+        }
+        .spacer {
+          margin-bottom: 22px;
         }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -51,7 +72,7 @@
             <div class="unit-60 text-right">
 
               <nav class="navbar navbar-right">
-                <ul>
+                <ul class="menu">
                   <?php if(! Sentry::check() && $_SERVER['REQUEST_URI']!=='/login'): ?>
                     <li><a href="/login">Sign In</a></li>
                   <?php endif; ?>
@@ -60,7 +81,11 @@
                     <li><a href="/">Resources</a></li>
                   <?php endif; ?>
 
-                  <?php if (Bentleysoft\Helper::userHasAccess(array('user.create', 'user.delete', 'user.update' ))): ?>
+                  <?php if (Bentleysoft\Helper::userHasAccess(array('subjectareas.manage'))): ?>
+                    <li><a href="/subjectareas">Subject Areas</a></li>
+                  <?php endif; ?>
+
+                  <?php if (Bentleysoft\Helper::userHasAccess(array('user.create', 'user.delete', 'user.update', 'user.view', 'application.admin' ))): ?>
                     <li><a href="/admin/users">Users</a></li>
                   <?php endif; ?>
 

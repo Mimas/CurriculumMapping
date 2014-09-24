@@ -21,8 +21,13 @@ form {
               <label>
               {{ucfirst($class->class)}}
                 <ul class="forms-inline-list">
-                  <?php foreach ($permissions as $permission) if($permission->class == $class->class) { ?>
-                    <li><input type="checkbox" name="{{$class->class}}_{{$permission->action}}" <?php if ( \Bentleysoft\Helper::userHasAccess(array($class->class.'.'.$permission->action))) echo 'checked="checked"'; ?>  /> &nbsp;<label>{{ucfirst($permission->action)}}</label>
+                  <?php foreach ($permissions as $permission) 
+                    if($permission->class == $class->class) { 
+                  ?>
+                    <li><input type="checkbox" name="{{$class->class}}_{{$permission->action}}" 
+                      <?php if ( \Bentleysoft\Helper::userHasAccess(array($class->class.'.'.$permission->action), $user->id  )) 
+                        echo 'checked="checked"'; ?>  
+                      /> &nbsp;<label>{{ucfirst($permission->action)}}</label>
                     </li>
 
                   <?php } ?>

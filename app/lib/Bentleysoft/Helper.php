@@ -21,18 +21,26 @@ class Helper {
 	* @param array $rights
 	* @return bool
 	*/
-	public static function userHasAccess(array $rights) {
+	public static function userHasAccess(array $rights, $id = -1) {
 		$ret = false;
 
 		$x = new \Sentry;
 
 		if (! \Sentry::check()) {
+			// TODO: Throw Exception
 			return $ret;
 		} else {
 			try {
-				$user = \Sentry::getUser();
+
+				if ($id == -1) {  // the current user
+					$user = \Sentry::getUser();
+
+				} else { // or the user being managed...
+
+					$user = \Sentry::findUserById($id);
+				}
 			} catch (Exception $e) {
-			// TODO: Make use of Sentry specific exceptions?!
+				// TODO: Make use of Sentry specific exceptions?!
 				return false;
 			}
 			try {
