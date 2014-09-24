@@ -85,9 +85,9 @@ here
 
 Route::post('/subject/{id?}', function($id = '')
 {
-    if ($id);
 
     $id = Input::get('id', -1);
+
     $subject = Subjectarea::find($id);
 
     // TODO: validate
@@ -95,10 +95,9 @@ Route::post('/subject/{id?}', function($id = '')
     // find record
     if (! ($subject ) ) {
         $subject = new Subjectarea;
-    } else {
-        $subject->area = Input::get('area');
-        $subject->stuff = Input::get('stuff');
     }
+    $subject->area = Input::get('area');
+    $subject->stuff = Input::get('stuff');
 
     // try save
     if ($subject->save()) {
@@ -107,19 +106,17 @@ Route::post('/subject/{id?}', function($id = '')
         // TODO: Error handing
         $status = array();
     }
-    return View::make('edit')->with( array('data'=>$subject, 'status'=>$status));
+    return View::make('subject')->with( array('data'=>$subject, 'status'=>$status));
 });
 
 Route::get('/subject/{id?}', function($id = '')
 {
     $subject = Subjectarea::find($id);
+    if (!$subject) {
+      $subject = new Subjectarea;
+    }
     return View::make('subject')->with( array('data'=>$subject, 'status'=>array()));
 });
-
-
-/* 
-here
-*/
 
 
 Route::when('/*', 'access');
@@ -131,7 +128,9 @@ Route::filter('access', function() {
 
 Route::get('/subjectareas', function()
 {
-    $subjectAreas = Subjectarea::where('id', '>', '0')->get();
+    $q = Input::get('q','');
+
+    $subjectAreas = Subjectarea::where('area', 'LIKE', "%$q%")->get();
 
     return View::make('subjectareas')->with( array('data'=>$subjectAreas));
 });

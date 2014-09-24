@@ -1,10 +1,5 @@
 @extends('layouts.standard')
 @section('content')
-<style type="text/css">
-form {
-  display: inline;
-}
-</style>
 <div class="units-row top44">
     <div class="unit-100 unit-centered">
         @if(Session::has('success'))
@@ -30,22 +25,22 @@ form {
           <td>{{$user->last_name}}</td>
           <td>
             {{Form::open(array('url' => 'admin/toggle/'.$user->id, 'method' => 'PUT')); }}
-             <button class="btn btn-small {{$user->activated == 1 ? 'btn-active' : '' }}">{{$user->activated == 1 ? 'Active' : 'Inactive' }}</button>
+             <button class="btn btn-smaller {{$user->activated == 1 ? 'btn-active' : '' }}">{{$user->activated == 1 ? 'Active' : 'Inactive' }}</button>
             {{Form::close();}}
           </td>
           <td>{{$user->last_login}}</td>
           <td>
-            <a href="/admin/user/{{$user->id}}/edit/" class="btn btn-small btn-blue">Edit&nbsp;<i class="fa fa-cog"></i></a>
+            <a href="/admin/user/{{$user->id}}/edit/" class="btn btn-smaller btn-blue">Edit&nbsp;<i class="fa fa-cog"></i></a>
 
             {{Form::open(array('url' => 'admin/user/'.$user->id, 'method' => 'delete')); }}
-            <button class="btn btn-small btn-red">Delete&nbsp;<i class="fa fa-trash-o"></i></button>
+            <button class="btn btn-smaller btn-red">Delete&nbsp;<i class="fa fa-trash-o"></i></button>
             {{Form::close();}}
           </td>
         </tr>
         <?php endforeach; ?>
         </table>
       <?php echo $users->links(); ?>
-      <a href="/admin/user/0/edit/" class="btn btn-small btn-blue">Add User&nbsp;<i class="fa fa-plus"></i></a>
+      <a href="/admin/user/0/edit/" class="btn btn-smaller btn-blue">Add User&nbsp;<i class="fa fa-plus"></i></a>
     </div>
 </div>
 @stop

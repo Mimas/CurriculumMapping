@@ -1,4 +1,4 @@
-@extends('layouts.standard')
+@extends('layouts.standard', array('error'=>1))
 @section('content')
   <div class="units-row">
     <div class="unit-100" style="margin-top: 44px;">

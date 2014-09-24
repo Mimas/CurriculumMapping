@@ -48,6 +48,9 @@
         .spacer {
           margin-bottom: 22px;
         }
+        form {
+          display: inline;
+        }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
@@ -70,7 +73,9 @@
                 <img alt="Jisc" title="Jisc logo" src="<?php echo asset('assets/img') ?>/jisc-logo.png" />
             </div>
             <div class="unit-60 text-right">
-
+              <?php
+              if (!isset($error)) {
+              ?>
               <nav class="navbar navbar-right">
                 <ul class="menu">
                   <?php if(! Sentry::check() && $_SERVER['REQUEST_URI']!=='/login'): ?>
@@ -99,7 +104,9 @@
 
                 </ul>
               </nav>
-
+              <?php
+              }
+              ?>
             </div>
         </div>
     </div>

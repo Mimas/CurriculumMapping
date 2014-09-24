@@ -27,6 +27,7 @@
     if (isset($status['close'])) {
     ?>
     <script>
+        parent.location.reload();
         parent.$.fn.colorbox.close();
     </script>
     <?php
