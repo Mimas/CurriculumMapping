@@ -16,6 +16,16 @@
         .units-row {
             margin-bottom: 7px !important;
         }
+        ul.horizontal
+        {
+          margin-left: 0px;
+          list-style: none !important;
+          text-align: left !important;
+        }
+        ul.horizontal li {
+          display: inline;
+        }
+
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 

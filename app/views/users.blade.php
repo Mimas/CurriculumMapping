@@ -30,11 +30,10 @@
           </td>
           <td>{{$user->last_login}}</td>
           <td>
-            <a href="/admin/user/{{$user->id}}/edit/" class="btn btn-smaller btn-blue">Edit&nbsp;<i class="fa fa-cog"></i></a>
-
             {{Form::open(array('url' => 'admin/user/'.$user->id, 'method' => 'delete')); }}
             <button class="btn btn-smaller btn-red">Delete&nbsp;<i class="fa fa-trash-o"></i></button>
             {{Form::close();}}
+            <a href="/admin/user/{{$user->id}}/edit/" class="breathe-left btn btn-smaller btn-blue">Edit&nbsp;<i class="fa fa-cog"></i></a>
           </td>
         </tr>
         <?php endforeach; ?>

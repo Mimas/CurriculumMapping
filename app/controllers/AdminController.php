@@ -92,7 +92,6 @@ class AdminController extends BaseController {
   public function getUser($id = 0) {
    try {    
       $user = Sentry::findUserById(intVal($id));
-
     } catch (Exception $e) {
       $user = new User;
     }
@@ -170,7 +169,9 @@ class AdminController extends BaseController {
   public function putToggle($id = 0 ) {
     try {    
       $id = intVal($id);
-      $user = Sentry::findUserById($id);
+
+      $user = Cartalyst\Sentry\Facades\Laravel::findUserById($id);
+
       $user->activated = ! $user->activated;
       if ($user->save()) {
         return Redirect::to('admin/users');
@@ -184,7 +185,10 @@ class AdminController extends BaseController {
 
   }
 
-
+  /**
+   * The Dashboard. Might move to routes as it's app specific...
+   * @return mixed
+   */
   public function getDashboard() {
     $view = 'dashboard';
 
@@ -192,48 +196,60 @@ class AdminController extends BaseController {
     return $output;
   }
 
+  /**
+   *
+   * Handle POST requests for setting User permissions
+   *
+   * @param $id
+   * @throws Exception
+   */
+  public function postPermissions($id = -1) {
+
+
+    $allPermissions = Permission::where('id','>',1)->get();
+    if (!$allPermissions || count($allPermissions)<1 ) {
+      throw new Exception('No settable permissions found.');
+    }
+
+    $user = Sentry::findUserById($id);
+
+    if (!$user) {
+      App::abort(404, 'Cannot find the user.');
+    }
+
+    $userPermissions = array();
+
+    foreach($allPermissions as $permission) {
+      $label = $permission->class.'_'.$permission->action;   // e.g. user.create
+
+      if (array_key_exists($label,Input::all())) {
+        $userPermissions[$permission->class.'.'.$permission->action] = 1;
+      } else {
+        $userPermissions[$permission->class.'.'.$permission->action] = 0;
+      }
+
+    }
+    $user->permissions = $userPermissions;
+
+    if (!$user->save()) {
+      throw new Exception('User could not be updated.');
+    }
+
+
+  }
+
 	public function missingMethod($parameters = array())
 	{
 		echo 'catch all method';
-    var_dump($_REQUEST);
 		return;
 	}
 
 
-   /**
-   *
+  /**
    * The method below is just a bootstrap for creating a user
-   * 
    */
    public function getSeed() {
-      echo 'done...';
-      return;
-      try
-      {
-        // Find the user using the user id
-        $user = Sentry::findUserById(4);
-
-        // Attempt to activate the user
-        if ($user->attemptActivation(''))
-        {
-          // User activation passed
-        } else {
-           // User activation failed
-        }
-      }
-      catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
-      {
-        echo 'User was not found.';
-      }
-      catch (Cartalyst\Sentry\Users\UserAlreadyActivatedException $e)
-      {
-        echo 'User is already activated.';
-      }
-
-
-      return;
-
-      try
+        try
       {
         // Create the group
         $group = Sentry::createGroup(array(

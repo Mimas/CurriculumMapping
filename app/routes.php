@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -10,6 +9,12 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+
+Route::get('/test', function() {
+  $x = json_decode('{"user.create":1,"user.delete":1,"user.view":1,"user.update":1, "resource.manage":1}');
+  var_dump($x);
+});
+
 Route::when('admin*', 'admin');
 Route::filter('admin', function() {
   if (!Bentleysoft\Helper::userHasAccess(array('application.admin'))) {
@@ -34,9 +39,19 @@ Route::controller('redis', 'RedisController');
 */
 Route::get('/', function()
 {
+    $pageSize = 20;
+
     $query = Input::get('q', '*');
-    $data = Bentleysoft\ES\Service::browse(0, 20, $query);
-    return View::make('main')->with( array('data'=>$data));
+    $page = Input::get('page',0)-1;
+
+    $offset = $page*$pageSize;
+
+    $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query);
+
+    $resources = Paginator::make($data['hits']['hits'], $data['hits']['total'], 20);
+    $presenter = new Illuminate\Pagination\BootstrapPresenter($resources);
+
+    return View::make('main')->with( array('data'=>$data, 'resources'=>$resources, 'presenter'=>$presenter));
 });
 
 Route::get('/edit/{uuid?}', function($uuid = '')
@@ -130,7 +145,7 @@ Route::get('/subjectareas', function()
 {
     $q = Input::get('q','');
 
-    $subjectAreas = Subjectarea::where('area', 'LIKE', "%$q%")->get();
+    $subjectAreas = Subjectarea::where('area', 'LIKE', "%$q%")->paginate(10);
 
     return View::make('subjectareas')->with( array('data'=>$subjectAreas));
 });
