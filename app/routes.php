@@ -42,6 +42,7 @@ Route::get('/', function()
     $pageSize = 20;
 
     $query = Input::get('q', '*');
+
     $page = Input::get('page',1)-1;
 
     $offset = $page*$pageSize;
