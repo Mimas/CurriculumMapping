@@ -42,13 +42,19 @@ Route::get('/', function()
     $pageSize = 20;
 
     $query = Input::get('q', '*');
-    $page = Input::get('page',0)-1;
+    $page = Input::get('page',1)-1;
 
     $offset = $page*$pageSize;
 
     $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query);
 
     $resources = Paginator::make($data['hits']['hits'], $data['hits']['total'], 20);
+
+    // add any query string..
+    if ($query<>'*') {
+      $resources->addQuery('q', $query);
+    }
+
     $presenter = new Illuminate\Pagination\BootstrapPresenter($resources);
 
     return View::make('main')->with( array('data'=>$data, 'resources'=>$resources, 'presenter'=>$presenter));
