@@ -34,13 +34,19 @@ Route::filter('redis', function()
 });
 Route::controller('redis', 'RedisController');
 
+Route::get('/dashboard', function() {
+    return \Illuminate\Support\Facades\View::make('dashboard')->with(array());
+    /// return \Illuminate\Support\Facades\View::mak
+  }
+);
+
+
 /**
 * MAIN area
 */
 Route::get('/', function()
 {
     $pageSize = 20;
-
     $query = Input::get('q', '*');
 
     $page = Input::get('page',1)-1;
@@ -58,7 +64,7 @@ Route::get('/', function()
 
     $presenter = new Illuminate\Pagination\BootstrapPresenter($resources);
 
-    return View::make('main')->with( array('data'=>$data, 'resources'=>$resources, 'presenter'=>$presenter));
+    return View::make('main')->with(array('data'=>$data, 'resources'=>$resources, 'presenter'=>$presenter));
 });
 
 Route::get('/edit/{uuid?}', function($uuid = '')

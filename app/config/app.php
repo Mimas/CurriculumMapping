@@ -121,9 +121,9 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
-        'Shift31\LaravelElasticsearch\LaravelElasticsearchServiceProvider',
-        'Cartalyst\Sentry\SentryServiceProvider',
-
+    'Shift31\LaravelElasticsearch\LaravelElasticsearchServiceProvider',
+    'Cartalyst\Sentry\SentryServiceProvider',
+    'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 	),
 
 	/*
