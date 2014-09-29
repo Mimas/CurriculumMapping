@@ -34,37 +34,51 @@ Route::filter('redis', function()
 });
 Route::controller('redis', 'RedisController');
 
-Route::get('/dashboard', function() {
-    return \Illuminate\Support\Facades\View::make('dashboard')->with(array());
-    /// return \Illuminate\Support\Facades\View::mak
+Route::get('/resources', function() {
+  $pageSize = 20;
+  $query = Input::get('q', '*');
+
+  $page = Input::get('page',1)-1;
+
+  $offset = $page*$pageSize;
+
+  $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query);
+
+  $resources = Paginator::make($data['hits']['hits'], $data['hits']['total'], 20);
+
+  // add any query string..
+  if ($query<>'*') {
+    $resources->addQuery('q', $query);
   }
-);
+
+  $presenter = new Illuminate\Pagination\BootstrapPresenter($resources);
+
+  return View::make('main')->with(array('data'=>$data, 'resources'=>$resources, 'presenter'=>$presenter));
+
+});
 
 
 /**
-* MAIN area
-*/
+ * The Dashboard
+ * TODO:m Think what kind of Dashboard diferent people get - or is it the same for all?
+ */
 Route::get('/', function()
 {
-    $pageSize = 20;
-    $query = Input::get('q', '*');
+  $pageSize = 20;
 
-    $page = Input::get('page',1)-1;
+  $query = Input::get('q', '*');
+  $page = Input::get('page',1)-1;
 
-    $offset = $page*$pageSize;
+  $offset = $page*$pageSize;
 
-    $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query);
+  $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query);
 
-    $resources = Paginator::make($data['hits']['hits'], $data['hits']['total'], 20);
+  //  $resources = Paginator::make($data['hits']['hits'], $data['hits']['total'], 20);
 
-    // add any query string..
-    if ($query<>'*') {
-      $resources->addQuery('q', $query);
-    }
+  $mapped = Mapping::where('id','>', 0)->get()->count();
 
-    $presenter = new Illuminate\Pagination\BootstrapPresenter($resources);
 
-    return View::make('main')->with(array('data'=>$data, 'resources'=>$resources, 'presenter'=>$presenter));
+  return \Illuminate\Support\Facades\View::make('dashboard')->with(array('total'=>$data['hits']['total'], 'mapped'=>$mapped ) );
 });
 
 Route::get('/edit/{uuid?}', function($uuid = '')
