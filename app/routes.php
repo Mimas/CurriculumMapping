@@ -20,6 +20,7 @@ Route::filter('admin', function() {
   if (!Bentleysoft\Helper::userHasAccess(array('application.admin'))) {
     return \Illuminate\Support\Facades\Redirect::to('/login');
   }
+  return;
 });
 
 Route::controller('admin', 'AdminController');
@@ -31,6 +32,7 @@ Route::filter('redis', function()
         // \Illuminate\Support\Facades\Redirect::to('login');
         return \Illuminate\Support\Facades\Redirect::to('/login');
     }
+  return;
 });
 Route::controller('redis', 'RedisController');
 
@@ -44,6 +46,7 @@ Route::get('/resources', function() {
 
   $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query);
 
+
   $resources = Paginator::make($data['hits']['hits'], $data['hits']['total'], 20);
 
   // add any query string..
@@ -53,7 +56,7 @@ Route::get('/resources', function() {
 
   $presenter = new Illuminate\Pagination\BootstrapPresenter($resources);
 
-  return View::make('main')->with(array('data'=>$data, 'resources'=>$resources, 'presenter'=>$presenter));
+  return View::make('resources')->with(array('data'=>$data, 'resources'=>$resources, 'presenter'=>$presenter));
 
 });
 
@@ -81,27 +84,74 @@ Route::get('/', function()
   return \Illuminate\Support\Facades\View::make('dashboard')->with(array('total'=>$data['hits']['total'], 'mapped'=>$mapped ) );
 });
 
-Route::get('/edit/{uuid?}', function($uuid = '')
+
+
+// /view/jorum-10949/8894
+/**
+ * Route for viewing a resource
+ */
+Route::get('/view/{u?}/{id?}', function($u = '', $id='')
 {
-   // $meta = Mapping::where('uuid','=', '$uuid')->get();
-    $result = Mapping::where('uuid','=', $uuid)->get();
-    if ($result && count($result)>0) {
-    	$meta = $result[0];
-    } else {
-    	$meta = new Mapping;
-        $meta->uuid = $uuid;
-    }
-    $status = array();
-   	return View::make('edit')->with( array('data'=>$meta, 'status'=>$status));
+  $uid = "$u/$id";
+
+  $resource = \Bentleysoft\ES\Service::get($uid);
+  if (!$resource) {
+    App::abort(404);
+  }
+
+  if ($resource['_source']['admin']['source']=='jorum') {
+    $object = MIMAS\Service\Jorum\Item::find(str_replace('jorum-', '', $uid), array('expand'=>'all'), 'json', 'json');
+    $bitstreams = $object->getBitstreams();
+  } elseif($resource['_source']['admin']['source']=='ht') {
+    $bitstreams = false;
+  }
+
+  $status = array();
+  return View::make('view')->with( array('data'=>$resource, 'status'=>$status, 'bitstreams'=>$bitstreams));
+});
+
+/**
+ * Content retrieve (i.e. download) handler
+ */
+Route::post('download', function() {
+  $link = Input::get('link');
+  $mime = Input::get('mime');
+  $name = Input::get('filename');
+
+  $url = 'http://dspace.jorum.ac.uk/rest'.$link;
+
+  $stream = MIMAS\Service\Jorum\JorumApi::apiCall($url);
+
+  $response = \Response::make($stream);
+  $response->header('Content-Type', $mime);
+  $response->header('Content-Disposition', 'attachment; filename="'.$name.'"');
+  return $response;
+
+});
+
+Route::get('/edit/{u?}/{id?}', function($u = '', $id = '')
+{
+  $uid = "$u/$$id";
+  // $meta = Mapping::where('uuid','=', '$uuid')->get();
+  $result = Mapping::where('uid','=', $uid)->get();
+  if ($result && count($result)>0) {
+  	$meta = $result[0];
+  } else {
+    $meta = new Mapping;
+    $meta->uid = $uid;
+  }
+  $status = array();
+  return View::make('edit')->with( array('data'=>$meta, 'status'=>$status));
 });
 
 Route::post('/edit/{uuid?}', function($uuid = '')
 {
-    $uuid = Input::get('uuid');
-    $result = Mapping::where('uuid','=', $uuid)->get();
+    $uid = Input::get('uid');
+    $result = Mapping::where('uid','=', $uid)->get();
+
     if (! ($result && count($result)>0) ) {
         $meta = new Mapping;
-        $meta->uuid = $uuid;
+        $meta->uid = $uid;
     } else {
         $meta = $result[0];
     }
@@ -127,9 +177,7 @@ here
 
 Route::post('/subject/{id?}', function($id = '')
 {
-
     $id = Input::get('id', -1);
-
     $subject = Subjectarea::find($id);
 
     // TODO: validate
@@ -143,10 +191,10 @@ Route::post('/subject/{id?}', function($id = '')
 
     // try save
     if ($subject->save()) {
-        $status = array('close'=>true,);
+      $status = array('close'=>true,);
     } else {
-        // TODO: Error handing
-        $status = array();
+      // TODO: Error handing
+    $status = array();
     }
     return View::make('subject')->with( array('data'=>$subject, 'status'=>$status));
 });
@@ -166,6 +214,7 @@ Route::filter('access', function() {
   if (! Bentleysoft\Helper::userHasAccess(array('resource.manage'))) {
     return \Illuminate\Support\Facades\Redirect::to('/login');
   }
+  return;
 });
 
 Route::get('/subjectareas', function()

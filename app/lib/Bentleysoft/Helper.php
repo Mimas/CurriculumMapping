@@ -16,11 +16,12 @@ use Whoops\Example\Exception;
  * @author Petros Diveris
  */
 class Helper {
-	/**
-	* Method to check if a user has permissions for a specific operation
-	* @param array $rights
-	* @return bool
-	*/
+  /**
+   * Method to check if a user has permissions for a specific operation
+   * @param array $rights
+   * @param $id
+   * @return bool
+   */
 	public static function userHasAccess(array $rights, $id = -1) {
 		$ret = false;
 
@@ -79,5 +80,29 @@ class Helper {
 			return(false);
 		}
 	}
+
+  /**
+   * Return human readable file size information i.e. 12K, 1.3M etc
+   *
+   * @internal param $size
+   * @internal param int $precision
+   * @param $bytes
+   * @param int $precision
+   * @internal param $size
+   * @return string
+   */
+  public static function  formatBytes($bytes, $precision = 2)
+  {
+    $units = array('b', 'Kb', 'Mb', 'Gb', 'Tb');
+
+    $bytes = max($bytes, 0);
+    $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
+    $pow = min($pow, count($units) - 1);
+
+    // Uncomment one of the following alternatives
+    // $bytes /= pow(1024, $pow);
+    // $bytes /= (1 << (10 * $pow));
+
+    return round($bytes, $precision) . ' ' . $units[$pow];   }
 
 } 

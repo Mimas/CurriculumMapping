@@ -54,6 +54,35 @@
       .breathe-left {
         margin-left: 7px !important;
       }
+
+      .menu a {
+        color: #ea6000 !important;
+
+      }
+
+      .dashboard {
+        font-size: 1.2em;;
+      }
+
+      .dash-1 {
+        font-size: 1.2em;
+      }
+      .dash-1 a {
+        text-decoration: none;
+        color: #ea6000;
+
+      }
+
+      .dash-2 {
+        font-size: 1.2em;
+      }
+
+      .dash-2 a {
+        text-decoration: none;
+        color: #ea6000;
+
+      }
+
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
@@ -61,6 +90,9 @@
     <link rel="stylesheet" href="<?php echo asset('3rdparty/font-awesome/css/font-awesome.min.css'); ?>">
     <link rel="stylesheet" href="<?php echo asset('3rdparty/colorbox/colorbox.css'); ?>"/>
     <script src="<?php echo asset('3rdparty/colorbox/jquery.colorbox.js');?>"></script>
+
+    <script src="<?php echo asset('3rdparty/highcharts/highcharts.js');?>"></script>
+    <script src="<?php echo asset('3rdparty/highcharts/highcharts-more.js');?>"></script>
 
     <script>
         $(document).ready(function(){
@@ -73,7 +105,7 @@
     <div class="wrap">
         <div class="units-row">
             <div class="unit-40">
-                <img alt="Jisc" title="Jisc logo" src="<?php echo asset('assets/img') ?>/jisc-logo.png" />
+                <a href="<?php echo asset(''); ?>"><img alt="Jisc" title="Jisc logo" src="<?php echo asset('assets/img') ?>/jisc-logo.png" /></a>
             </div>
             <div class="unit-60 text-right">
               <?php
@@ -86,7 +118,7 @@
                   <?php endif; ?>
 
                   <?php if (Bentleysoft\Helper::userHasAccess(array('resource.manage'))): ?>
-                    <li><a href="/">Resources</a></li>
+                    <li><a href="/resources">Resources</a></li>
                   <?php endif; ?>
 
                   <?php if (Bentleysoft\Helper::userHasAccess(array('subjectareas.manage'))): ?>

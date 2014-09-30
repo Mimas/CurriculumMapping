@@ -7,7 +7,7 @@
     left: 20px;
   }
 </style>
-    <form method="get" action="/" class="forms">
+    <form method="get" action="<?php echo asset('resources'); ?>" class="forms">
         <div class="units-row top44">
             <div class="unit-90">
                 <div class="input-groups spacer">
@@ -25,7 +25,7 @@
           ?>
           <div class="units-row">
               <div class="unit-50">
-                  <a class="iframe" href="/view/{{$row['_source']['admin']['uuid']}}">{{ $row['_source']['summary_title'] }}</a>
+                <a href="/view/<?php echo $row['_source']['admin']['uid']; ?>">{{ $row['_source']['summary_title'] }}</a>
               </div>
               <div class="unit-10">
                   {{ $row['_source']['admin']['source'] }}
@@ -34,7 +34,7 @@
                   {{ $row['_type'] }}
               </div>
               <div class="unit-20">
-                  <a href="/edit/{{$row['_source']['admin']['uuid']}}" class="iframe btn btn-small btn-blue">Edit&nbsp;<i class="fa fa-cog"></i></a>
+                  <a href="/edit/<?php echo $row['_source']['admin']['uid']; ?>" class="iframe btn btn-small btn-blue">Edit&nbsp;<i class="fa fa-cog"></i></a>
               </div>
           </div>
        <?php

@@ -42,6 +42,7 @@
                     <label for="subject_area">
                         Subject area<br/>
                         <textarea class="width-100" rows="5" id="subject_area" name="subject_area">{{$data->subject_area}}</textarea>
+                        <input type="hidden" name="uid" value="<?php echo $data->uid; ?>"
                         <input type="hidden" name="uuid" value="<?php echo $data->uuid; ?>"
                     </label>
                     <label for="content_usage">

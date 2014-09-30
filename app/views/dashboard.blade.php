@@ -72,7 +72,6 @@
           }
         },
 
-
         series: [{
           data: [<?php echo $mapped ?>],
           yAxis: 0
