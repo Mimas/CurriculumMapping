@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<Sample9>
+    <child>
+        <child>
+            <str>abc</str>
+        </child>
+    </child>
+</Sample9>
