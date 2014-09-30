@@ -25,7 +25,7 @@
           ?>
           <div class="units-row">
               <div class="unit-50">
-                  <a class="iframe" href="/edit/{{$row['_source']['admin']['uuid']}}">{{ $row['_source']['summary_title'] }}</a>
+                  <a class="iframe" href="/view/{{$row['_source']['admin']['uuid']}}">{{ $row['_source']['summary_title'] }}</a>
               </div>
               <div class="unit-10">
                   {{ $row['_source']['admin']['source'] }}
