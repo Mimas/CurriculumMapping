@@ -8,7 +8,7 @@ The Resources are contained in an Elastic Search repository (not included in thi
 
 This web application has been rapidly put together as a pilot.
 
-It is based on Laravel 4, Cartalyst Sentry and Kube CSS.
+It is based on Laravel 4, Cartalyst Sentry, Highcharts and Kube CSS.
 
 ### License
 
