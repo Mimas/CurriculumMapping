@@ -170,7 +170,7 @@ class AdminController extends BaseController {
     try {    
       $id = intVal($id);
 
-      $user = Cartalyst\Sentry\Facades\Laravel::findUserById($id);
+      $user = Sentry::findUserById($id);
 
       $user->activated = ! $user->activated;
       if ($user->save()) {

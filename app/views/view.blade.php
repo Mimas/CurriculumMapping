@@ -29,9 +29,9 @@
                         <td class="bold">Licence</td><td>{{$data['_source']['lifecycle']['publication'][0]['rights']['uri'] or ''}}</td>
                       </tr>
                       <tr>
-                        <td class="bold">Jacs2 Code/Subject</td>
+                        <td class="bold">Jacs3 Code/Subject</td>
                         <td>
-                          {{$data['_source']['subject'][0]['id']}}/{{$data['_source']['subject'][0]['value'] or ''}}
+                          {{$data['_source']['subject'][0]['id'] or ''}}/{{$data['_source']['subject'][0]['value'] or ''}}
                         </td>
                       </tr>
                       </table>

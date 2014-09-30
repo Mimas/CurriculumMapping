@@ -8,7 +8,10 @@
     "shift31/laravel-elasticsearch": "1.0.*@dev",
     "cartalyst/sentry": "2.0.*",
 		"php-console/laravel-service-provider": "1.*",
-    "barryvdh/laravel-ide-helper": "1.*"
+    "barryvdh/laravel-ide-helper": "1.*",
+    "jyggen/curl": "*",
+    "nategood/httpful": "*"
+
 	},
 	"autoload": {
 			"classmap": [
@@ -20,7 +23,8 @@
 				"app/tests/TestCase.php"
 			],
       "psr-0": {
-      	"Bentleysoft": "app/lib"
+      	"Bentleysoft": "app/lib",
+        "MIMAS": "app/lib"
       }
 	},
 	"scripts": {

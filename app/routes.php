@@ -10,11 +10,6 @@
 |
 */
 
-Route::get('/test', function() {
-  $x = json_decode('{"user.create":1,"user.delete":1,"user.view":1,"user.update":1, "resource.manage":1}');
-  var_dump($x);
-});
-
 Route::when('admin*', 'admin');
 Route::filter('admin', function() {
   if (!Bentleysoft\Helper::userHasAccess(array('application.admin'))) {
@@ -46,7 +41,6 @@ Route::get('/resources', function() {
 
   $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query);
 
-
   $resources = Paginator::make($data['hits']['hits'], $data['hits']['total'], 20);
 
   // add any query string..
@@ -63,7 +57,7 @@ Route::get('/resources', function() {
 
 /**
  * The Dashboard
- * TODO:m Think what kind of Dashboard diferent people get - or is it the same for all?
+ * TODO: Think what kind of Dashboard diferrent people get - or is it the same for all?
  */
 Route::get('/', function()
 {
@@ -80,11 +74,34 @@ Route::get('/', function()
 
   $mapped = Mapping::where('id','>', 0)->get()->count();
 
-
   return \Illuminate\Support\Facades\View::make('dashboard')->with(array('total'=>$data['hits']['total'], 'mapped'=>$mapped ) );
 });
 
+/**
+ * Testbench method to add an attribute (is this the terminology?)
+ * to the document - the famous edited flag
+ */
+Route::get('/test', function() {
+ // $resource = \Bentleysoft\ES\Service::get('jorum-10949/8919');
 
+  // $body = \Es::getSource()
+  $params = array(
+    'id'=>'jorum-10949/8919',
+    'type'=>'learning resource',
+    'index'=>'ciim',
+    'body'=>array('doc'=>array('edited'=>'YES')),
+
+  );
+  $response = \Es::update($params);
+  var_export($response);
+  /*
+  $id = $this->extractArgument($params, 'id');
+  $index = $this->extractArgument($params, 'index');
+  $type = $this->extractArgument($params, 'type');
+  $body = $this->extractArgument($params, 'body');
+  */
+
+});
 
 // /view/jorum-10949/8894
 /**
@@ -106,7 +123,6 @@ Route::get('/view/{u?}/{id?}', function($u = '', $id='')
     $bitstreams = false;
   }
   $status = array();
-
 
   return View::make('view')->with( array('data'=>$resource, 'status'=>$status, 'bitstreams'=>$bitstreams));
 });
