@@ -8,30 +8,30 @@
                       <h2>{{ $data['_source']['summary_title'] }}</h2>
                       </th>
                       <tr>
-                        <td class="bold">Source</td><td>{{$data['_source']['admin']['source']}}</td>
+                        <td class="bold">Source</td><td>{{$data['_source']['admin']['source'] or '' }}</td>
                       </tr>
                       <tr>
-                        <td class="bold">Description</td><td>{{$data['_source']['description'][0]['value']}}</td>
+                        <td class="bold">Description</td><td>{{$data['_source']['description'][0]['value'] or ''}}</td>
                       </tr>
                       <tr>
-                        <td class="bold">Format</td><td>{{$data['_source']['format'][0]}}</td>
+                        <td class="bold">Format</td><td>{{ $data['_source']['format'][0] or '' }}</td>
                       </tr>
                       <tr>
-                        <td class="bold">Author</td><td>{{$data['_source']['lifecycle']['creation'][0]['author'][0]['name'][0]['value']}}</td>
+                        <td class="bold">Author</td><td>{{$data['_source']['lifecycle']['creation'][0]['author'][0]['name'][0]['value'] or ''}}</td>
                       </tr>
                       <tr>
-                        <td class="bold">Publisher</td><td>{{$data['_source']['lifecycle']['publication'][0]['publisher'][0]['name'][0]['value']}}</td>
+                        <td class="bold">Publisher</td><td>{{$data['_source']['lifecycle']['publication'][0]['publisher'][0]['name'][0]['value'] or ''}}</td>
                       </tr>
                       <tr>
-                        <td class="bold">Licence</td><td>{{$data['_source']['lifecycle']['publication'][0]['rights']['details']}}</td>
+                        <td class="bold">Licence</td><td>{{$data['_source']['lifecycle']['publication'][0]['rights']['details'] or ''}}</td>
                       </tr>
                       <tr>
-                        <td class="bold">Licence</td><td>{{$data['_source']['lifecycle']['publication'][0]['rights']['uri']}}</td>
+                        <td class="bold">Licence</td><td>{{$data['_source']['lifecycle']['publication'][0]['rights']['uri'] or ''}}</td>
                       </tr>
                       <tr>
                         <td class="bold">Jacs2 Code/Subject</td>
                         <td>
-                          {{$data['_source']['subject'][0]['id']}}/{{$data['_source']['subject'][0]['value']}}
+                          {{$data['_source']['subject'][0]['id']}}/{{$data['_source']['subject'][0]['value'] or ''}}
                         </td>
                       </tr>
                       </table>

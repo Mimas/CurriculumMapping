@@ -23,412 +23,412 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class Bitstream extends JorumApi
 {
-    /**
-     * id
-     * @var string
-     */
-    protected $id = '';
+  /**
+   * id
+   * @var string
+   */
+  protected $id = '';
 
-    /**
-     * handle
-     * @var string
-     */
-    protected $handle = '';
+  /**
+   * handle
+   * @var string
+   */
+  protected $handle = '';
 
-    /**
-     * name
-     * @var string
-     */
-    protected $name = '';
+  /**
+   * name
+   * @var string
+   */
+  protected $name = '';
 
-    /**
-     * type
-     * @var string
-     */
-    protected $type = '';
+  /**
+   * type
+   * @var string
+   */
+  protected $type = '';
 
-    /**
-     * link
-     * @var string
-     */
-    protected $link = '';
+  /**
+   * link
+   * @var string
+   */
+  protected $link = '';
 
-    /**
-     * expand
-     * @var array
-     */
-    protected $expand = array();
+  /**
+   * expand
+   * @var array
+   */
+  protected $expand = array();
 
-    /**
-     * bundleName
-     * @var string
-     */
-    protected $bundleName = '';
+  /**
+   * bundleName
+   * @var string
+   */
+  protected $bundleName = '';
 
-    /**
-     * description
-     * @var string
-     */
-    protected $description = '';
+  /**
+   * description
+   * @var string
+   */
+  protected $description = '';
 
-    /**
-     * format
-     * @var string
-     */
-    protected $format = '';
+  /**
+   * format
+   * @var string
+   */
+  protected $format = '';
 
-    /**
-     * mimeType
-     * @var string
-     */
-    protected $mimeType = '';
+  /**
+   * mimeType
+   * @var string
+   */
+  protected $mimeType = '';
 
-    /**
-     * sizeBytes
-     * @var string
-     */
-    protected $sizeBytes = '';
+  /**
+   * sizeBytes
+   * @var string
+   */
+  protected $sizeBytes = '';
 
-    /**
-     * parentObject array
-     * @var array
-     */
-    protected $parentObject = array();
+  /**
+   * parentObject array
+   * @var array
+   */
+  protected $parentObject = array();
 
-    /**
-     * retrieveLink
-     * @var $retrieveLink
-     */
-    protected $retrieveLink;
+  /**
+   * retrieveLink
+   * @var $retrieveLink
+   */
+  protected $retrieveLink;
 
-    /**
-     * checkSum
-     * @var array checkSum
-     * @todo implement checkSum functionality
-     */
-    protected $checkSum = array();
+  /**
+   * checkSum
+   * @var array checkSum
+   * @todo implement checkSum functionality
+   */
+  protected $checkSum = array();
 
-    /**
-     * sequenceId
-     * @var int $sequenceId
-     */
-    protected $sequenceId = 0;
+  /**
+   * sequenceId
+   * @var int $sequenceId
+   */
+  protected $sequenceId = 0;
 
-    /**
-     *
-     * Constructor. Data or format passed to Base model
-     *
-     * @param string $params
-     * @param string $inputFormat
-     * @param array $options
-     */
-    public function __construct($params = '', $inputFormat = 'application/json', $options = array())
-    {
-        parent::__construct($params, $inputFormat, $options);
+  /**
+   *
+   * Constructor. Data or format passed to Base model
+   *
+   * @param string $params
+   * @param string $inputFormat
+   * @param array $options
+   */
+  public function __construct($params = '', $inputFormat = 'application/json', $options = array())
+  {
+    parent::__construct($params, $inputFormat, $options);
 
-    }
+  }
 
-    /**
-     * Get id
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+  /**
+   * Get id
+   * @return string
+   */
+  public function getId()
+  {
+    return $this->id;
+  }
 
-    /**
-     * Set id
-     * @param string $id
-     */
-    public function setId($id = '')
-    {
-        $this->id = $id;
-    }
+  /**
+   * Set id
+   * @param string $id
+   */
+  public function setId($id = '')
+  {
+    $this->id = $id;
+  }
 
-    /**
-     * Get handle
-     * @return string
-     */
-    public function getHandle()
-    {
-        return $this->handle;
-    }
+  /**
+   * Get handle
+   * @return string
+   */
+  public function getHandle()
+  {
+    return $this->handle;
+  }
 
-    /**
-     * Set handle
-     * @param string $handle
-     */
-    public function setHandle($handle = '')
-    {
-        $this->handle = $handle;
-    }
+  /**
+   * Set handle
+   * @param string $handle
+   */
+  public function setHandle($handle = '')
+  {
+    $this->handle = $handle;
+  }
 
-    /**
-     * Get name
-     * @return string name
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
+  /**
+   * Get name
+   * @return string name
+   */
+  public function getName()
+  {
+    return $this->name;
+  }
 
-    /**
-     * Set name
-     * @param string $name
-     */
-    public function setName($name = '')
-    {
-        $this->name = $name;
-    }
+  /**
+   * Set name
+   * @param string $name
+   */
+  public function setName($name = '')
+  {
+    $this->name = $name;
+  }
 
-    /**
-     * Get type
-     * @return string type
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
+  /**
+   * Get type
+   * @return string type
+   */
+  public function getType()
+  {
+    return $this->type;
+  }
 
-    /**
-     * Set type
-     * @param string $type
-     */
-    public function setType($type = '')
-    {
-        $this->type = $type;
-    }
+  /**
+   * Set type
+   * @param string $type
+   */
+  public function setType($type = '')
+  {
+    $this->type = $type;
+  }
 
-    /**
-     * Get link
-     * @return string link
-     */
-    public function getLink()
-    {
-        return $this->link;
-    }
+  /**
+   * Get link
+   * @return string link
+   */
+  public function getLink()
+  {
+    return $this->link;
+  }
 
-    /**
-     * Set link
-     * @param string $link
-     */
-    public function setLink($link = '')
-    {
-        $this->link = $link;
-    }
+  /**
+   * Set link
+   * @param string $link
+   */
+  public function setLink($link = '')
+  {
+    $this->link = $link;
+  }
 
-    /**
-     * Get expand
-     * @return array
-     */
-    public function getExpand()
-    {
-        return $this->expand;
-    }
+  /**
+   * Get expand
+   * @return array
+   */
+  public function getExpand()
+  {
+    return $this->expand;
+  }
 
-    /**
-     * Set expand
-     * @param string $expand
-     */
-    public function setExpand($expand = '')
-    {
-        $this->expand = $expand;
-    }
+  /**
+   * Set expand
+   * @param string $expand
+   */
+  public function setExpand($expand = '')
+  {
+    $this->expand = $expand;
+  }
 
-    /**
-     * Set bundleName
-     * @param string $bundleName
-     */
-    public function setBundleName($bundleName = '')
-    {
-        $this->bundleName = $bundleName;
-    }
+  /**
+   * Set bundleName
+   * @param string $bundleName
+   */
+  public function setBundleName($bundleName = '')
+  {
+    $this->bundleName = $bundleName;
+  }
 
-    /**
-     * Get bundleName
-     * @return string
-     */
-    public function getBundleName()
-    {
-        return $this->bundleName;
-    }
+  /**
+   * Get bundleName
+   * @return string
+   */
+  public function getBundleName()
+  {
+    return $this->bundleName;
+  }
 
-    /**
-     * Get description
-     * @param string $description
-     */
-    public function setDescription($description = '')
-    {
-        $this->description = $description;
-    }
+  /**
+   * Get description
+   * @param string $description
+   */
+  public function setDescription($description = '')
+  {
+    $this->description = $description;
+  }
 
-    /**
-     * Set description
-     * @return string description
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
+  /**
+   * Set description
+   * @return string description
+   */
+  public function getDescription()
+  {
+    return $this->description;
+  }
 
-    /**
-     * Get format
-     * @param string $format
-     */
-    public function setFormat($format = '')
-    {
-        $this->format = $format;
-    }
+  /**
+   * Get format
+   * @param string $format
+   */
+  public function setFormat($format = '')
+  {
+    $this->format = $format;
+  }
 
-    /**
-     * Set format
-     * @return string format
-     */
-    public function getFormat()
-    {
-        return $this->format;
-    }
+  /**
+   * Set format
+   * @return string format
+   */
+  public function getFormat()
+  {
+    return $this->format;
+  }
 
-    /**
-     * Set mimeType
-     * @param string $mimeType
-     */
-    public function setMimeType($mimeType = '')
-    {
-        $this->mimeType = $mimeType;
-    }
+  /**
+   * Set mimeType
+   * @param string $mimeType
+   */
+  public function setMimeType($mimeType = '')
+  {
+    $this->mimeType = $mimeType;
+  }
 
-    /**
-     * Get mimeType
-     * @return string mimeType
-     */
-    public function getMimeType()
-    {
-        return $this->mimeType;
-    }
+  /**
+   * Get mimeType
+   * @return string mimeType
+   */
+  public function getMimeType()
+  {
+    return $this->mimeType;
+  }
 
-    /**
-     * Set setSizeBytes
-     * @param int $sizeBytes
-     */
-    public function setSizeBytes($sizeBytes = 0)
-    {
-        $this->sizeBytes = $sizeBytes;
-    }
+  /**
+   * Set setSizeBytes
+   * @param int $sizeBytes
+   */
+  public function setSizeBytes($sizeBytes = 0)
+  {
+    $this->sizeBytes = $sizeBytes;
+  }
 
-    /**
-     * get setSizeBytes
-     * @return int
-     */
-    public function getSizeBytes()
-    {
-        return $this->sizeBytes;
-    }
+  /**
+   * get setSizeBytes
+   * @return int
+   */
+  public function getSizeBytes()
+  {
+    return $this->sizeBytes;
+  }
 
-    /**
-     * Set parentObject
-     * @param $parentObject
-     */
-    public function setParentObject($parentObject)
-    {
-        $this->parentObject = $parentObject;
-    }
+  /**
+   * Set parentObject
+   * @param $parentObject
+   */
+  public function setParentObject($parentObject)
+  {
+    $this->parentObject = $parentObject;
+  }
 
-    /**
-     * Get parentObject
-     * @return array
-     */
-    public function getParentObject()
-    {
-        return $this->parentObject;
-    }
+  /**
+   * Get parentObject
+   * @return array
+   */
+  public function getParentObject()
+  {
+    return $this->parentObject;
+  }
 
-    /**
-     * Get retrieveLink
-     * @param string $retrievalLink
-     */
-    public function setRetrieveLink($retrievalLink = '')
-    {
-        $this->retrieveLink = $retrievalLink;
-    }
+  /**
+   * Get retrieveLink
+   * @param string $retrievalLink
+   */
+  public function setRetrieveLink($retrievalLink = '')
+  {
+    $this->retrieveLink = $retrievalLink;
+  }
 
-    /**
-     * Set retrieveLink
-     * @return mixed
-     */
-    public function getRetrieveLink()
-    {
-        return $this->retrieveLink;
-    }
+  /**
+   * Set retrieveLink
+   * @return mixed
+   */
+  public function getRetrieveLink()
+  {
+    return $this->retrieveLink;
+  }
 
-    /**
-     * Get checkSum
-     * @param array $checkSum
-     */
-    public function setCheckSum($checkSum = array())
-    {
-        $this->checkSum = $checkSum;
-    }
+  /**
+   * Get checkSum
+   * @param array $checkSum
+   */
+  public function setCheckSum($checkSum = array())
+  {
+    $this->checkSum = $checkSum;
+  }
 
-    /**
-     * Set checkSum
-     * @return array checkSum
-     */
-    public function getCheckSum()
-    {
-        return $this->checkSum;
-    }
+  /**
+   * Set checkSum
+   * @return array checkSum
+   */
+  public function getCheckSum()
+  {
+    return $this->checkSum;
+  }
 
-    /**
-     * Get sequenceId
-     * @param int $sequenceId
-     */
-    public function setSequenceId($sequenceId = 0)
-    {
-        $this->sequenceId = $sequenceId;
-    }
+  /**
+   * Get sequenceId
+   * @param int $sequenceId
+   */
+  public function setSequenceId($sequenceId = 0)
+  {
+    $this->sequenceId = $sequenceId;
+  }
 
-    /**
-     * Set sequenceId
-     * @return int sequenceId
-     */
-    public function getSequenceId()
-    {
-        return $this->sequenceId;
-    }
+  /**
+   * Set sequenceId
+   * @return int sequenceId
+   */
+  public function getSequenceId()
+  {
+    return $this->sequenceId;
+  }
 
-    /**
-     * Fetch the bitstream and return it, along with the mime type
-     * as specified in the Bitstream
-     *
-     * @return \Illuminate\Http\Response
-     *
-     */
-    public function retrieve()
-    {
-        $url = parent::$apiUrl . substr($this->getRetrieveLink(), 1);
+  /**
+   * Fetch the bitstream and return it, along with the mime type
+   * as specified in the Bitstream
+   *
+   * @return \Illuminate\Http\Response
+   *
+   */
+  public function retrieve()
+  {
+    $url = parent::$apiUrl . substr($this->getRetrieveLink(), 1);
 
-        $stream = self::ApiCall($url);
+    $stream = self::ApiCall($url);
 
-        $response = \Response::make($stream);
-        $response->header('Content-Type', $this->getMimeType());
-        return $response;
+    $response = \Response::make($stream);
+    $response->header('Content-Type', $this->getMimeType());
+    return $response;
 
-    }
+  }
 
-    /**
-     * Find. Wrapper for findByIdOrHandle
-     * @param string $id
-     * @param array $options
-     * @param string $outputFormat
-     * @param string $inputFormat
-     * @return \MIMAS\Service\Jorum\Item $item
-     */
-    public static function find($id = '', $options = array(), $outputFormat = '', $inputFormat)
-    {
-        $bitstream = new Bitstream($outputFormat, $inputFormat);
-        return $bitstream->findByIdOrHandle($id, $options);
-    }
+  /**
+   * Find. Wrapper for findByIdOrHandle
+   * @param string $id
+   * @param array $options
+   * @param string $outputFormat
+   * @param string $inputFormat
+   * @return \MIMAS\Service\Jorum\Item $item
+   */
+  public static function find($id = '', $options = array(), $outputFormat = '', $inputFormat)
+  {
+    $bitstream = new Bitstream($outputFormat, $inputFormat);
+    return $bitstream->findByIdOrHandle($id, $options);
+  }
 
 }

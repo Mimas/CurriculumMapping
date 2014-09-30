@@ -16,13 +16,14 @@
             ]
           },
           plotBackgroundImage: null,
-          height: 200
+          height: 160
         },
 
         title: {
           text: 'Title',
           style: {
-            'color': 'ffffff'
+            'color': 'ffffff',
+            'display': 'none'
           }
         },
         credits: {

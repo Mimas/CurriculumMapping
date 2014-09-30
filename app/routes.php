@@ -105,8 +105,9 @@ Route::get('/view/{u?}/{id?}', function($u = '', $id='')
   } elseif($resource['_source']['admin']['source']=='ht') {
     $bitstreams = false;
   }
-
   $status = array();
+
+
   return View::make('view')->with( array('data'=>$resource, 'status'=>$status, 'bitstreams'=>$bitstreams));
 });
 
