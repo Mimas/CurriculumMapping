@@ -86,21 +86,98 @@ Route::get('/test', function() {
 
   // $body = \Es::getSource()
   $params = array(
-    'id'=>'jorum-10949/8919',
+    'id'=>'jorum-10949/8894',
     'type'=>'learning resource',
     'index'=>'ciim',
-    'body'=>array('doc'=>array('edited'=>'YES')),
+    'body'=>array('doc'=>array('edited'=>'yes',
+                                'admin'=>array('processed'=>time()*1000),
+                               )
+    ),
 
   );
   $response = \Es::update($params);
   var_export($response);
-  /*
-  $id = $this->extractArgument($params, 'id');
-  $index = $this->extractArgument($params, 'index');
-  $type = $this->extractArgument($params, 'type');
-  $body = $this->extractArgument($params, 'body');
-  */
 
+
+});
+
+
+/**
+ * Popular 10 or something
+ *
+ *
+ * <h2>{{jsonData.title[0]}}</h2>
+ * <h3>ID:{{jsonData.id}}
+ * {{jsonData.jmd_jacs3_subject[0]}}</h3>
+ * <p class="overflow">{{jsonData.description}}<br />
+ *
+ *
+ */
+Route::get('/popular', function() {
+
+  $searchParams['index'] = 'ciim';
+
+  $searchParams['size'] = 30;
+  $searchParams['from'] = 0;
+
+  $index = \Es::search($searchParams);
+  $result = array();
+
+  foreach ($index['hits']['hits'] as $hit) {
+    if (isset($hit['_source']['subject']))
+      $subject = $hit['_source']['subject'][0]['value'];
+
+    $resource = \Bentleysoft\ES\Service::get($hit['_id']);
+
+    if ($resource['_source']['admin']['source']=='jorum') {
+      $object = MIMAS\Service\Jorum\Item::find(str_replace('jorum-', '', $hit['_id']), array('expand'=>'all'), 'json', 'json');
+      $bitstreams = $object->getBitstreams();
+    } elseif($resource['_source']['admin']['source']=='ht') {
+      $bitstreams = false;
+    }
+
+    $i = 0;
+    $image = '';
+
+    while (true) {
+      if ($i>=count($bitstreams)) {
+        break;
+      }
+      $b = $bitstreams[$i];
+      if (strpos($b->getMimeType(), 'image')!==false) {
+        $image = $b->getRetrieveLink();
+        break;
+      }
+      $i++;
+    }
+    if ($image<>'') {
+        $result[] = array(
+                        'title' => array(
+                              0=>$hit['_source']['summary_title']
+                          ),
+                        'id'=>$hit['_id'],
+                        'jmd_jacs3_subject'=>array(
+                              $subject
+                         ),
+                         'image'=>"http://dspace.jorum.ac.uk/rest$image",
+        );
+    } else {
+      $result[] = array(
+        'title' => array(
+          0=>$hit['_source']['summary_title']
+        ),
+        'id'=>$hit['_id'],
+        'jmd_jacs3_subject'=>array(
+          $subject
+        )
+      );
+
+    }
+
+  }
+  header('Content-Type: application/json');
+  echo json_encode($result);
+  return;
 });
 
 // /view/jorum-10949/8894
@@ -148,7 +225,7 @@ Route::post('download', function() {
 
 Route::get('/edit/{u?}/{id?}', function($u = '', $id = '')
 {
-  $uid = "$u/$$id";
+  $uid = "$u/$id";
   // $meta = Mapping::where('uuid','=', '$uuid')->get();
   $result = Mapping::where('uid','=', $uid)->get();
   if ($result && count($result)>0) {
@@ -179,7 +256,19 @@ Route::post('/edit/{uuid?}', function($uuid = '')
     $meta->content_usage = Input::get('content_usage');
 
     if ($meta->save()) {
-        $status = array('close'=>true,);
+
+      $params = array(
+        'id'=>$meta->uid,
+        'type'=>'learning resource',
+        'index'=>'ciim',
+        'body'=>array('doc'=>array('edited'=>'yes',
+          'admin'=>array('processed'=>time()*1000),
+        )
+        ),
+
+      );
+      $response = \Es::update($params);
+      $status = array('close'=>true,);
 
     } else {
         // TODO: Error handing        
@@ -237,10 +326,18 @@ Route::filter('access', function() {
 Route::get('/subjectareas', function()
 {
     $q = Input::get('q','');
-
     $subjectAreas = Subjectarea::where('area', 'LIKE', "%$q%")->paginate(10);
-
     return View::make('subjectareas')->with( array('data'=>$subjectAreas));
+});
+
+Route::delete('/subject/{id?}', function($id)
+{
+  // $q = Input::get('q','');
+  $subject = Subjectarea::find($id);
+  $subject->delete();
+
+  return Redirect::to('subjectareas');
+
 });
 
 

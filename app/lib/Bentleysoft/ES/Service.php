@@ -26,7 +26,18 @@ class Service
     $searchParams['from'] = $from;
 
 
-    $searchParams['body']['query']['wildcard']['summary_title'] = "$pattern**";
+    $searchParams['sort'] = array(
+      /*
+      '_type:desc',
+      'summary_title:asc'
+      */
+      'processed:desc'
+    ,
+      'edited:asc'
+
+    );
+
+    $searchParams['body']['query']['wildcard']['summary_title'] = "*$pattern*";
 
     $result = \Es::search($searchParams);
 

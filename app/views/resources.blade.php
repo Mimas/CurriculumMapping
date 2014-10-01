@@ -31,10 +31,20 @@
                   {{ $row['_source']['admin']['source'] }}
               </div>
               <div class="unit-20">
-                  {{ $row['_type'] }}
+                  {{ $row['_type'] }} <?php // echo date('Y-m-d H:i:s', $row['_source']['admin']['processed']/1000); ?>
               </div>
               <div class="unit-20">
+                <?php
+                if (isset($row['_source']['edited'])) {
+                ?>
+                  <a href="/edit/<?php echo $row['_source']['admin']['uid']; ?>" class="iframe btn btn-small">Edit&nbsp;<i class="fa fa-cog"></i></a>
+                <?php
+                } else {
+                ?>
                   <a href="/edit/<?php echo $row['_source']['admin']['uid']; ?>" class="iframe btn btn-small btn-blue">Edit&nbsp;<i class="fa fa-cog"></i></a>
+                <?php
+                }
+                ?>
               </div>
           </div>
        <?php
