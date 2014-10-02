@@ -4,14 +4,14 @@
 	"keywords": ["framework", "laravel"],
 	"license": "MIT",
 	"require": {
-		"laravel/framework": "4.2.*",
-    "shift31/laravel-elasticsearch": "1.0.*@dev",
-    "cartalyst/sentry": "2.0.*",
-		"php-console/laravel-service-provider": "1.*",
-    "barryvdh/laravel-ide-helper": "1.*",
-    "jyggen/curl": "*",
-    "nategood/httpful": "*"
-
+      "laravel/framework": "4.2.*",
+      "shift31/laravel-elasticsearch": "1.0.*@dev",
+      "cartalyst/sentry": "2.0.*",
+      "php-console/laravel-service-provider": "1.*",
+      "barryvdh/laravel-ide-helper": "1.*",
+      "jyggen/curl": "*",
+      "nategood/httpful": "*",
+      "ruflin/Elastica": "dev-master"
 	},
 	"autoload": {
 			"classmap": [
