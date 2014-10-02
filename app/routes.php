@@ -29,8 +29,15 @@ Route::filter('redis', function()
     }
   return;
 });
+
+/**
+ * Redis stuff
+ */
 Route::controller('redis', 'RedisController');
 
+/**
+ * Resources
+ */
 Route::get('/resources', function() {
   $pageSize = 20;
   $query = Input::get('q', '*');
@@ -40,6 +47,32 @@ Route::get('/resources', function() {
   $offset = $page*$pageSize;
 
   $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query);
+
+  $resources = Paginator::make($data['hits']['hits'], $data['hits']['total'], 20);
+
+  // add any query string..
+  if ($query<>'*') {
+    $resources->addQuery('q', $query);
+  }
+
+  $presenter = new Illuminate\Pagination\BootstrapPresenter($resources);
+
+  return View::make('resources')->with(array('data'=>$data, 'resources'=>$resources, 'presenter'=>$presenter));
+
+});
+
+/**
+ * Resources
+ */
+Route::get('/mapped', function() {
+  $pageSize = 20;
+  $query = Input::get('q', '*');
+
+  $page = Input::get('page',1)-1;
+
+  $offset = $page*$pageSize;
+
+  $data = Bentleysoft\ES\Service::mapped($offset, $pageSize, $query);
 
   $resources = Paginator::make($data['hits']['hits'], $data['hits']['total'], 20);
 
@@ -105,12 +138,10 @@ Route::get('/test', function() {
 /**
  * Popular 10 or something
  *
- *
  * <h2>{{jsonData.title[0]}}</h2>
  * <h3>ID:{{jsonData.id}}
  * {{jsonData.jmd_jacs3_subject[0]}}</h3>
  * <p class="overflow">{{jsonData.description}}<br />
- *
  *
  */
 Route::get('/popular', function() {
@@ -140,7 +171,7 @@ Route::get('/popular', function() {
     $image = '';
 
     while (true) {
-      if ($i>=count($bitstreams)) {
+      if ($i >= count($bitstreams)) {
         break;
       }
       $b = $bitstreams[$i];
@@ -314,7 +345,7 @@ Route::get('/subject/{id?}', function($id = '')
     return View::make('subject')->with( array('data'=>$subject, 'status'=>array()));
 });
 
-
+/* Have moved this into filter innit
 Route::when('/*', 'access');
 Route::filter('access', function() {
   if (! Bentleysoft\Helper::userHasAccess(array('resource.manage'))) {
@@ -322,6 +353,8 @@ Route::filter('access', function() {
   }
   return;
 });
+
+*/
 
 Route::get('/subjectareas', function()
 {

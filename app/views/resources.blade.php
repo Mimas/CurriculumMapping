@@ -7,7 +7,7 @@
     left: 20px;
   }
 </style>
-    <form method="get" action="<?php echo asset('resources'); ?>" class="forms">
+    <form method="get" action="<?php echo asset(Request::path()); ?>" class="forms">
         <div class="units-row top44">
             <div class="unit-90">
                 <div class="input-groups spacer">

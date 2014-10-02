@@ -48,6 +48,38 @@ class Service
     return ($result);
   }
 
+  public static function mapped($from = 0, $size = 20, $pattern = '*')
+  {
+
+    $searchParams['index'] = 'ciim';
+
+    $searchParams['size'] = $size;
+    $searchParams['from'] = $from;
+
+
+    $searchParams['sort'] = array(
+      /*
+      '_type:desc',
+      'summary_title:asc'
+      */
+      'processed:desc'
+    ,
+      'edited:asc'
+
+    );
+
+    $searchParams['body']['query']['wildcard']['edited'] = "yes";
+    /// $searchParams['body']['query']['wildcard']['summary_title'] = "*$pattern*";
+
+
+    $result = \Es::search($searchParams);
+
+    //$searchParams['id'] = 'ht-node/805';
+    //$searchParams['type'] = 'collection';
+    // $result = Es::get($searchParams);
+
+    return ($result);
+  }
 
   public static function get($id) {
     $searchParams = array('index'=>'ciim', 'id'=>$id, 'type'=>'learning resource');

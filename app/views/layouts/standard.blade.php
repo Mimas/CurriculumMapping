@@ -51,13 +51,13 @@
         form {
           display: inline;
         }
+
       .breathe-left {
         margin-left: 7px !important;
       }
 
       .menu a {
         color: #ea6000 !important;
-
       }
 
       .dashboard {
@@ -70,7 +70,6 @@
       .dash-1 a {
         text-decoration: none;
         color: #ea6000;
-
       }
 
       .dash-2 {
@@ -80,17 +79,23 @@
       .dash-2 a {
         text-decoration: none;
         color: #ea6000;
+      }
 
+      #logo {
+        margin-top: 12px;
+        color: #ea6000;
+      }
+
+      #logo h2 {
+        color: #ea6000;
       }
 
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-
     <link rel="stylesheet" href="<?php echo asset('3rdparty/kube/css/kube.css'); ?>">
     <link rel="stylesheet" href="<?php echo asset('3rdparty/font-awesome/css/font-awesome.min.css'); ?>">
     <link rel="stylesheet" href="<?php echo asset('3rdparty/colorbox/colorbox.css'); ?>"/>
     <script src="<?php echo asset('3rdparty/colorbox/jquery.colorbox.js');?>"></script>
-
     <script src="<?php echo asset('3rdparty/highcharts/highcharts.js');?>"></script>
     <script src="<?php echo asset('3rdparty/highcharts/highcharts-more.js');?>"></script>
 
@@ -104,8 +109,11 @@
 <body>
     <div class="wrap">
         <div class="units-row">
-            <div class="unit-40">
+            <div class="unit-10">
                 <a href="<?php echo asset(''); ?>"><img alt="Jisc" title="Jisc logo" src="<?php echo asset('assets/img') ?>/jisc-logo.png" /></a>
+            </div>
+            <div class="unit-30" id="logo">
+              <h2>Curriculum Mapping Tool</h2>
             </div>
             <div class="unit-60 text-right">
               <?php

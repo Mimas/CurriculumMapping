@@ -11,9 +11,18 @@
 |
 */
 
+
+/**
+ * Rudimentary catch all filter
+ * TODO: Check URLs for Ajax validation
+ */
 App::before(function($request)
 {
-	//
+
+  if ($request->path()<>'login' && $request->path()<>'logout' && $request->path()<>'login/reset' & !Sentry::check()) {
+    return \Illuminate\Support\Facades\Redirect::to('/login');
+  }
+
 });
 
 
