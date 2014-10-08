@@ -2,12 +2,12 @@
 
 
 use Monolog\Logger;
-
+// 130.88.120.187
 return array(
   'hosts' => array(
-    '130.88.120.187:9200'
+    'www.definitio.org:9200'
   ),
-  'logPath' => 'path/to/your/elasticsearch/log',
+  'logPath' => '/tmp/elastic.php.log',
   'logLevel' => Logger::INFO
 
 );

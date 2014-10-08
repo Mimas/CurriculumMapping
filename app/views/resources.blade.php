@@ -24,12 +24,15 @@
       foreach ($data['hits']['hits'] as $row) {
           ?>
           <div class="units-row">
-              <div class="unit-50">
+              <div class="unit-40">
                 <a href="/view/<?php echo $row['_source']['admin']['uid']; ?>">{{ $row['_source']['summary_title'] }}</a>
               </div>
               <div class="unit-10">
                   {{ $row['_source']['admin']['source'] }}
               </div>
+            <div class="unit-10">
+              {{ $row['_source']['audience'][0] }}
+            </div>
               <div class="unit-20">
                   {{ $row['_type'] }} <?php // echo date('Y-m-d H:i:s', $row['_source']['admin']['processed']/1000); ?>
               </div>

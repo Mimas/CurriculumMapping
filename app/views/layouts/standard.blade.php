@@ -113,7 +113,7 @@
                 <a href="<?php echo asset(''); ?>"><img alt="Jisc" title="Jisc logo" src="<?php echo asset('assets/img') ?>/jisc-logo.png" /></a>
             </div>
             <div class="unit-30" id="logo">
-              <h2>Curriculum Mapping Tool</h2>
+              <h2>Curriculum Mapping Tool Pre-Release version 0.9</h2>
             </div>
             <div class="unit-60 text-right">
               <?php

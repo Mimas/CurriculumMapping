@@ -79,6 +79,55 @@ class AdminController extends BaseController {
     return $output;
   }
 
+  /**
+   *
+   * Handle POST requests for setting User permissions
+   *
+   * @param $id
+   * @throws Exception
+   */
+  public function postPermissions($id = -1) {
+
+
+    $allPermissions = Permission::where('id','>',1)->get();
+    if (!$allPermissions || count($allPermissions)<1 ) {
+      throw new Exception('No settable permissions found.');
+    }
+
+    $user = Sentry::findUserById($id);
+
+    if (!$user) {
+      App::abort(404, 'Cannot find the user.');
+    }
+
+    $userPermissions = array();
+
+    foreach($allPermissions as $permission) {
+      $label = $permission->class.'_'.$permission->action;   // e.g. user.create
+
+      if (array_key_exists($label,Input::all())) {
+        $userPermissions[$permission->class.'.'.$permission->action] = 1;
+      } else {
+        $userPermissions[$permission->class.'.'.$permission->action] = 0;
+      }
+    }
+
+    $user->permissions = $userPermissions;
+
+    if (!$user->save()) {
+      throw new Exception('User could not be updated.');
+    } else {
+      $status = array('close'=>true,);
+      return  View::make('edituserpermissions',
+        array('lang'=>$this->lang,
+          'user'=>$user,
+          'status'=>$status,
+          'classes'=>array(),
+          'permissions'=>array()));
+
+    }
+
+  }
 
   /**
   * Method to respond to POST requests with a PUT method
@@ -196,47 +245,7 @@ class AdminController extends BaseController {
     return $output;
   }
 
-  /**
-   *
-   * Handle POST requests for setting User permissions
-   *
-   * @param $id
-   * @throws Exception
-   */
-  public function postPermissions($id = -1) {
 
-
-    $allPermissions = Permission::where('id','>',1)->get();
-    if (!$allPermissions || count($allPermissions)<1 ) {
-      throw new Exception('No settable permissions found.');
-    }
-
-    $user = Sentry::findUserById($id);
-
-    if (!$user) {
-      App::abort(404, 'Cannot find the user.');
-    }
-
-    $userPermissions = array();
-
-    foreach($allPermissions as $permission) {
-      $label = $permission->class.'_'.$permission->action;   // e.g. user.create
-
-      if (array_key_exists($label,Input::all())) {
-        $userPermissions[$permission->class.'.'.$permission->action] = 1;
-      } else {
-        $userPermissions[$permission->class.'.'.$permission->action] = 0;
-      }
-
-    }
-    $user->permissions = $userPermissions;
-
-    if (!$user->save()) {
-      throw new Exception('User could not be updated.');
-    }
-
-
-  }
 
 	public function missingMethod($parameters = array())
 	{

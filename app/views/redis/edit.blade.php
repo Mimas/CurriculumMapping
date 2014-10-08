@@ -1,4 +1,4 @@
-@extends('layouts.standard')
+@extends('layouts.plain')
 @section('content')
 <div class="units-row top44">
     <div class="unit-100 text-right">

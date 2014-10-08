@@ -36,7 +36,7 @@
             <td class="r" style="text-align: right;"><?php echo($meta['len']); ?></td>
             <td class="text-right">
               <a class="btn btn-smaller btn-red" href="<?php echo URL::to('redis/delete'); ?>/<?php echo($key);?>">Delete&nbsp;<i class="fa fa-trash-o"></i></a>
-              <a class="btn btn-smaller btn-blue" href="<?php echo URL::to('redis/edit'); ?>/<?php echo($key);?>" >&nbsp;&nbsp;Edit&nbsp;<i class="fa fa-edit"></i></a>
+              <a class="btn btn-smaller btn-blue iframe" href="<?php echo URL::to('redis/edit'); ?>/<?php echo($key);?>" >&nbsp;&nbsp;Edit&nbsp;<i class="fa fa-edit"></i></a>
             </td>
           </tr>
           <?php

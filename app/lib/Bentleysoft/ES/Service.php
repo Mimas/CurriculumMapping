@@ -37,7 +37,21 @@ class Service
 
     );
 
-    $searchParams['body']['query']['wildcard']['summary_title'] = "*$pattern*";
+///    $searchParams['body']['query']['wildcard']['summary_title'] = "*$pattern*";
+
+    $filter = array();
+    $filter['term']['audience'] = 'FE';
+
+
+    $query = array();
+//    $query['match']['summary_title'] = "*$pattern*";
+
+///    $searchParams['body']['query']['bool']['must'][]['match']['audience'] = 'FE';
+
+    $searchParams['body']['query']['filtered'] = array(
+        "filter" => $filter,
+        "query" => $query,
+      );
 
     $result = \Es::search($searchParams);
 

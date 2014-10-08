@@ -119,7 +119,7 @@ Route::get('/test', function() {
 
   // $body = \Es::getSource()
   $params = array(
-    'id'=>'jorum-10949/8894',
+    'id'=>'jorum-10949/8914',
     'type'=>'learning resource',
     'index'=>'ciim',
     'body'=>array('doc'=>array('edited'=>'yes',
