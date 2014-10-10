@@ -1,6 +1,5 @@
 @extends('layouts.standard')
 @section('content')
-
             <div class="units-row top44">
                 <div class="unit-100">
                     <table class="table-hovered">
@@ -28,12 +27,35 @@
                       <tr>
                         <td class="bold">Licence</td><td>{{$data['_source']['lifecycle']['publication'][0]['rights']['uri'] or ''}}</td>
                       </tr>
+                      <?php
+                      if ( isset($data['_source']['audience']) && $data['_source']['audience'] == 'HE' ) {
+                      ?>
                       <tr>
                         <td class="bold">Jacs3 Code/Subject</td>
                         <td>
                           {{$data['_source']['subject'][0]['id'] or ''}}/{{$data['_source']['subject'][0]['value'] or ''}}
                         </td>
                       </tr>
+                      <?php
+                      } else {
+                      ?>
+                        <tr>
+                          <td class="bold">LD Code/Subject</td>
+                          <td>
+                            <?php
+                            if (isset($data['_source']['subject']['ldcode'])) foreach( $data['_source']['subject']['ldcode'] as $i=>$code ) {
+                            ?>
+                            {{ $code or '' }}, {{$data['_source']['subject']['ld'][$i] or '' }}<br/>
+                            <?php
+                            }
+                            ?>
+                          </td>
+                        </tr>
+
+
+                      <?php
+                      }
+                      ?>
                       </table>
                       <table class='table-hovered' data-role='bitstreams' id='files'>
                         <th colspan="5">

@@ -1,6 +1,6 @@
 @extends('layouts.standard')
 @section('content')
-    <form method="get" action="<?php echo asset('subjectareas') ?>" class="forms">
+    <form method="get" action="<?php echo asset('subjectareas') ?>" class="forms search">
         <div class="units-row top44">
             <div class="unit-90">
                 <div class="input-groups spacer">
@@ -10,6 +10,24 @@
                     </span>
                 </div>
 
+            </div>
+        </div>
+        <div class="units-row">
+            <div class="unit-50">
+            <label for="levels">Levels
+            <?php
+            for ($i=1; $i<$maxDepth; $i++) {
+              ?>
+              {{$i}} <input class="autosubmit" type="checkbox" name="levels[]" <?php if ( in_array($i, $selectedLevels)) echo ' checked ' ?> value="{{$i}}" />
+            <?php
+              }
+            ?>
+            </label>
+            </div>
+            <div class="unit-40">
+              <div class="text-right" style="float: right;">
+              {{ Form::select('pageSize', \Bentleysoft\Helper::pageSizes(), $pageSize, array('class' => 'autoselect')); }}
+              </div>
             </div>
         </div>
     </form>
@@ -22,7 +40,8 @@
   <table class="width-90 table-hovered">
     <?php foreach ($data as $row): ?>
       <tr>
-        <td> <a class="iframe" href="<?php echo asset('subject') ?>/{{$row->id}}">{{ $row->area }}</a></td>
+        <td class="width-10"> <a class="iframe" href="<?php echo asset('subject') ?>/{{$row->id}}">{{ $row->ldsc_code }}</a></td>
+        <td> <a class="iframe" href="<?php echo asset('subject') ?>/{{$row->id}}">{{ $row->ldsc_desc }}</a></td>
         <td class="text-right">
           {{Form::open(array('url' => asset('/subject').'/'.$row->id, 'method' => 'delete')); }}
           <button class="btn btn-smaller btn-red">Delete&nbsp;<i class="fa fa-trash-o"></i></button>
@@ -32,7 +51,7 @@
       </tr>
     <?php endforeach; ?>
     <tr>
-      <td>
+      <td colspan="2">
         <?php echo $data->links(); ?>
       </td>
       <td class="text-right">

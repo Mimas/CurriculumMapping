@@ -29,7 +29,7 @@ Route::filter('redis', function()
     }
   return;
 });
-
+ 
 /**
  * Redis stuff
  */
@@ -46,7 +46,7 @@ Route::get('/resources', function() {
 
   $offset = $page*$pageSize;
 
-  $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query);
+  $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query, Input::get('audience','FE'));
 
   $resources = Paginator::make($data['hits']['hits'], $data['hits']['total'], 20);
 
@@ -101,7 +101,7 @@ Route::get('/', function()
 
   $offset = $page*$pageSize;
 
-  $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query);
+  $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query, \Illuminate\Support\Facades\Input::get('audience','FE'));
 
   //  $resources = Paginator::make($data['hits']['hits'], $data['hits']['total'], 20);
 
@@ -131,8 +131,85 @@ Route::get('/test', function() {
   $response = \Es::update($params);
   var_export($response);
 
-
 });
+
+Route::get('/pako', function() {
+  \Bentleysoft\ES\Service::codeH();
+});
+
+
+/**
+ * TAG HT as 'FE'
+ * and other tasks (meta)
+ */
+Route::get('/tag', function() {
+  // $resource = \Bentleysoft\ES\Service::get('jorum-10949/8919');
+
+  $from = 0;
+  $pagesize = 10;
+
+  $lds = array();
+
+  while (true) {
+      $records = \Bentleysoft\ES\Service::orphans($from, $pagesize);
+      foreach ($records['hits']['hits'] as $document) {
+
+
+        if (isset($document['_source']['audience'] ) && $document['_source']['audience'][0] =='FE') {
+          $ldSubject = array();
+
+          if (isset($document['_source']['collection'][0]['name_for_debug'] )) {
+            $ldName = \Bentleysoft\ES\Service::getCorrectLdFromWrongJorumLd($document['_source']['collection'][0]['name_for_debug']);
+            $ldCode = \Bentleysoft\ES\Service::getLdCodeFromLabel($ldName);
+
+            $ldSubject = array(
+              'ld'=>array($ldName),
+              'ldcode'=>array($ldCode),
+              'lddebug'=>$ldCode,
+            );
+
+          } else {
+            $ldSubject = array(
+              'ld'=>'Unknown',
+              'ldcode'=>'U',
+              'lddebug'=>'Z',
+            );
+
+          }
+
+          $params = array(
+            'id'=>$document['_id'],
+            'type'=>$document['_type'],
+            'index'=>'ciim',
+            'body'=>array('doc'=>array('subject'=>$ldSubject,
+              'admin'=>array('processed'=>time()*1000),
+            )
+            ),
+
+          );
+
+          try
+          {
+            $response = \Es::update($params);
+            var_dump($response);
+
+          } catch (Exception $e)
+          {
+            echo  "Not done {$document['_id']}<br/>";
+          }
+
+
+        }
+
+      }
+      $from = $from + $pagesize;
+
+      if (count($records['hits']['hits']) < $pagesize) {
+        exit;
+      }
+  }
+});
+
 
 
 /**
@@ -220,6 +297,7 @@ Route::get('/view/{u?}/{id?}', function($u = '', $id='')
   $uid = "$u/$id";
 
   $resource = \Bentleysoft\ES\Service::get($uid);
+  
   if (!$resource) {
     App::abort(404);
   }
@@ -323,7 +401,7 @@ Route::post('/subject/{id?}', function($id = '')
     if (! ($subject ) ) {
         $subject = new Subjectarea;
     }
-    $subject->area = Input::get('area');
+    $subject->ldsc_desc = Input::get('ldsc_desc');
     $subject->stuff = Input::get('stuff');
 
     // try save
@@ -345,22 +423,75 @@ Route::get('/subject/{id?}', function($id = '')
     return View::make('subject')->with( array('data'=>$subject, 'status'=>array()));
 });
 
-/* Have moved this into filter innit
-Route::when('/*', 'access');
-Route::filter('access', function() {
-  if (! Bentleysoft\Helper::userHasAccess(array('resource.manage'))) {
-    return \Illuminate\Support\Facades\Redirect::to('/login');
-  }
-  return;
+/**
+* Qualifications
+*/
+Route::get('/qualifications', function()
+{
+
+    $q = Input::get('q','');
+
+    $selectedQualifications = Input::get('selectedQualifications', array(1));
+
+    var_export($selectedQualifications);
+
+    $pageSize = Input::get('pageSize', 10);
+
+    // $maxDepth = DB::table('subjectareas_view')->max('depth');
+
+    $qualifiers = Qualifier::where('id', '>', 0)->get();
+
+
+
+    $qualifications = QualificationView::where('qualification', 'LIKE', "%$q%")
+                                        ->orderBy('qualifier_id')
+                                        ->orderBy('level')
+                                        ->orderBy('qualification')
+                                        ->paginate($pageSize);
+
+    return View::make('qualifications')->with( array('data'=>$qualifications,
+                                                    'qualifiers'=>$qualifiers,
+                                                    'selectedQualifications'=>$selectedQualifications,
+                                                    'pageSize'=>$pageSize,
+                                                   ));
 });
 
-*/
+/**
+ * delete hook
+ */
 
+Route::delete('/subject/{id?}', function($id)
+{
+  // $q = Input::get('q','');
+  $subject = Subjectarea::find($id);
+  $subject->delete();
+
+  return Redirect::to('subjectareas');
+
+});
+
+
+/**
+* Subject areas
+*/
 Route::get('/subjectareas', function()
 {
+
     $q = Input::get('q','');
-    $subjectAreas = Subjectarea::where('area', 'LIKE', "%$q%")->paginate(10);
-    return View::make('subjectareas')->with( array('data'=>$subjectAreas));
+
+    $selectedLevels = Input::get('levels', array(1,2));
+    $pageSize = Input::get('pageSize', 10);
+
+    $maxDepth = DB::table('subjectareas_view')->max('depth');
+
+    $subjectAreas = SubjectareaView::where('ldsc_desc', 'LIKE', "%$q%")
+                                    ->whereIn('depth', $selectedLevels)
+                                    ->orderBy('ldsc_code')->paginate($pageSize);
+
+    return View::make('subjectareas')->with( array('data'=>$subjectAreas,
+                                                   'maxDepth'=>$maxDepth,
+                                                   'pageSize'=>$pageSize,
+                                                   'selectedLevels'=>$selectedLevels));
 });
 
 Route::delete('/subject/{id?}', function($id)

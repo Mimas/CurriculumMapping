@@ -162,6 +162,7 @@ class Service
 
   /**
    * Map the semi-wrong (approximate) LD label from Jorum to the correct one
+   * Return 'Unknown' if nothing found  (this will match '' as well)
    * This is primarily so we can then also get the correct code using the function
    *
    * @param $wrongCode
@@ -200,7 +201,7 @@ class Service
   }
 
   /**
-   * Get the Learnin Direct Code from a label - top level only
+   * Get the Learning Direct Code from a label - top level only
    * @param $subject
    * @internal param $area
    * @return string

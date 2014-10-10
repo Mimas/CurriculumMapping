@@ -82,6 +82,15 @@ class Helper {
 	}
 
   /**
+   * Paginator supported page sizes.. Just a helper
+   * @return array
+   */
+  public static function pageSizes() {
+    return array(10=>10,25=>25,50=>50,100=>100);
+  }
+
+
+  /**
    * Return human readable file size information i.e. 12K, 1.3M etc
    *
    * @internal param $size
@@ -103,6 +112,7 @@ class Helper {
     // $bytes /= pow(1024, $pow);
     // $bytes /= (1 << (10 * $pow));
 
-    return round($bytes, $precision) . ' ' . $units[$pow];   }
+    return round($bytes, $precision) . ' ' . $units[$pow];
+  }
 
 } 

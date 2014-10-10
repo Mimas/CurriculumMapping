@@ -103,6 +103,14 @@
         $(document).ready(function(){
             $(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
             $(".colorbox").colorbox({iframe:true, width:"80%", height:"80%"});
+            $(".autosubmit").click(function() {
+                $('.search').submit();
+              }
+            );
+            $(".autoselect").change(function() {
+                $('.search').submit();
+              }
+            );
         });
     </script>
 </head>
@@ -131,6 +139,10 @@
 
                   <?php if (Bentleysoft\Helper::userHasAccess(array('subjectareas.manage'))): ?>
                     <li><a href="/subjectareas">Subject Areas</a></li>
+                  <?php endif; ?>
+
+                  <?php if (Bentleysoft\Helper::userHasAccess(array('qualifications.manage'))): ?>
+                    <li><a href="/qualifications">Qualifications</a></li>
                   <?php endif; ?>
 
                   <?php if (Bentleysoft\Helper::userHasAccess(array('user.create', 'user.delete', 'user.update', 'user.view', 'application.admin' ))): ?>

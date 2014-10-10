@@ -2,11 +2,16 @@
 /**
  * Pedro Diveris
  * 
- * @property string id
- * @property string area
+ * @property integer id
+ * @property string ldsc_code
+ * @property string ldsc_desc
+ * @property string created_on
+ * @property string effective_to
+ * @property string effective_from
  * @property string stuff
  * @property string created_at
  * @property string updated_at
+ *
  */
 class Subjectarea extends Eloquent  {
 	/**

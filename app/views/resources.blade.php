@@ -31,7 +31,7 @@
                   {{ $row['_source']['admin']['source'] }}
               </div>
             <div class="unit-10">
-              {{ $row['_source']['audience'][0] }}
+              {{ $row['_source']['audience'][0] or '&nbsp;' }}
             </div>
               <div class="unit-20">
                   {{ $row['_type'] }} <?php // echo date('Y-m-d H:i:s', $row['_source']['admin']['processed']/1000); ?>
