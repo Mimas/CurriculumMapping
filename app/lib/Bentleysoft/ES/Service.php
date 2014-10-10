@@ -201,10 +201,11 @@ class Service
 
   /**
    * Get the Learnin Direct Code from a label - top level only
-   * @param $area
+   * @param $subject
+   * @internal param $area
    * @return string
    */
-  public static function getLdCodeFromLabel($area) {
+  public static function getLdCodeFromLabel($subject) {
     $map = array(
       'BUSINESS / MANAGEMENT / OFFICE STUDIES'=>'A',
       'SALES MARKETING and RETAILING'=>'B',
@@ -232,8 +233,8 @@ class Service
       'LOGISTICS / DISTRIBUTION / TRANSPORT / DRIVING'=>'Z'
     );
 
-    if (array_key_exists($area, $map)) {
-      return $map[$area];
+    if (array_key_exists($subject, $map)) {
+      return $map[$subject];
     } else {
       return 'U';
     }
