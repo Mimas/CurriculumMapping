@@ -32,7 +32,7 @@ class Service
       'edited:asc'
     );
 
-///    $searchParams['body']['query']['wildcard']['summary_title'] = "*$pattern*";
+    ///    $searchParams['body']['query']['wildcard']['summary_title'] = "*$pattern*";
 
     $filter = array();
 
@@ -64,6 +64,9 @@ class Service
     return ($result);
   }
 
+  /**
+  * Get the "mapped" resources - the main bit of the beast...
+  */
   public static function mapped($from = 0, $size = 20, $pattern = '*')
   {
 
