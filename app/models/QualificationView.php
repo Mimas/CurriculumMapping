@@ -11,6 +11,8 @@
  * @property integer colour
  * @property integer label
  * @property integer url
+ * @property integer qualifier
+ * @property integer qualifier_short
  *
  */
 class QualificationView extends Eloquent  {

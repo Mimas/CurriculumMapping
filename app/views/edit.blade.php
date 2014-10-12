@@ -19,6 +19,9 @@
         label {
             display: block;
         }
+      .jisc {
+        color: #ea6000;
+      }
 	</style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<link rel="stylesheet" href="<?php echo asset('3rdparty/kube/css/kube.css'); ?>">
@@ -38,6 +41,9 @@
    <form method="post" action="<?php echo asset('edit'); ?>" class="forms">
         <div class="container">
             <div class="units-row">
+                <div class="unit-100">
+                    <h2 class="jisc">{{$resource['_source']['summary_title'] or '' }}</h2>
+                </div>
                 <div class="unit-100">
                     <label for="subject_area">
                         Subject area<br/>

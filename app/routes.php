@@ -37,9 +37,13 @@ Route::controller('redis', 'RedisController');
 
 /**
  * Resources
+ * browse
+ * pass int pageSize
  */
 Route::get('/resources', function() {
-  $pageSize = 20;
+
+  $pageSize = Input::get('pageSize', 25);
+
   $query = Input::get('q', '*');
 
   $page = Input::get('page',1)-1;
@@ -48,16 +52,26 @@ Route::get('/resources', function() {
 
   $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query, Input::get('audience','FE'));
 
-  $resources = Paginator::make($data['hits']['hits'], $data['hits']['total'], 20);
+  $resources = Paginator::make($data['hits']['hits'], $data['hits']['total'], $pageSize);
 
   // add any query string..
   if ($query<>'*') {
     $resources->addQuery('q', $query);
   }
 
+  if ($pageSize<>25) {
+    $resources->addQuery('pageSize', $pageSize);
+  }
+
   $presenter = new Illuminate\Pagination\BootstrapPresenter($resources);
 
-  return View::make('resources')->with(array('data'=>$data, 'resources'=>$resources, 'presenter'=>$presenter));
+  return View::make('resources')->with(array('data'=>$data, 
+                                             'resources'=>$resources, 
+                                             'presenter'=>$presenter,
+                                             'pageSize'=>$pageSize,
+                                             'total'=>$data['hits']['total'],
+                                             'page'=>$page+1,
+                                             ));
 
 });
 
@@ -335,7 +349,13 @@ Route::post('download', function() {
 Route::get('/edit/{u?}/{id?}', function($u = '', $id = '')
 {
   $uid = "$u/$id";
-  // $meta = Mapping::where('uuid','=', '$uuid')->get();
+
+  $resource = \Bentleysoft\ES\Service::get($uid);
+  
+  if (!$resource) {
+    App::abort(404);
+  }
+
   $result = Mapping::where('uid','=', $uid)->get();
   if ($result && count($result)>0) {
   	$meta = $result[0];
@@ -344,7 +364,7 @@ Route::get('/edit/{u?}/{id?}', function($u = '', $id = '')
     $meta->uid = $uid;
   }
   $status = array();
-  return View::make('edit')->with( array('data'=>$meta, 'status'=>$status));
+  return View::make('edit')->with( array('data'=>$meta, 'status'=>$status, 'resource'=>$resource));
 });
 
 Route::post('/edit/{uuid?}', function($uuid = '')
@@ -431,9 +451,7 @@ Route::get('/qualifications', function()
 
     $q = Input::get('q','');
 
-    $selectedQualifications = Input::get('selectedQualifications', array(1));
-
-    var_export($selectedQualifications);
+    $selectedQualifications = Input::get('selectedqualifications', array(1));
 
     $pageSize = Input::get('pageSize', 10);
 
@@ -444,13 +462,30 @@ Route::get('/qualifications', function()
 
 
     $qualifications = QualificationView::where('qualification', 'LIKE', "%$q%")
+                                        ->whereIn('qualifier_id', $selectedQualifications)
                                         ->orderBy('qualifier_id')
                                         ->orderBy('level')
                                         ->orderBy('qualification')
                                         ->paginate($pageSize);
 
+    $paginator = Paginator::make($qualifications->getItems(), $qualifications->getTotal(), $pageSize);
+
+    if ($q<>'') {
+      $paginator->addQuery('q', $q);
+    }
+
+    if ('pageSize'<>10) {
+      $paginator->addQuery('pageSize', $pageSize);
+
+    }
+
+    $paginator->addQuery('selectedqualifications', $selectedQualifications);
+
     return View::make('qualifications')->with( array('data'=>$qualifications,
                                                     'qualifiers'=>$qualifiers,
+                                                    'total'=>$qualifications->getTotal(),
+                                                    'page'=>$paginator->getCurrentPage(),
+                                                    'paginator'=>$paginator,
                                                     'selectedQualifications'=>$selectedQualifications,
                                                     'pageSize'=>$pageSize,
                                                    ));
@@ -459,7 +494,6 @@ Route::get('/qualifications', function()
 /**
  * delete hook
  */
-
 Route::delete('/subject/{id?}', function($id)
 {
   // $q = Input::get('q','');
@@ -470,13 +504,11 @@ Route::delete('/subject/{id?}', function($id)
 
 });
 
-
 /**
 * Subject areas
 */
 Route::get('/subjectareas', function()
-{
-
+{    
     $q = Input::get('q','');
 
     $selectedLevels = Input::get('levels', array(1,2));
@@ -486,12 +518,30 @@ Route::get('/subjectareas', function()
 
     $subjectAreas = SubjectareaView::where('ldsc_desc', 'LIKE', "%$q%")
                                     ->whereIn('depth', $selectedLevels)
-                                    ->orderBy('ldsc_code')->paginate($pageSize);
+                                    ->orderBy('ldsc_code')
+                                    ->paginate($pageSize);
+
+
+    $paginator = Paginator::make($subjectAreas->getItems(), $subjectAreas->getTotal(), $pageSize);
+
+    if ($q<>'') {
+      $paginator->addQuery('q', $q);
+    }
+
+    if ('pageSize'<>10) {
+      $paginator->addQuery('pageSize', $pageSize);
+
+    }
+
+    $paginator->addQuery('levels', $selectedLevels);
 
     return View::make('subjectareas')->with( array('data'=>$subjectAreas,
                                                    'maxDepth'=>$maxDepth,
                                                    'pageSize'=>$pageSize,
-                                                   'selectedLevels'=>$selectedLevels));
+                                                   'total'=>$subjectAreas->getTotal(),
+                                                   'page'=>$paginator->getCurrentPage(),
+                                                   'selectedLevels'=>$selectedLevels,
+                                                   'paginator'=>$paginator));
 });
 
 Route::delete('/subject/{id?}', function($id)

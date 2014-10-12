@@ -7,7 +7,7 @@
     left: 20px;
   }
 </style>
-    <form method="get" action="<?php echo asset(Request::path()); ?>" class="forms">
+    <form method="get" action="<?php echo asset(Request::path()); ?>" class="forms search">
         <div class="units-row top44">
             <div class="unit-90">
                 <div class="input-groups spacer">
@@ -16,10 +16,21 @@
                         <button class="btn">Go</button>
                     </span>
                 </div>
-
+            </div>
+        </div>
+        <div class="units-row">
+            <div class="unit-50">
+              &nbsp;&nbsp;&nbsp;
+            </div>
+            <div class="unit-40">
+              <div class="text-right pager" style="float: right;">
+              <span class="total">{{$total}}</span> Resources, page {{$page}} of {{ $resources->getLastPage() }}</span>&nbsp;&nbsp;|&nbsp;&nbsp;
+              {{ Form::select('pageSize', \Bentleysoft\Helper::pageSizes(), $pageSize, array('class' => 'autoselect inliner')); }}
+              </div>
             </div>
         </div>
     </form>
+    <div style="margin-top: 22px;">    
       <?php
       foreach ($data['hits']['hits'] as $row) {
           ?>
@@ -53,6 +64,7 @@
        <?php
       }
       ?>
+    </div>
      <div class="units-row">
         <div class="unit-20"><br/></div>
         <div class="unit-60 text-centered">

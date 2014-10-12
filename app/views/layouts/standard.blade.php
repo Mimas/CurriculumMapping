@@ -10,29 +10,23 @@
             font-family:'Lato', sans-serif;
             color: #999;
         }
-
         .units-row {
             margin-bottom: 7px !important;
         }
-
         .wrap {
             margin: auto;
             width: 80%;
             max-width: 1200px;
         }
-
         .welcome {
           margin-top: 32px;
         }
-
         .dashboard {
           margin-top: 32px;
         }
-
         .top44 {
           margin-top: 32px;
         }
-
         ul.horizontal
         {
           margin-left: 0px;
@@ -51,19 +45,15 @@
         form {
           display: inline;
         }
-
       .breathe-left {
         margin-left: 7px !important;
       }
-
       .menu a {
         color: #ea6000 !important;
       }
-
       .dashboard {
         font-size: 1.2em;;
       }
-
       .dash-1 {
         font-size: 1.2em;
       }
@@ -71,25 +61,29 @@
         text-decoration: none;
         color: #ea6000;
       }
-
       .dash-2 {
         font-size: 1.2em;
       }
-
       .dash-2 a {
         text-decoration: none;
         color: #ea6000;
       }
-
       #logo {
         margin-top: 12px;
         color: #ea6000;
       }
-
       #logo h2 {
         color: #ea6000;
       }
-
+      .navbar {
+        font-size: 95% !important;
+      }
+      .inliner {
+        display: inline !important;
+      }
+      .total {
+        font-weight: 900;
+      }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <link rel="stylesheet" href="<?php echo asset('3rdparty/kube/css/kube.css'); ?>">
@@ -121,7 +115,7 @@
                 <a href="<?php echo asset(''); ?>"><img alt="Jisc" title="Jisc logo" src="<?php echo asset('assets/img') ?>/jisc-logo.png" /></a>
             </div>
             <div class="unit-30" id="logo">
-              <h2>Curriculum Mapping Tool Pre-Release version 0.9</h2>
+              <h2>Curriculum Mapping Tool beta v0.9</h2>
             </div>
             <div class="unit-60 text-right">
               <?php

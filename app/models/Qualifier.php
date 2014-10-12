@@ -4,6 +4,7 @@
  * 
  * @property integer id
  * @property string label
+ * @property string short
  * @property string colour
  * @property string url
  * @property integer created_at

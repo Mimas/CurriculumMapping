@@ -25,6 +25,9 @@
         ul.horizontal li {
           display: inline;
         }
+      .jisc {
+        color: #ea6000;
+      }
 
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
