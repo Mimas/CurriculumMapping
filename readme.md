@@ -1,14 +1,14 @@
 ## CurriculumMapper
 
-Pilot web based application to allow practitioners tp browse and edit FE Resources.
+Pilot web based application to allow practitioners to browse and edit FE Resources.
 
-The aim is to map them to the Curriculum, Subject Areas and Qualification Level.
+The aim is to map FE Resources to the Curriculum, Subject Areas and Qualification Levels.
 
 The Resources are contained in an Elastic Search repository (not included in this Github repo).
 
-This web application has been rapidly put together as a pilot.
+This web application has been rapidly put together as a pilot, so don't expect miracles.
 
-It is based on Laravel 4, Cartalyst Sentry, Highcharts and Kube CSS.
+It is using Laravel 4, Cartalyst Sentry, Highcharts and Kube CSS. And handcrafted code.
 
 ### License
 
