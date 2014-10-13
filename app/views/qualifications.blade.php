@@ -47,7 +47,10 @@
         <td class="width-20">
           <a class="iframe" href="<?php echo asset('qualification') ?>/{{$row->id}}">{{ $row->qualifier_short }}</a>
         </td>
-        <td class="width-50"> <a class="iframe" href="<?php echo asset('subject') ?>/{{$row->id}}">{{ $row->qualification }}</a></td>
+        <td class="width-10">
+          {{ $row->level }}
+        </td>
+        <td class="width-40"> <a class="iframe" href="<?php echo asset('subject') ?>/{{$row->id}}">{{ $row->qualification }}</a></td>
         <td class="text-right">
           {{Form::open(array('url' => asset('/subject').'/'.$row->id, 'method' => 'delete')); }}
           <button class="btn btn-smaller btn-red">Delete&nbsp;<i class="fa fa-trash-o"></i></button>

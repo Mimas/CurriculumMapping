@@ -406,42 +406,7 @@ Route::post('/edit/{uuid?}', function($uuid = '')
     return View::make('edit')->with( array('data'=>$meta, 'status'=>$status));
 });
 
-/*
-here
-*/
 
-Route::post('/subject/{id?}', function($id = '')
-{
-    $id = Input::get('id', -1);
-    $subject = Subjectarea::find($id);
-
-    // TODO: validate
-
-    // find record
-    if (! ($subject ) ) {
-        $subject = new Subjectarea;
-    }
-    $subject->ldsc_desc = Input::get('ldsc_desc');
-    $subject->stuff = Input::get('stuff');
-
-    // try save
-    if ($subject->save()) {
-      $status = array('close'=>true,);
-    } else {
-      // TODO: Error handing
-    $status = array();
-    }
-    return View::make('subject')->with( array('data'=>$subject, 'status'=>$status));
-});
-
-Route::get('/subject/{id?}', function($id = '')
-{
-    $subject = Subjectarea::find($id);
-    if (!$subject) {
-      $subject = new Subjectarea;
-    }
-    return View::make('subject')->with( array('data'=>$subject, 'status'=>array()));
-});
 
 /**
 * Qualifications
@@ -494,19 +459,52 @@ Route::get('/qualifications', function()
 /**
  * delete hook
  */
-Route::delete('/subject/{id?}', function($id)
+Route::delete('/qualification/{id?}', function($id)
 {
   // $q = Input::get('q','');
-  $subject = Subjectarea::find($id);
-  $subject->delete();
+  $qualification = Qualification::find($id);
+  $qualification->delete();
 
-  return Redirect::to('subjectareas');
+  return Redirect::to('qualifications');
 
 });
 
-/**
-* Subject areas
-*/
+
+/**************************************************** Subject areas *************************************************/
+Route::post('/subject/{id?}', function($id = '')
+{
+  $id = Input::get('id', -1);
+  $subject = Subjectarea::find($id);
+
+  // TODO: validate
+
+  // find record
+  if (! ($subject ) ) {
+    $subject = new Subjectarea;
+  }
+  $subject->ldsc_desc = Input::get('ldsc_desc');
+  $subject->stuff = Input::get('stuff');
+
+  // try save
+  if ($subject->save()) {
+    $status = array('close'=>true,);
+  } else {
+    // TODO: Error handing
+    $status = array();
+  }
+  return View::make('subject')->with( array('data'=>$subject, 'status'=>$status));
+});
+
+Route::get('/subject/{id?}', function($id = '')
+{
+  $subject = Subjectarea::find($id);
+  if (!$subject) {
+    $subject = new Subjectarea;
+  }
+  return View::make('subject')->with( array('data'=>$subject, 'status'=>array()));
+});
+
+/*** Subject areas */
 Route::get('/subjectareas', function()
 {    
     $q = Input::get('q','');
@@ -521,7 +519,6 @@ Route::get('/subjectareas', function()
                                     ->orderBy('ldsc_code')
                                     ->paginate($pageSize);
 
-
     $paginator = Paginator::make($subjectAreas->getItems(), $subjectAreas->getTotal(), $pageSize);
 
     if ($q<>'') {
@@ -530,7 +527,6 @@ Route::get('/subjectareas', function()
 
     if ('pageSize'<>10) {
       $paginator->addQuery('pageSize', $pageSize);
-
     }
 
     $paginator->addQuery('levels', $selectedLevels);
@@ -544,6 +540,8 @@ Route::get('/subjectareas', function()
                                                    'paginator'=>$paginator));
 });
 
+
+
 Route::delete('/subject/{id?}', function($id)
 {
   // $q = Input::get('q','');
@@ -553,6 +551,95 @@ Route::delete('/subject/{id?}', function($id)
   return Redirect::to('subjectareas');
 
 });
+/**************************************************** /Subject areas **************************************************/
+
+/******************************************************* LDCS  ********************************************************/
+
+/*** LD Subject areas */
+Route::get('/ldcs', function()
+{
+  $q = Input::get('q','');
+
+  $selectedLevels = Input::get('levels', array(1,2));
+  $pageSize = Input::get('pageSize', 10);
+
+  $maxDepth = DB::table('ldcs_view')->max('depth');
+
+  $subjects = LdcsView::where('ldsc_desc', 'LIKE', "%$q%")
+    ->whereIn('depth', $selectedLevels)
+    ->orderBy('ldsc_code')
+    ->paginate($pageSize);
+
+
+  $paginator = Paginator::make($subjects->getItems(), $subjects->getTotal(), $pageSize);
+
+  if ($q<>'') {
+    $paginator->addQuery('q', $q);
+  }
+
+  if ('pageSize'<>10) {
+    $paginator->addQuery('pageSize', $pageSize);
+
+  }
+
+  $paginator->addQuery('levels', $selectedLevels);
+
+  return View::make('ldcs')->with( array('data'=>$subjects,
+    'maxDepth'=>$maxDepth,
+    'pageSize'=>$pageSize,
+    'total'=>$subjects->getTotal(),
+    'page'=>$paginator->getCurrentPage(),
+    'selectedLevels'=>$selectedLevels,
+    'paginator'=>$paginator));
+});
+
+
+/**
+ * Delete LDC (shouldn't really be able..._
+ */
+Route::delete('/ldc/{id?}', function($id)
+{
+  // $q = Input::get('q','');
+  $ldcs = Ldcs::find($id);
+  $ldcs->delete();
+
+  return Redirect::to('ldcs');
+
+});
+
+Route::post('/ldc/{id?}', function($id = '')
+{
+  $id = Input::get('id', -1);
+  $ldcs = Ldcs::find($id);
+
+  // TODO: validate
+
+  // find record
+  if (! ($ldcs ) ) {
+    $ldcs = new Ldcs();
+  }
+  $ldcs->ldsc_desc = Input::get('ldcs_desc');
+  $ldcs->ldsc_code = Input::get('ldcs_code');
+
+  // try save
+  if ($ldcs->save()) {
+    $status = array('close'=>true,);
+  } else {
+    // TODO: Error handing
+    $status = array();
+  }
+  return View::make('ldc')->with( array('data'=>$ldcs, 'status'=>$status));
+});
+
+Route::get('/ldc/{id?}', function($id = '')
+{
+  $subject = Ldcs::find($id);
+  if (!$subject) {
+    $subject = new Ldcs();
+  }
+  return View::make('ldc')->with( array('data'=>$subject, 'status'=>array()));
+});
+/************************************************** /LDCS **************************************************/
 
 
 Route::any('/logout', 'LoginController@actionLogout');

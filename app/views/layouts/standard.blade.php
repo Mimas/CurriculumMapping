@@ -131,8 +131,8 @@
                     <li><a href="/resources">Resources</a></li>
                   <?php endif; ?>
 
-                  <?php if (Bentleysoft\Helper::userHasAccess(array('subjectareas.manage'))): ?>
-                    <li><a href="/subjectareas">Subject Areas</a></li>
+                  <?php if (Bentleysoft\Helper::userHasAccess(array('subjectareas.admin'))): ?>
+                    <li><a href="/ldcs">LDCS</a></li>
                   <?php endif; ?>
 
                   <?php if (Bentleysoft\Helper::userHasAccess(array('qualifications.manage'))): ?>

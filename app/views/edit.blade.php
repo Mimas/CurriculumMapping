@@ -21,6 +21,10 @@
         }
       .jisc {
         color: #ea6000;
+        display: inline !important;
+      }
+      .norman {
+        display: inline !important;
       }
 	</style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -42,7 +46,7 @@
         <div class="container">
             <div class="units-row">
                 <div class="unit-100">
-                    <h2 class="jisc">{{$resource['_source']['summary_title'] or '' }}</h2>
+                    <h2 class="norman">Resource Editor - </h2><h2 class="jisc">{{$resource['_source']['summary_title'] or '' }}</h2>
                 </div>
                 <div class="unit-100">
                     <label for="subject_area">

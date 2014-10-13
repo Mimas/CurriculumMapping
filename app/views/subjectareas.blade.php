@@ -1,6 +1,6 @@
 @extends('layouts.standard')
 @section('content')
-    <form method="get" action="<?php echo asset('subjectareas') ?>" class="forms search">
+    <form method="get" action="<?php echo asset(Request::path()); ?>" class="forms search">
         <div class="units-row top44">
             <div class="unit-90">
                 <div class="input-groups spacer">
@@ -40,8 +40,8 @@
   <table class="width-90 table-hovered">
     <?php foreach ($data as $row): ?>
       <tr>
-        <td class="width-10"> <a class="iframe" href="<?php echo asset('subject') ?>/{{$row->id}}">{{ $row->ldsc_code }}</a></td>
-        <td> <a class="iframe" href="<?php echo asset('subject') ?>/{{$row->id}}">{{ $row->ldsc_desc }}</a></td>
+        <td class="width-10"> <a class="iframe" href="<?php echo asset(str_singular(Request::path())); ?>/{{$row->id}}">{{ $row->ldsc_code }}</a></td>
+        <td> <a class="iframe" href="<?php echo asset(str_singular(Request::path())); ?>/{{$row->id}}">{{ $row->ldsc_desc }}</a></td>
         <td class="text-right width-30">
           {{Form::open(array('url' => asset('/subject').'/'.$row->id, 'method' => 'delete')); }}
           <button class="btn btn-smaller btn-red">Delete&nbsp;<i class="fa fa-trash-o"></i></button>
