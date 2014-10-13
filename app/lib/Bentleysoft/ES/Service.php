@@ -20,6 +20,51 @@ class Service
    */
   public static function browse($from = 0, $size = 20, $pattern = '*', $audience='FE')
   {
+$searchParams['index'] = 'ciim';
+
+    $searchParams['size'] = $size;
+    $searchParams['from'] = $from;
+
+
+    $searchParams['sort'] = array(
+      'summary_title:asc',
+      'processed:desc',
+      'edited:asc'
+    );
+
+    ///    $searchParams['body']['query']['wildcard']['summary_title'] = "*$pattern*";
+
+    $filter = array();
+
+    $must = array();
+    $must[] = array("query_string"=>array("query"=>"$pattern"));
+    $must[] = array( 'terms'=>array('audience'=>array('FE')) );
+
+    // THIS HALF WORKS
+    $query = array(
+      'bool'=>array(
+          'must'=>$must,  
+        )
+    );
+
+    $searchParams['body']['query'] = $query;
+
+    $result = \Es::search($searchParams);
+
+    return ($result);
+  }
+
+
+/**
+   * @param int $from
+   * @param int $size
+   * @param string $pattern
+   * @param array|string $audience
+   * @internal param int $sice
+   * @return mixed
+   */
+  public static function test($from = 0, $size = 20, $pattern = '*', $audience='FE')
+  {
     $searchParams['index'] = 'ciim';
 
     $searchParams['size'] = $size;
@@ -36,33 +81,25 @@ class Service
 
     $filter = array();
 
-    if ($audience=='*') {
+    $must = array();
+    $must[] = array("query_string"=>array("query"=>'Graduated'));
+    $must[] = array( 'terms'=>array('audience'=>array('FE')) );
 
-    } else {
-
-      if (!is_array($audience)) {
-        $audience = explode(':', $audience);
-      }
-
-      foreach ($audience as $what ) {
-        $filter['or'][]['term'] = array('audience'=>$what);
-      }
-    }
-
+    // THIS HALF WORKS
     $query = array(
-      'wildcard'=>array('summary_title'=>"*$pattern*")
+      'bool'=>array(
+          'must'=>$must,  
+        )
     );
 
-    $searchParams['body']['query']['filtered'] = array(
-        "filter" => $filter,
-        "query" => $query,
-      );
+    $searchParams['body']['query'] = $query;
 
     $result = \Es::search($searchParams);
 
 
     return ($result);
   }
+
 
   /**
   * Get the "mapped" resources - the main bit of the beast...

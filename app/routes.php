@@ -40,15 +40,45 @@ Route::controller('redis', 'RedisController');
  * browse
  * pass int pageSize
  */
+Route::get('/koko', function() {
+  // get/set pageSize
+  $pageSize = Input::get('pageSize', 25);
+  
+  // our query string
+  $query = '';
+
+  // current page (-1)
+  $page = Input::get('page',1)-1;
+
+  // calculate offset
+  $offset = $page*$pageSize;
+
+  // get the data
+  $data = Bentleysoft\ES\Service::test($offset, $pageSize, $query, Input::get('audience','FE'));
+
+  var_dump($data);
+
+});
+
+
+/**
+ * Resources
+ * browse
+ * pass int pageSize
+ */
 Route::get('/resources', function() {
   // get/set pageSize
   $pageSize = Input::get('pageSize', 25);
+  
   // our query string
   $query = Input::get('q', '*');
+
   // current page (-1)
   $page = Input::get('page',1)-1;
+
   // calculate offset
   $offset = $page*$pageSize;
+
   // get the data
   $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query, Input::get('audience','FE'));
 
