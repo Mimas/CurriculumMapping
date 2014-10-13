@@ -7,7 +7,7 @@
         </div>
         @endif
        <h3>Users</h3>
-      <table class="width-100 table-hovered">
+      <table class="width-100 table-hovered table-stripped">
           <thead>
             <tr>
               <th>Email address</th>

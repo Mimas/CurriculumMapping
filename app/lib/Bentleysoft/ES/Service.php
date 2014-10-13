@@ -146,7 +146,7 @@ class Service
 
     $filter = array();
 
-    $filter['prefix'] = array('_id'=>'jorum');
+    $filter['prefix'] = array('_id'=>'ht');
 
     $query = array(
       'wildcard'=>array('summary_title'=>"**")

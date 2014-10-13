@@ -41,15 +41,15 @@ Route::controller('redis', 'RedisController');
  * pass int pageSize
  */
 Route::get('/resources', function() {
-
+  // get/set pageSize
   $pageSize = Input::get('pageSize', 25);
-
+  // our query string
   $query = Input::get('q', '*');
-
+  // current page (-1)
   $page = Input::get('page',1)-1;
-
+  // calculate offset
   $offset = $page*$pageSize;
-
+  // get the data
   $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query, Input::get('audience','FE'));
 
   $resources = Paginator::make($data['hits']['hits'], $data['hits']['total'], $pageSize);
@@ -59,14 +59,20 @@ Route::get('/resources', function() {
     $resources->addQuery('q', $query);
   }
 
+  // custom pagination
   if ($pageSize<>25) {
     $resources->addQuery('pageSize', $pageSize);
   }
-
   $presenter = new Illuminate\Pagination\BootstrapPresenter($resources);
 
-  return View::make('resources')->with(array('data'=>$data, 
-                                             'resources'=>$resources, 
+  // get subjectAreas
+  $subjectAreas = Subjectarea::where('activated','=',1)
+                              ->get();
+
+
+  return View::make('resources')->with(array('data'=>$data,
+                                             'resources'=>$resources,
+                                             'subjectAreas'=>$subjectAreas,
                                              'presenter'=>$presenter,
                                              'pageSize'=>$pageSize,
                                              'total'=>$data['hits']['total'],
@@ -160,18 +166,37 @@ Route::get('/tag', function() {
   // $resource = \Bentleysoft\ES\Service::get('jorum-10949/8919');
 
   $from = 0;
-  $pagesize = 10;
+  $pagesize = 100;
 
   $lds = array();
-
+  /// header('Content-Type: text/csv');
   while (true) {
       $records = \Bentleysoft\ES\Service::orphans($from, $pagesize);
+
       foreach ($records['hits']['hits'] as $document) {
 
+       //  if (isset($document['_source']['audience'] ) && $document['_source']['audience'] =='FE' ) {
+       if (true || strpos($document['_id'],'ht')!=false) {
+          echo "{$document['_id']}";
+          echo " | ";
+          echo "{$document['_source']['summary_title']}";
+          echo "<br/>";
+          /*
+          if (isset($document['_source']['subject']['ldcode'][0] )) {
+            echo "{$document['_source']['subject']['ldcode'][0]}";
+            echo "\t";
+            echo "{$document['_source']['subject']['ld'][0]}";
+          } else {
+            echo "N/A\tN/A";
 
-        if (isset($document['_source']['audience'] ) && $document['_source']['audience'][0] =='FE') {
-          $ldSubject = array();
+          }
+          echo "\n";
+          */
 
+
+
+          /// $ldSubject = array();
+          /*
           if (isset($document['_source']['collection'][0]['name_for_debug'] )) {
             $ldName = \Bentleysoft\ES\Service::getCorrectLdFromWrongJorumLd($document['_source']['collection'][0]['name_for_debug']);
             $ldCode = \Bentleysoft\ES\Service::getLdCodeFromLabel($ldName);
@@ -190,12 +215,12 @@ Route::get('/tag', function() {
             );
 
           }
-
+          */
           $params = array(
             'id'=>$document['_id'],
             'type'=>$document['_type'],
             'index'=>'ciim',
-            'body'=>array('doc'=>array('subject'=>$ldSubject,
+            'body'=>array('doc'=>array('audience'=>array('FE'),
               'admin'=>array('processed'=>time()*1000),
             )
             ),
@@ -207,8 +232,7 @@ Route::get('/tag', function() {
             $response = \Es::update($params);
             var_dump($response);
 
-          } catch (Exception $e)
-          {
+          } catch (Exception $e) {
             echo  "Not done {$document['_id']}<br/>";
           }
 
@@ -469,8 +493,8 @@ Route::delete('/qualification/{id?}', function($id)
 
 });
 
-
 /**************************************************** Subject areas *************************************************/
+
 Route::post('/subject/{id?}', function($id = '')
 {
   $id = Input::get('id', -1);
@@ -482,7 +506,7 @@ Route::post('/subject/{id?}', function($id = '')
   if (! ($subject ) ) {
     $subject = new Subjectarea;
   }
-  $subject->ldsc_desc = Input::get('ldsc_desc');
+  $subject->subject = Input::get('subject');
   $subject->stuff = Input::get('stuff');
 
   // try save
@@ -504,6 +528,28 @@ Route::get('/subject/{id?}', function($id = '')
   return View::make('subject')->with( array('data'=>$subject, 'status'=>array()));
 });
 
+/**
+ * Handle toggle ON/OFF PUT requests for Subjects....
+ */
+Route::put('/subject/toggle/{id?}', function($id='') {
+  try {
+    $id = intVal($id);
+
+    $subject = Subjectarea::find($id);
+
+    $subject->activated = !$subject->activated;
+
+    if ($subject->save()) {
+      return Redirect::to('subjectareas');
+    } else {
+      throw new Exception('Activated flag for user could not be updated...');
+    }
+  } catch (Exception $e) {
+    throw new Exception('Activated flag for user could not be updated.');
+  }
+  return Redirect::to('subjectareas');
+});
+
 /*** Subject areas */
 Route::get('/subjectareas', function()
 {    
@@ -512,11 +558,8 @@ Route::get('/subjectareas', function()
     $selectedLevels = Input::get('levels', array(1,2));
     $pageSize = Input::get('pageSize', 10);
 
-    $maxDepth = DB::table('subjectareas_view')->max('depth');
-
-    $subjectAreas = SubjectareaView::where('ldsc_desc', 'LIKE', "%$q%")
-                                    ->whereIn('depth', $selectedLevels)
-                                    ->orderBy('ldsc_code')
+    $subjectAreas = SubjectareaView::where('subject', 'LIKE', "%$q%")
+                                    ->orderBy('subject')
                                     ->paginate($pageSize);
 
     $paginator = Paginator::make($subjectAreas->getItems(), $subjectAreas->getTotal(), $pageSize);
@@ -532,11 +575,9 @@ Route::get('/subjectareas', function()
     $paginator->addQuery('levels', $selectedLevels);
 
     return View::make('subjectareas')->with( array('data'=>$subjectAreas,
-                                                   'maxDepth'=>$maxDepth,
                                                    'pageSize'=>$pageSize,
                                                    'total'=>$subjectAreas->getTotal(),
                                                    'page'=>$paginator->getCurrentPage(),
-                                                   'selectedLevels'=>$selectedLevels,
                                                    'paginator'=>$paginator));
 });
 

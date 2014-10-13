@@ -15,17 +15,17 @@
         <div class="units-row">
             <div class="unit-50">
               <ul class="blocks-3">
-            <?php
-            foreach ($qualifiers as $i=>$qualifier) {
+              <?php
+              foreach ($qualifiers as $i=>$qualifier) {
+                ?>
+                <li>{{$qualifier->short_name}} <input class="autosubmit" style="display: inline; "
+                    type="checkbox" name="selectedqualifications[]" <?php if ( in_array($qualifier->id, $selectedQualifications)) echo ' checked ' ?>
+                    value="{{$qualifier->id}}" />
+                </li>
+              <?php
+                }
               ?>
-              <li>{{$qualifier->short_name}} <input class="autosubmit" style="display: inline; "
-                  type="checkbox" name="selectedqualifications[]" <?php if ( in_array($qualifier->id, $selectedQualifications)) echo ' checked ' ?> 
-                  value="{{$qualifier->id}}" />
-              </li>
-            <?php
-              }
-            ?>
-
+              </ul>
             </div>
             <div class="unit-40">
               <div class="text-right" style="float: right;">
@@ -41,7 +41,7 @@
   <div class="error row-fluid">
   </div>
   @endif
-  <table class="width-90 table-hovered">
+  <table class="width-90 table-hovered table-stripped">
     <?php foreach ($data as $row): ?>
       <tr>
         <td class="width-20">
@@ -60,7 +60,7 @@
       </tr>
     <?php endforeach; ?>
     <tr>
-      <td colspan="2">
+      <td colspan="3">
         <?php echo $paginator->links(); ?>
       </td>
       <td class="text-right">

@@ -20,7 +20,7 @@
       display: block;
     }
 	</style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<link rel="stylesheet" href="<?php echo asset('3rdparty/kube/css/kube.css'); ?>">
 	<link rel="stylesheet" href="<?php echo asset('3rdparty/font-awesome/css/font-awesome.min.css'); ?>">
     <?php
@@ -40,7 +40,7 @@
                 <div class="unit-100">
                     <label for="subject_area">
                         Subject area<br/>
-                        <textarea class="width-100" rows="5" id="area" name="area">{{$data->area}}</textarea>
+                        <textarea class="width-100" rows="5" id="subject" name="subject">{{$data->subject}}</textarea>
                         <input type="hidden" name="id" value="<?php echo $data->id; ?>"
                     </label>
                     <label for="extras">

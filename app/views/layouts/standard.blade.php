@@ -130,6 +130,9 @@
                   <?php if (Bentleysoft\Helper::userHasAccess(array('resource.manage'))): ?>
                     <li><a href="/resources">Resources</a></li>
                   <?php endif; ?>
+                  <?php if (Bentleysoft\Helper::userHasAccess(array('subjectareas.manage')) || Bentleysoft\Helper::userHasAccess(array('subjectareas.admin')) ): ?>
+                    <li><a href="/subjectareas">Subjects</a></li>
+                  <?php endif; ?>
 
                   <?php if (Bentleysoft\Helper::userHasAccess(array('subjectareas.admin'))): ?>
                     <li><a href="/ldcs">LDCS</a></li>

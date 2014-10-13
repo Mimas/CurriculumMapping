@@ -19,10 +19,18 @@
             </div>
         </div>
         <div class="units-row">
-            <div class="unit-50">
-              &nbsp;&nbsp;&nbsp;
+            <div class="unit-60">
+              <ul class="blocks-3">
+                <?php
+                 foreach ($subjectAreas as $subjectArea) {
+                  ?>
+                  <li>{{$subjectArea->subject}} <input class="autosubmit" type="checkbox" name="areas[]" <?php if ( in_array($subjectArea->id, [0])) echo ' checked ' ?> value="{{$subjectArea->id}}" /></li>
+                <?php
+                }
+                ?>
+              </ul>
             </div>
-            <div class="unit-40">
+            <div class="unit-30">
               <div class="text-right pager" style="float: right;">
               <span class="total">{{$total}}</span> Resources, page {{$page}} of {{ $resources->getLastPage() }}</span>&nbsp;&nbsp;|&nbsp;&nbsp;
               {{ Form::select('pageSize', \Bentleysoft\Helper::pageSizes(), $pageSize, array('class' => 'autoselect inliner')); }}
@@ -30,41 +38,38 @@
             </div>
         </div>
     </form>
-    <div style="margin-top: 22px;">    
-      <?php
-      foreach ($data['hits']['hits'] as $row) {
-          ?>
-          <div class="units-row">
-              <div class="unit-40">
-                <a href="/view/<?php echo $row['_source']['admin']['uid']; ?>">{{ $row['_source']['summary_title'] }}</a>
-              </div>
-              <div class="unit-10">
-                  {{ $row['_source']['admin']['source'] }}
-              </div>
-            <div class="unit-10">
-              {{ $row['_source']['audience'][0] or '&nbsp;' }}
-            </div>
-              <div class="unit-20">
-                  {{ $row['_type'] }} <?php // echo date('Y-m-d H:i:s', $row['_source']['admin']['processed']/1000); ?>
-              </div>
-              <div class="unit-20">
-                <?php
-                if (isset($row['_source']['edited'])) {
+    <div style="margin-top: -26px;" class="units-row">
+      <div class="unit-90">
+        <table class="table-hovered table-stripped">
+        <?php
+        foreach ($data['hits']['hits'] as $row) {
+        ?>
+          <tr>
+            <td class="width-50"><a href="/view/<?php echo $row['_source']['admin']['uid']; ?>">{{ $row['_source']['summary_title'] }}</a></td>
+            <td>{{ $row['_source']['admin']['source'] }}</td>
+            <td>{{ $row['_source']['audience'][0] or '&nbsp'; }}</td>
+            <td>{{ $row['_source']['subject']['ldcode'][0] or 'U' }}</td>
+            <td>{{ $row['_type'] }} <?php // echo date('Y-m-d H:i:s', $row['_source']['admin']['processed']/1000); ?></td>
+            <td>
+              <?php
+              if (isset($row['_source']['edited'])) {
                 ?>
-                  <a href="/edit/<?php echo $row['_source']['admin']['uid']; ?>" class="iframe btn btn-small">Edit&nbsp;<i class="fa fa-cog"></i></a>
-                <?php
-                } else {
+                <a href="/edit/<?php echo $row['_source']['admin']['uid']; ?>" class="iframe btn btn-small">Edit&nbsp;<i class="fa fa-cog"></i></a>
+              <?php
+              } else {
                 ?>
-                  <a href="/edit/<?php echo $row['_source']['admin']['uid']; ?>" class="iframe btn btn-small btn-blue">Edit&nbsp;<i class="fa fa-cog"></i></a>
-                <?php
-                }
-                ?>
-              </div>
-          </div>
-       <?php
-      }
-      ?>
-    </div>
+                <a href="/edit/<?php echo $row['_source']['admin']['uid']; ?>" class="iframe btn btn-small btn-blue">Edit&nbsp;<i class="fa fa-cog"></i></a>
+              <?php
+              }
+              ?>
+            </td>
+          </tr>
+        <?php
+        }
+        ?>
+        </table>
+      </div>
+     </div>
      <div class="units-row">
         <div class="unit-20"><br/></div>
         <div class="unit-60 text-centered">
