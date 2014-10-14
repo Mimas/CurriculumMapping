@@ -183,8 +183,8 @@ Route::get('/test', function() {
 
 });
 
-Route::get('/pako', function() {
-  \Bentleysoft\ES\Service::codeH();
+Route::get('/getuser', function() {
+  var_dump(Sentry::getUser());
 });
 
 

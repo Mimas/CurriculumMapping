@@ -84,6 +84,7 @@ class AdminController extends BaseController {
    * Handle POST requests for setting User permissions
    *
    * @param $id
+   * @return \Illuminate\View\View
    * @throws Exception
    */
   public function postPermissions($id = -1) {
@@ -145,7 +146,26 @@ class AdminController extends BaseController {
       $user = new User;
     }
 
-    $output = View::make('edituser', array('lang'=>$this->lang, 'user'=>$user ));
+
+    // $userSubjects =
+
+    $subjectAreas = SubjectareaView::where('id','>',0)
+                                   ->orderBy('subject')
+                                   ->get();
+
+    $userSubjectsRecs = UserSubjectareas::where('users_id','=',intval($id))->get();
+
+    $userSubjects = array();
+
+    foreach ($userSubjectsRecs as $us) {
+      $userSubjects[] = $us->subjectareas_id;
+    }
+
+    $output = View::make('edituser', array('lang'=>$this->lang,
+                                            'user'=>$user,
+                                            'subjectAreas'=>$subjectAreas,
+                                            'userSubjects'=>$userSubjects,
+                                           ));
 
     return $output;
   }
@@ -201,8 +221,22 @@ class AdminController extends BaseController {
       } catch (Exception $e) {
         throw new Exception('User could not be updated.');
       }
+
+      // expand pls
+      DB::transaction(function() use ($user)
+      {
+        DB::table('users_subjectareas')->where('users_id', $user->getId())->delete();
+
+        foreach (Input::get('area') as $i=>$areaId) {
+          $id = DB::table('users_subjectareas')->insertGetId(
+            array('users_id' =>$user->id, 'subjectareas_id' => $areaId));
+        }
+      });
+
     }
-    return Redirect::to('admin/users');
+
+
+    return Redirect::to('admin/user/'.$user->getId().'/edit');
 
   }
 

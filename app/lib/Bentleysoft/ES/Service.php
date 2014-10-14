@@ -82,7 +82,7 @@ $searchParams['index'] = 'ciim';
     $filter = array();
 
     $must = array();
-    $must[] = array("query_string"=>array("query"=>'Graduated'));
+    $must[] = array("query_string"=>array("query"=>$pattern));
     $must[] = array( 'terms'=>array('audience'=>array('FE')) );
 
     // THIS HALF WORKS
