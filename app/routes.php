@@ -72,6 +72,9 @@ Route::get('/resources', function() {
   
   // our query string
   $query = Input::get('q', '*');
+  if ($query=='') {
+    $query = '*';
+  }
 
   // current page (-1)
   $page = Input::get('page',1)-1;
@@ -79,8 +82,26 @@ Route::get('/resources', function() {
   // calculate offset
   $offset = $page*$pageSize;
 
+  // get subjectAreas
+  $subjectAreas = Subjectarea::where('activated','=',1)
+    ->get();
+
+
+  $selectedAreas = Input::get('areas', array());
+
+
+  /**
+   * Set the user's initial checkboxes to whatever they are set as in the User panel
+   * but only if the user is not an app admin (i.e. "superuser")
+   */
+  if (empty($selectedAreas) && ! \Bentleysoft\Helper::userHasAccess(array('application.admin'))) {
+    $selectedAreas = \Bentleysoft\Helper::getUserSubjectAreas();
+  } else {
+
+  }
+
   // get the data
-  $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query, Input::get('audience','FE'));
+  $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query, Input::get('audience','FE'), $selectedAreas);
 
   $resources = Paginator::make($data['hits']['hits'], $data['hits']['total'], $pageSize);
 
@@ -95,15 +116,12 @@ Route::get('/resources', function() {
   }
   $presenter = new Illuminate\Pagination\BootstrapPresenter($resources);
 
-  // get subjectAreas
-  $subjectAreas = Subjectarea::where('activated','=',1)
-                              ->get();
-
 
   return View::make('resources')->with(array('data'=>$data,
                                              'resources'=>$resources,
-                                             'subjectAreas'=>$subjectAreas,
                                              'presenter'=>$presenter,
+                                             'subjectAreas'=>$subjectAreas,
+                                             'selectedAreas'=>$selectedAreas,
                                              'pageSize'=>$pageSize,
                                              'total'=>$data['hits']['total'],
                                              'page'=>$page+1,
@@ -131,9 +149,35 @@ Route::get('/mapped', function() {
     $resources->addQuery('q', $query);
   }
 
+  // get subjectAreas
+  $subjectAreas = Subjectarea::where('activated','=',1)
+    ->get();
+
+
+  $selectedAreas = Input::get('areas', array());
+
+
+  /**
+   * Set the user's initial checkboxes to whatever they are set as in the User panel
+   * but only if the user is not an app admin (i.e. "superuser")
+   */
+  if (empty($selectedAreas) && ! \Bentleysoft\Helper::userHasAccess(array('application.admin'))) {
+    $selectedAreas = \Bentleysoft\Helper::getUserSubjectAreas();
+  } else {
+
+  }
+
   $presenter = new Illuminate\Pagination\BootstrapPresenter($resources);
 
-  return View::make('resources')->with(array('data'=>$data, 'resources'=>$resources, 'presenter'=>$presenter));
+  return View::make('resources')->with(array('data'=>$data,
+    'resources'=>$resources,
+    'presenter'=>$presenter,
+    'subjectAreas'=>$subjectAreas,
+    'selectedAreas'=>$selectedAreas,
+    'pageSize'=>$pageSize,
+    'total'=>$data['hits']['total'],
+    'page'=>$page+1,
+  ));
 
 });
 

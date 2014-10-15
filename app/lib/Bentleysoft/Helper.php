@@ -20,6 +20,7 @@ class Helper {
    * Method to check if a user has permissions for a specific operation
    * @param array $rights
    * @param $id
+   * @throws \Exception
    * @return bool
    */
 	public static function userHasAccess(array $rights, $id = -1) {
@@ -29,7 +30,7 @@ class Helper {
 
 		if (! \Sentry::check()) {
 			// TODO: Throw Exception
-			return $ret;
+      throw new \Exception("Not authorised");
 		} else {
 			try {
 
@@ -59,6 +60,44 @@ class Helper {
 			return false;
 		}
 	}
+
+  /**
+   * Get user's subject areas
+   * If a user is not specified then get the current one's
+   * @param int $id | null
+   * @throws \Exception
+   * @return array
+   */
+  public static function getUserSubjectAreas($id=-1) {
+    if ($id<0) {
+      if (! \Sentry::check()) {
+        // TODO: Throw Exception
+        throw new \Exception("Not authorised");
+      } else {
+        try {
+          if ($id == -1) {  // the current user
+            $user = \Sentry::getUser();
+            $id = $user->getId();
+          }
+        } catch (Exception $e) {
+          // TODO: Make use of Sentry specific exceptions?!
+          return false;
+        }
+      }
+    }
+
+    $userSubjectsRecs = \UserSubjectareas::where('users_id','=',intval($id))->get();
+
+    $userSubjects = array();
+
+    foreach ($userSubjectsRecs as $us) {
+      $userSubjects[] = $us->subjectareas_id;
+    }
+    return $userSubjects;
+  }
+
+
+
 
 	/**
 	 * Create a temporary file with a unique random name, write to it and return the filename

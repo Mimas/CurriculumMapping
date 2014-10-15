@@ -6,6 +6,9 @@
     position: relative !important;
     left: 20px;
   }
+  .tight {
+    margin-bottom: -5px !important;
+  }
 </style>
     <form method="get" action="<?php echo asset(Request::path()); ?>" class="forms search">
         <div class="units-row top44">
@@ -22,9 +25,15 @@
             <div class="unit-60">
               <ul class="blocks-3">
                 <?php
-                 foreach ($subjectAreas as $subjectArea) {
+                 foreach ($subjectAreas as $area) {
                   ?>
-                  <li>{{$subjectArea->subject}} <input class="autosubmit" type="checkbox" name="areas[]" <?php if ( in_array($subjectArea->id, [0])) echo ' checked ' ?> value="{{$subjectArea->id}}" /></li>
+                   <li class="tight"><label>{{$area->subject}}
+                       <input class="autosubmit"
+                          type="checkbox" name="areas[]" id="area_{{$area->id}}" value="{{$area->id}}"
+                         <?php if( in_array($area->id, $selectedAreas)) echo 'checked="yes";'  ?>
+                       />
+                       </label>
+                   </li>
                 <?php
                 }
                 ?>

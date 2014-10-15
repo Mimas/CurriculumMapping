@@ -17,7 +17,8 @@
             margin-bottom: 7px !important;
         }
         label {
-            display: block;
+          display: block;
+          font-weight: 900;
         }
       .jisc {
         color: #ea6000;
@@ -26,9 +27,14 @@
       .norman {
         display: inline !important;
       }
+    .breathe {
+      margin-top: 12px;
+    }
 	</style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-	<link rel="stylesheet" href="<?php echo asset('3rdparty/kube/css/kube.css'); ?>">
+  <link rel="stylesheet" href="<?php echo asset('3rdparty/jquery'); ?>/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+  	<link rel="stylesheet" href="<?php echo asset('3rdparty/kube/css/kube.css'); ?>">
 	<link rel="stylesheet" href="<?php echo asset('3rdparty/font-awesome/css/font-awesome.min.css'); ?>">
     <?php
     if (isset($status['close'])) {
@@ -36,10 +42,16 @@
     <script>
         parent.location.reload();
         parent.$.fn.colorbox.close();
+
     </script>
     <?php
     }
     ?>
+    <script>
+      $(function() {
+        $( "#radio" ).buttonset();
+      });
+    </script>
 </head>
 <body>
    <form method="post" action="<?php echo asset('edit'); ?>" class="forms">
@@ -48,7 +60,11 @@
                 <div class="unit-100">
                     <h2 class="norman">Resource Editor - </h2><h2 class="jisc">{{$resource['_source']['summary_title'] or '' }}</h2>
                 </div>
-                <div class="unit-100">
+                <div class="unit-100 breathe">
+                    <label for="currency">
+                        Currency<br/>
+                        <textarea class="width-100" rows="5" id="currency" name="currency">{{$data->currency}}</textarea>
+                    </label>
                     <label for="subject_area">
                         Subject area<br/>
                         <textarea class="width-100" rows="5" id="subject_area" name="subject_area">{{$data->subject_area}}</textarea>
@@ -56,12 +72,17 @@
                         <input type="hidden" name="uuid" value="<?php echo $data->uuid; ?>"
                     </label>
                     <label for="content_usage">
-                        Content usage<br/>
+                        How would you use this content<br/>
                         <textarea class="width-100" rows="5" id="content_usage" name="content_usage">{{$data->content_usage}}</textarea>
                     </label>
                     <label for="level">
-                        Level
-                        <textarea class="width-100" rows="3" id="level" name="level">{{$data->level}}</textarea>
+                        Qualification Levels<p/>
+                        <div id="radio">
+                          <input type="radio" id="radio1" name="radio"><label for="radio1">SCQF 3</label>
+                          <input type="radio" id="radio2" name="radio"><label for="radio2">SCQF 4</label>
+                          <input type="radio" id="radio3" name="radio"><label for="radio3">SCQF 5</label>
+                        </div>
+
                     </label>
                 </div>
                 <div class="unit-100 text-right">

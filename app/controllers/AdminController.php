@@ -153,13 +153,7 @@ class AdminController extends BaseController {
                                    ->orderBy('subject')
                                    ->get();
 
-    $userSubjectsRecs = UserSubjectareas::where('users_id','=',intval($id))->get();
-
-    $userSubjects = array();
-
-    foreach ($userSubjectsRecs as $us) {
-      $userSubjects[] = $us->subjectareas_id;
-    }
+    $userSubjects = self::getUserSubjectAreas($id);
 
     $output = View::make('edituser', array('lang'=>$this->lang,
                                             'user'=>$user,
@@ -169,6 +163,23 @@ class AdminController extends BaseController {
 
     return $output;
   }
+
+  /**
+   * Get user's subject areas like
+   * @param int $id | null
+   * @return array
+   */
+  public static function getUserSubjectAreas($id=0) {
+    $userSubjectsRecs = UserSubjectareas::where('users_id','=',intval($id))->get();
+
+    $userSubjects = array();
+
+    foreach ($userSubjectsRecs as $us) {
+      $userSubjects[] = $us->subjectareas_id;
+    }
+    return $userSubjects;
+  }
+
 
   /**
   * @TODO: Adapt validation to mode (edit/add);

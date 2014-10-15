@@ -15,12 +15,13 @@ class Service
    * @param int $size
    * @param string $pattern
    * @param array|string $audience
+   * @param array $areas
    * @internal param int $sice
    * @return mixed
    */
-  public static function browse($from = 0, $size = 20, $pattern = '*', $audience='FE')
+  public static function browse($from = 0, $size = 20, $pattern = '*', $audience='FE', $areas = array())
   {
-$searchParams['index'] = 'ciim';
+    $searchParams['index'] = 'ciim';
 
     $searchParams['size'] = $size;
     $searchParams['from'] = $from;
@@ -36,9 +37,27 @@ $searchParams['index'] = 'ciim';
 
     $filter = array();
 
+
+
+
     $must = array();
     $must[] = array("query_string"=>array("query"=>"$pattern"));
-    $must[] = array( 'terms'=>array('audience'=>array('FE')) );
+
+    $extraTerms = array();
+
+    if (! empty($areas)) {
+      $extraTerms = self::getLdCodesForSubjects($areas);
+
+      $must[] = array( 'terms'=>array(
+                          'audience'=>array('FE'),
+                          'subject.ldcode'=>$extraTerms,
+                        )
+                      );
+    } else {
+      $must[] = array( 'terms'=>array('audience'=>array('FE')) );
+    }
+
+
 
     // THIS HALF WORKS
     $query = array(
@@ -199,6 +218,29 @@ $searchParams['index'] = 'ciim';
     return ($result);
   }
 
+  /**
+   * Return an array of LD codes groupped under the subjectId
+   * Petros Diveris, Oct 14/14
+   * Important: They need to be lowercase due to the tokenizer used
+   *
+   * @param array $subjectIds
+   * @throws \Exception
+   * @return array
+   */
+  public static function getLdCodesForSubjects($subjectIds = array()) {
+    $ret = array();
+    foreach ($subjectIds as $i=>$sid) {
+      $s2ls = \SubjectareasLdcs::where('subjectarea_id','=',$sid)->get();
+      foreach ($s2ls as $s2l) {
+        $learnDirect = \Ldcs::find($s2l->ldcs_id);
+        if (!$learnDirect) {
+          throw new \Exception("Strange inability to find ldcs for id {$sld->ldcs_id} ");
+        }
+        $ret[] = strtolower($learnDirect->ldsc_code);
+      }
+    }
+    return $ret;
+  }
 
   /**
    * Map the semi-wrong (approximate) LD label from Jorum to the correct one
