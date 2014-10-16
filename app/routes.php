@@ -11,7 +11,7 @@
 */
 
 Route::when('admin*', 'admin');
-Route::filter('admin', function() {
+Route::filter('admin', function () {
   if (!Bentleysoft\Helper::userHasAccess(array('application.admin'))) {
     return \Illuminate\Support\Facades\Redirect::to('/login');
   }
@@ -21,15 +21,14 @@ Route::filter('admin', function() {
 Route::controller('admin', 'AdminController');
 
 Route::when('redis*', 'redis');
-Route::filter('redis', function()
-{
-    if (! Bentleysoft\Helper::userHasAccess(array('redis.admin'))) {
-        // \Illuminate\Support\Facades\Redirect::to('login');
-        return \Illuminate\Support\Facades\Redirect::to('/login');
-    }
+Route::filter('redis', function () {
+  if (!Bentleysoft\Helper::userHasAccess(array('redis.admin'))) {
+    // \Illuminate\Support\Facades\Redirect::to('login');
+    return \Illuminate\Support\Facades\Redirect::to('/login');
+  }
   return;
 });
- 
+
 /**
  * Redis stuff
  */
@@ -40,21 +39,21 @@ Route::controller('redis', 'RedisController');
  * browse
  * pass int pageSize
  */
-Route::get('/koko', function() {
+Route::get('/koko', function () {
   // get/set pageSize
   $pageSize = Input::get('pageSize', 25);
-  
+
   // our query string
   $query = '';
 
   // current page (-1)
-  $page = Input::get('page',1)-1;
+  $page = Input::get('page', 1) - 1;
 
   // calculate offset
-  $offset = $page*$pageSize;
+  $offset = $page * $pageSize;
 
   // get the data
-  $data = Bentleysoft\ES\Service::test($offset, $pageSize, $query, Input::get('audience','FE'));
+  $data = Bentleysoft\ES\Service::test($offset, $pageSize, $query, Input::get('audience', 'FE'));
 
   var_dump($data);
 
@@ -66,24 +65,24 @@ Route::get('/koko', function() {
  * browse
  * pass int pageSize
  */
-Route::get('/resources', function() {
+Route::get('/resources', function () {
   // get/set pageSize
   $pageSize = Input::get('pageSize', 25);
-  
+
   // our query string
   $query = Input::get('q', '*');
-  if ($query=='') {
+  if ($query == '') {
     $query = '*';
   }
 
   // current page (-1)
-  $page = Input::get('page',1)-1;
+  $page = Input::get('page', 1) - 1;
 
   // calculate offset
-  $offset = $page*$pageSize;
+  $offset = $page * $pageSize;
 
   // get subjectAreas
-  $subjectAreas = Subjectarea::where('activated','=',1)
+  $subjectAreas = Subjectarea::where('activated', '=', 1)
     ->get();
 
 
@@ -93,63 +92,63 @@ Route::get('/resources', function() {
    * Set the user's initial checkboxes to whatever they are set as in the User panel
    * but only if the user is not an app admin (i.e. "superuser")
    */
-  if (empty($selectedAreas) && ! \Bentleysoft\Helper::userHasAccess(array('application.admin'))) {
+  if (empty($selectedAreas) && !\Bentleysoft\Helper::userHasAccess(array('application.admin'))) {
     $selectedAreas = \Bentleysoft\Helper::getUserSubjectAreas();
   } else {
 
   }
 
   // get the data
-  $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query, Input::get('audience','FE'), $selectedAreas);
+  $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query, Input::get('audience', 'FE'), $selectedAreas);
 
   $resources = Paginator::make($data['hits']['hits'], $data['hits']['total'], $pageSize);
 
   // add any query string..
-  if ($query<>'*') {
+  if ($query <> '*') {
     $resources->addQuery('q', $query);
   }
 
   // custom pagination
-  if ($pageSize<>25) {
+  if ($pageSize <> 25) {
     $resources->addQuery('pageSize', $pageSize);
   }
   $presenter = new Illuminate\Pagination\BootstrapPresenter($resources);
 
 
-  return View::make('resources')->with( array('data'=>$data,
-                                              'resources'=>$resources,
-                                              'presenter'=>$presenter,
-                                              'subjectAreas'=>$subjectAreas,
-                                              'selectedAreas'=>$selectedAreas,
-                                              'pageSize'=>$pageSize,
-                                              'total'=>$data['hits']['total'],
-                                              'page'=>$page+1,
-                                             ));
+  return View::make('resources')->with(array('data' => $data,
+    'resources' => $resources,
+    'presenter' => $presenter,
+    'subjectAreas' => $subjectAreas,
+    'selectedAreas' => $selectedAreas,
+    'pageSize' => $pageSize,
+    'total' => $data['hits']['total'],
+    'page' => $page + 1,
+  ));
 
 });
 
 /**
  * Resources
  */
-Route::get('/mapped', function() {
+Route::get('/mapped', function () {
   $pageSize = 20;
   $query = Input::get('q', '*');
 
-  $page = Input::get('page',1)-1;
+  $page = Input::get('page', 1) - 1;
 
-  $offset = $page*$pageSize;
+  $offset = $page * $pageSize;
 
   $data = Bentleysoft\ES\Service::mapped($offset, $pageSize, $query);
 
   $resources = Paginator::make($data['hits']['hits'], $data['hits']['total'], 20);
 
   // add any query string..
-  if ($query<>'*') {
+  if ($query <> '*') {
     $resources->addQuery('q', $query);
   }
 
   // get subjectAreas
-  $subjectAreas = Subjectarea::where('activated','=',1)
+  $subjectAreas = Subjectarea::where('activated', '=', 1)
     ->get();
 
 
@@ -160,7 +159,7 @@ Route::get('/mapped', function() {
    * Set the user's initial checkboxes to whatever they are set as in the User panel
    * but only if the user is not an app admin (i.e. "superuser")
    */
-  if (empty($selectedAreas) && ! \Bentleysoft\Helper::userHasAccess(array('application.admin'))) {
+  if (empty($selectedAreas) && !\Bentleysoft\Helper::userHasAccess(array('application.admin'))) {
     $selectedAreas = \Bentleysoft\Helper::getUserSubjectAreas();
   } else {
 
@@ -168,14 +167,14 @@ Route::get('/mapped', function() {
 
   $presenter = new Illuminate\Pagination\BootstrapPresenter($resources);
 
-  return View::make('resources')->with(array('data'=>$data,
-    'resources'=>$resources,
-    'presenter'=>$presenter,
-    'subjectAreas'=>$subjectAreas,
-    'selectedAreas'=>$selectedAreas,
-    'pageSize'=>$pageSize,
-    'total'=>$data['hits']['total'],
-    'page'=>$page+1,
+  return View::make('resources')->with(array('data' => $data,
+    'resources' => $resources,
+    'presenter' => $presenter,
+    'subjectAreas' => $subjectAreas,
+    'selectedAreas' => $selectedAreas,
+    'pageSize' => $pageSize,
+    'total' => $data['hits']['total'],
+    'page' => $page + 1,
   ));
 
 });
@@ -185,39 +184,38 @@ Route::get('/mapped', function() {
  * The Dashboard
  * TODO: Think what kind of Dashboard diferrent people get - or is it the same for all?
  */
-Route::get('/', function()
-{
+Route::get('/', function () {
   $pageSize = 20;
 
   $query = Input::get('q', '*');
-  $page = Input::get('page',1)-1;
+  $page = Input::get('page', 1) - 1;
 
-  $offset = $page*$pageSize;
+  $offset = $page * $pageSize;
 
-  $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query, \Illuminate\Support\Facades\Input::get('audience','FE'));
+  $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query, \Illuminate\Support\Facades\Input::get('audience', 'FE'));
 
   //  $resources = Paginator::make($data['hits']['hits'], $data['hits']['total'], 20);
 
-  $mapped = Mapping::where('id','>', 0)->get()->count();
+  $mapped = Mapping::where('id', '>', 0)->get()->count();
 
-  return \Illuminate\Support\Facades\View::make('dashboard')->with(array('total'=>$data['hits']['total'], 'mapped'=>$mapped ) );
+  return \Illuminate\Support\Facades\View::make('dashboard')->with(array('total' => $data['hits']['total'], 'mapped' => $mapped));
 });
 
 /**
  * Testbench method to add an attribute (is this the terminology?)
  * to the document - the famous edited flag
  */
-Route::get('/test', function() {
- // $resource = \Bentleysoft\ES\Service::get('jorum-10949/8919');
+Route::get('/test', function () {
+  // $resource = \Bentleysoft\ES\Service::get('jorum-10949/8919');
 
   // $body = \Es::getSource()
   $params = array(
-    'id'=>'jorum-10949/8914',
-    'type'=>'learning resource',
-    'index'=>'ciim',
-    'body'=>array('doc'=>array('edited'=>'yes',
-                                'admin'=>array('processed'=>time()*1000),
-                               )
+    'id' => 'jorum-10949/8914',
+    'type' => 'learning resource',
+    'index' => 'ciim',
+    'body' => array('doc' => array('edited' => 'yes',
+      'admin' => array('processed' => time() * 1000),
+    )
     ),
 
   );
@@ -226,7 +224,7 @@ Route::get('/test', function() {
 
 });
 
-Route::get('/getuser', function() {
+Route::get('/getuser', function () {
   var_dump(Sentry::getUser());
 });
 
@@ -235,7 +233,7 @@ Route::get('/getuser', function() {
  * TAG HT as 'FE'
  * and other tasks (meta)
  */
-Route::get('/tag', function() {
+Route::get('/tag', function () {
   // $resource = \Bentleysoft\ES\Service::get('jorum-10949/8919');
 
   $from = 0;
@@ -244,83 +242,80 @@ Route::get('/tag', function() {
   $lds = array();
   /// header('Content-Type: text/csv');
   while (true) {
-      $records = \Bentleysoft\ES\Service::orphans($from, $pagesize);
+    $records = \Bentleysoft\ES\Service::orphans($from, $pagesize);
 
-      foreach ($records['hits']['hits'] as $document) {
+    foreach ($records['hits']['hits'] as $document) {
 
-       //  if (isset($document['_source']['audience'] ) && $document['_source']['audience'] =='FE' ) {
-       if (true || strpos($document['_id'],'ht')!=false) {
-          echo "{$document['_id']}";
-          echo " | ";
-          echo "{$document['_source']['summary_title']}";
-          echo "<br/>";
-          /*
-          if (isset($document['_source']['subject']['ldcode'][0] )) {
-            echo "{$document['_source']['subject']['ldcode'][0]}";
-            echo "\t";
-            echo "{$document['_source']['subject']['ld'][0]}";
-          } else {
-            echo "N/A\tN/A";
-
-          }
-          echo "\n";
-          */
-
-
-
-          /// $ldSubject = array();
-          /*
-          if (isset($document['_source']['collection'][0]['name_for_debug'] )) {
-            $ldName = \Bentleysoft\ES\Service::getCorrectLdFromWrongJorumLd($document['_source']['collection'][0]['name_for_debug']);
-            $ldCode = \Bentleysoft\ES\Service::getLdCodeFromLabel($ldName);
-
-            $ldSubject = array(
-              'ld'=>array($ldName),
-              'ldcode'=>array($ldCode),
-              'lddebug'=>$ldCode,
-            );
-
-          } else {
-            $ldSubject = array(
-              'ld'=>'Unknown',
-              'ldcode'=>'U',
-              'lddebug'=>'Z',
-            );
-
-          }
-          */
-          $params = array(
-            'id'=>$document['_id'],
-            'type'=>$document['_type'],
-            'index'=>'ciim',
-            'body'=>array('doc'=>array('audience'=>array('FE'),
-              'admin'=>array('processed'=>time()*1000),
-            )
-            ),
-
-          );
-
-          try
-          {
-            $response = \Es::update($params);
-            var_dump($response);
-
-          } catch (Exception $e) {
-            echo  "Not done {$document['_id']}<br/>";
-          }
-
+      //  if (isset($document['_source']['audience'] ) && $document['_source']['audience'] =='FE' ) {
+      if (true || strpos($document['_id'], 'ht') != false) {
+        echo "{$document['_id']}";
+        echo " | ";
+        echo "{$document['_source']['summary_title']}";
+        echo "<br/>";
+        /*
+        if (isset($document['_source']['subject']['ldcode'][0] )) {
+          echo "{$document['_source']['subject']['ldcode'][0]}";
+          echo "\t";
+          echo "{$document['_source']['subject']['ld'][0]}";
+        } else {
+          echo "N/A\tN/A";
 
         }
+        echo "\n";
+        */
+
+
+        /// $ldSubject = array();
+        /*
+        if (isset($document['_source']['collection'][0]['name_for_debug'] )) {
+          $ldName = \Bentleysoft\ES\Service::getCorrectLdFromWrongJorumLd($document['_source']['collection'][0]['name_for_debug']);
+          $ldCode = \Bentleysoft\ES\Service::getLdCodeFromLabel($ldName);
+
+          $ldSubject = array(
+            'ld'=>array($ldName),
+            'ldcode'=>array($ldCode),
+            'lddebug'=>$ldCode,
+          );
+
+        } else {
+          $ldSubject = array(
+            'ld'=>'Unknown',
+            'ldcode'=>'U',
+            'lddebug'=>'Z',
+          );
+
+        }
+        */
+        $params = array(
+          'id' => $document['_id'],
+          'type' => $document['_type'],
+          'index' => 'ciim',
+          'body' => array('doc' => array('audience' => array('FE'),
+            'admin' => array('processed' => time() * 1000),
+          )
+          ),
+
+        );
+
+        try {
+          $response = \Es::update($params);
+          var_dump($response);
+
+        } catch (Exception $e) {
+          echo "Not done {$document['_id']}<br/>";
+        }
+
 
       }
-      $from = $from + $pagesize;
 
-      if (count($records['hits']['hits']) < $pagesize) {
-        exit;
-      }
+    }
+    $from = $from + $pagesize;
+
+    if (count($records['hits']['hits']) < $pagesize) {
+      exit;
+    }
   }
 });
-
 
 
 /**
@@ -332,7 +327,7 @@ Route::get('/tag', function() {
  * <p class="overflow">{{jsonData.description}}<br />
  *
  */
-Route::get('/popular', function() {
+Route::get('/popular', function () {
 
   $searchParams['index'] = 'ciim';
 
@@ -348,10 +343,10 @@ Route::get('/popular', function() {
 
     $resource = \Bentleysoft\ES\Service::get($hit['_id']);
 
-    if ($resource['_source']['admin']['source']=='jorum') {
-      $object = MIMAS\Service\Jorum\Item::find(str_replace('jorum-', '', $hit['_id']), array('expand'=>'all'), 'json', 'json');
+    if ($resource['_source']['admin']['source'] == 'jorum') {
+      $object = MIMAS\Service\Jorum\Item::find(str_replace('jorum-', '', $hit['_id']), array('expand' => 'all'), 'json', 'json');
       $bitstreams = $object->getBitstreams();
-    } elseif($resource['_source']['admin']['source']=='ht') {
+    } elseif ($resource['_source']['admin']['source'] == 'ht') {
       $bitstreams = false;
     }
 
@@ -363,30 +358,30 @@ Route::get('/popular', function() {
         break;
       }
       $b = $bitstreams[$i];
-      if (strpos($b->getMimeType(), 'image')!==false) {
+      if (strpos($b->getMimeType(), 'image') !== false) {
         $image = $b->getRetrieveLink();
         break;
       }
       $i++;
     }
-    if ($image<>'') {
-        $result[] = array(
-                        'title' => array(
-                              0=>$hit['_source']['summary_title']
-                          ),
-                        'id'=>$hit['_id'],
-                        'jmd_jacs3_subject'=>array(
-                              $subject
-                         ),
-                         'image'=>"http://dspace.jorum.ac.uk/rest$image",
-        );
+    if ($image <> '') {
+      $result[] = array(
+        'title' => array(
+          0 => $hit['_source']['summary_title']
+        ),
+        'id' => $hit['_id'],
+        'jmd_jacs3_subject' => array(
+          $subject
+        ),
+        'image' => "http://dspace.jorum.ac.uk/rest$image",
+      );
     } else {
       $result[] = array(
         'title' => array(
-          0=>$hit['_source']['summary_title']
+          0 => $hit['_source']['summary_title']
         ),
-        'id'=>$hit['_id'],
-        'jmd_jacs3_subject'=>array(
+        'id' => $hit['_id'],
+        'jmd_jacs3_subject' => array(
           $subject
         )
       );
@@ -403,218 +398,238 @@ Route::get('/popular', function() {
 /**
  * Route for viewing a resource
  */
-Route::get('/view/{u?}/{id?}', function($u = '', $id='')
-{
+Route::get('/view/{u?}/{id?}', function ($u = '', $id = '') {
   $uid = "$u/$id";
 
   $resource = \Bentleysoft\ES\Service::get($uid);
-  
+
   if (!$resource) {
     App::abort(404);
   }
 
-  if ($resource['_source']['admin']['source']=='jorum') {
-    $object = MIMAS\Service\Jorum\Item::find(str_replace('jorum-', '', $uid), array('expand'=>'all'), 'json', 'json');
+  if ($resource['_source']['admin']['source'] == 'jorum') {
+    $object = MIMAS\Service\Jorum\Item::find(str_replace('jorum-', '', $uid), array('expand' => 'all'), 'json', 'json');
     $bitstreams = $object->getBitstreams();
-  } elseif($resource['_source']['admin']['source']=='ht') {
+  } elseif ($resource['_source']['admin']['source'] == 'ht') {
     $bitstreams = false;
   }
   $status = array();
 
-  return View::make('view')->with( array('data'=>$resource, 'status'=>$status, 'bitstreams'=>$bitstreams));
+  return View::make('view')->with(array('data' => $resource, 'status' => $status, 'bitstreams' => $bitstreams));
 });
 
 /**
  * Content retrieve (i.e. download) handler
  */
-Route::post('download', function() {
+Route::post('download', function () {
   $link = Input::get('link');
   $mime = Input::get('mime');
   $name = Input::get('filename');
 
-  $url = 'http://dspace.jorum.ac.uk/rest'.$link;
+  $url = 'http://dspace.jorum.ac.uk/rest' . $link;
 
   $stream = MIMAS\Service\Jorum\JorumApi::apiCall($url);
 
   $response = \Response::make($stream);
   $response->header('Content-Type', $mime);
-  $response->header('Content-Disposition', 'attachment; filename="'.$name.'"');
+  $response->header('Content-Disposition', 'attachment; filename="' . $name . '"');
   return $response;
 
 });
 
-Route::get('/edit/{u?}/{id?}', function($u = '', $id = '')
-{
+Route::get('/edit/{u?}/{id?}', function ($u = '', $id = '') {
   $uid = "$u/$id";
 
   $resource = \Bentleysoft\ES\Service::get($uid);
-  
+
   if (!$resource) {
     App::abort(404);
   }
 
-  $result = Mapping::where('uid','=', $uid)->get();
-  if ($result && count($result)>0) {
-  	$meta = $result[0];
+  $result = Mapping::where('uid', '=', $uid)->get();
+  if ($result && count($result) > 0) {
+    $meta = $result[0];
   } else {
     $meta = new Mapping;
     $meta->uid = $uid;
   }
 
-  $qualifications = QualificationView::where('activated','=',1)->get();
+  $qualifications = QualificationView::where('activated', '=', 1)->get();
 
-  if (isset($resource['_source']['subject']['ldcode'])) {      // One level and one level only for now
+  if (isset($resource['_source']['subject']['ldcode'])) { // One level and one level only for now
     $topLevel = $resource['_source']['subject']['ldcode'][0];
   } else {
     $topLevel = '?';
   }
 
-  $ldcsSubjects = LdcsView::where('ldcs_code', 'like', "$topLevel%.%" )   // Only 2nd level for now
-                          ->whereIn('depth', [2])
-                          ->get();
+  $ldcsSubjects = LdcsView::where('ldcs_code', 'like', "$topLevel%.%") // Only 2nd level for now
+    ->whereIn('depth', [2])
+    ->get();
 
   $tags = array();
-  foreach( $ldcsSubjects as $subject) {
+  foreach ($ldcsSubjects as $subject) {
     $tags[] = $subject->ldcs_desc;
   }
 
   $status = array();
-  return View::make('edit')->with( array( 'data'=>$meta,
-                                          'status'=>$status,
-                                          'qualifications'=>$qualifications,
-                                          'tags'=>json_encode($tags),
-                                          'resource'=>$resource));
+  return View::make('edit')->with(array('data' => $meta,
+    'status' => $status,
+    'qualifications' => $qualifications,
+    'tags' => json_encode($tags),
+    'resource' => $resource));
 });
 
-Route::post('/edit/{uuid?}', function($uuid = '')
-{
-    $uid = Input::get('uid');
-    $result = Mapping::where('uid','=', $uid)->get();
+/**
+ * Post resource handler, the main handler really
+ * TODO: Move stuff to helper/model and add validation
+ */
+Route::post('/edit/{uuid?}', function ($uuid = '') {
+  $uid = Input::get('uid');
+  $result = Mapping::where('uid', '=', $uid)->get();
 
-    if (! ($result && count($result)>0) ) {
-        $meta = new Mapping;
-        $meta->uid = $uid;
-    } else {
-        $meta = $result[0];
+  if (!($result && count($result) > 0)) {
+    $meta = new Mapping;
+    $meta->uid = $uid;
+  } else {
+    $meta = $result[0];
+
+    MappingQualification::where('mappings_id','=',$meta->id)
+                        ->delete();
+
+  }
+  // TODO: validate
+
+  $meta->subject_area = Input::get('subject_area');
+  $meta->level = Input::get('level');
+  $meta->content_usage = Input::get('content_usage');
+
+  if ($meta->save()) {
+    /**
+     * Save the Qualifications
+     */
+    foreach (Input::all() as $key=>$input) {
+      if (strpos($key,'qualification')!==false) {
+        $qid = str_replace('qualification_', '', $key);
+        $metaQual = new MappingQualification();
+
+        $metaQual->mappings_id = $meta->id;
+        $metaQual->qualifications_id = $qid;
+        $metaQual->save();
+      }
     }
-   // TODO: validate
 
-    $meta->subject_area = Input::get('subject_area');
-    $meta->level = Input::get('level');
-    $meta->content_usage = Input::get('content_usage');
-
-    if ($meta->save()) {
-
-      $params = array(
-        'id'=>$meta->uid,
-        'type'=>'learning resource',
-        'index'=>'ciim',
-        'body'=>array('doc'=>array('edited'=>'yes',
-          'admin'=>array('processed'=>time()*1000),
+    $params = array(
+      'id' => $meta->uid,
+      'type' => 'learning resource',
+      'index' => 'ciim',
+      'body' => array('doc' => array('edited' => 'yes',
+        'admin' => array('processed' => time() * 1000),
         )
-        ),
+      ),
 
-      );
-      $response = \Es::update($params);
-      $status = array('close'=>true,);
+    );
+    $response = \Es::update($params);
+    $status = array('close' => true,);
 
-    } else {
-        // TODO: Error handing        
-        $status = array();   // add messages, handling etc..
-    }
-    return View::make('edit')->with( array('data'=>$meta, 'status'=>$status));
+  } else {
+    // TODO: Error handing
+    $status = array(); // add messages, handling etc..
+  }
+
+
+  return View::make('edit')->with(array('data' => $meta,
+                            'status' => $status,
+                            ));
+
 });
 
 /**
  * Togle edited on off
  */
-Route::put('/resource/toggle/{u?}/{id?}', function($u, $id) {
+Route::put('/resource/toggle/{u?}/{id?}', function ($u, $id) {
 
-  $uid = Input::get('_id','');
-  if ($uid <>'') {
+  $uid = Input::get('_id', '');
+  if ($uid <> '') {
     $resource = \Bentleysoft\ES\Service::get($uid);
 
     if (!$resource) {
       App::abort(404);
     }
-    if (isset($resource['_source']['edited']) && $resource['_source']['edited']=='yes') {
+    if (isset($resource['_source']['edited']) && $resource['_source']['edited'] == 'yes') {
       $edited = 'no';
     } else {
       $edited = 'yes';
     }
 
     $params = array(
-      'id'=>$uid,
-      'type'=>'learning resource',
-      'index'=>'ciim',
-      'body'=>array('doc'=>array('edited'=>$edited,
-        'admin'=>array('processed'=>time()*1000),
-        )
+      'id' => $uid,
+      'type' => 'learning resource',
+      'index' => 'ciim',
+      'body' => array('doc' => array('edited' => $edited,
+        'admin' => array('processed' => time() * 1000),
+      )
       ),
 
     );
     $x = time();
 
     $response = \Es::update($params);
-    if (!$response) ;  // code sniffing avoidance scheme
+    if (!$response) ; // code sniffing avoidance scheme
   }
   $url = Input::get('return_to', 'resources');
 
-  return Redirect::to($url, 303)->withInput(array($uid=>$edited), array('stuff'=>'XXXXXXXXXXXXXXXXXX'));
+  return Redirect::to($url, 303)->withInput(array($uid => $edited), array('stuff' => 'XXXXXXXXXXXXXXXXXX'));
 });
 
 /**
-* *************************************************  Qualifications ****************************************************
-*/
-Route::get('/qualifications', function()
-{
-    $q = Input::get('q','');
+ * *************************************************  Qualifications ****************************************************
+ */
+Route::get('/qualifications', function () {
+  $q = Input::get('q', '');
 
-    $selectedQualifications = Input::get('selectedqualifications', array(1));
+  $selectedQualifications = Input::get('selectedqualifications', array(1));
 
-    $pageSize = Input::get('pageSize', 10);
+  $pageSize = Input::get('pageSize', 10);
 
-    // $maxDepth = DB::table('subjectareas_view')->max('depth');
+  // $maxDepth = DB::table('subjectareas_view')->max('depth');
 
-    $qualifiers = Qualifier::where('id', '>', 0)->get();
-
+  $qualifiers = Qualifier::where('id', '>', 0)->get();
 
 
-    $qualifications = QualificationView::where('qualification', 'LIKE', "%$q%")
-                                        ->whereIn('qualifier_id', $selectedQualifications)
-                                        ->orderBy('qualifier_id')
-                                        ->orderBy('level')
-                                        ->orderBy('qualification')
-                                        ->paginate($pageSize);
+  $qualifications = QualificationView::where('qualification', 'LIKE', "%$q%")
+    ->whereIn('qualifier_id', $selectedQualifications)
+    ->orderBy('qualifier_id')
+    ->orderBy('level')
+    ->orderBy('qualification')
+    ->paginate($pageSize);
 
-    $paginator = Paginator::make($qualifications->getItems(), $qualifications->getTotal(), $pageSize);
+  $paginator = Paginator::make($qualifications->getItems(), $qualifications->getTotal(), $pageSize);
 
-    if ($q<>'') {
-      $paginator->addQuery('q', $q);
-    }
+  if ($q <> '') {
+    $paginator->addQuery('q', $q);
+  }
 
-    if ('pageSize'<>10) {
-      $paginator->addQuery('pageSize', $pageSize);
+  if ('pageSize' <> 10) {
+    $paginator->addQuery('pageSize', $pageSize);
 
-    }
+  }
 
-    $paginator->addQuery('selectedqualifications', $selectedQualifications);
+  $paginator->addQuery('selectedqualifications', $selectedQualifications);
 
-    return View::make('qualifications')->with( array('data'=>$qualifications,
-                                                    'qualifiers'=>$qualifiers,
-                                                    'total'=>$qualifications->getTotal(),
-                                                    'page'=>$paginator->getCurrentPage(),
-                                                    'paginator'=>$paginator,
-                                                    'selectedQualifications'=>$selectedQualifications,
-                                                    'pageSize'=>$pageSize,
-                                                   ));
+  return View::make('qualifications')->with(array('data' => $qualifications,
+    'qualifiers' => $qualifiers,
+    'total' => $qualifications->getTotal(),
+    'page' => $paginator->getCurrentPage(),
+    'paginator' => $paginator,
+    'selectedQualifications' => $selectedQualifications,
+    'pageSize' => $pageSize,
+  ));
 });
 
 /**
  * delete hook
  */
-Route::delete('/qualification/{id?}', function($id)
-{
+Route::delete('/qualification/{id?}', function ($id) {
   // $q = Input::get('q','');
   $qualification = Qualification::find($id);
   $qualification->delete();
@@ -626,7 +641,7 @@ Route::delete('/qualification/{id?}', function($id)
 /**
  * Handle toggle ON/OFF PUT requests for Subjects....
  */
-Route::put('/qualification/toggle/{id?}', function($id='') {
+Route::put('/qualification/toggle/{id?}', function ($id = '') {
   try {
     $id = intVal($id);
 
@@ -635,43 +650,41 @@ Route::put('/qualification/toggle/{id?}', function($id='') {
     $qual->activated = !$qual->activated;
 
     if ($qual->save()) {
-      return Redirect::to(Input::get('return_to','qualifications'));
+      return Redirect::to(Input::get('return_to', 'qualifications'));
     } else {
       throw new Exception('Activated flag for user could not be updated...');
     }
   } catch (Exception $e) {
     throw new Exception('Activated flag for user could not be updated.');
   }
-  return Redirect::to(Input::get('return_to','qualifications'));
+  return Redirect::to(Input::get('return_to', 'qualifications'));
 });
 
-Route::get('/qualification/{id?}', function($id = '')
-{
+Route::get('/qualification/{id?}', function ($id = '') {
   $qualification = Qualification::find($id);
 
-  $qualifiers = Qualifier::where('id','>',0)->get();
+  $qualifiers = Qualifier::where('id', '>', 0)->get();
 
   if (!$qualification) {
     $qualification = new Qualification();
   }
   return View::make('qualification')
-              ->with( array('data'=>$qualification,
-                      'qualifiers'=>$qualifiers,
-                      'status'=>array()));
+    ->with(array('data' => $qualification,
+      'qualifiers' => $qualifiers,
+      'status' => array()));
 });
 
 
 /**************************************************** Subject areas *************************************************/
 
-Route::post('/subject/{id?}', function($id = '')
-{
+Route::post('/subject/{id?}', function ($id = '') {
   $id = Input::get('id', -1);
   $subject = Subjectarea::find($id);
 
   // TODO: validate
 
   // find record
-  if (! ($subject ) ) {
+  if (!($subject)) {
     $subject = new Subjectarea;
   }
   $subject->subject = Input::get('subject');
@@ -679,27 +692,26 @@ Route::post('/subject/{id?}', function($id = '')
 
   // try save
   if ($subject->save()) {
-    $status = array('close'=>true,);
+    $status = array('close' => true,);
   } else {
     // TODO: Error handing
     $status = array();
   }
-  return View::make('subject')->with( array('data'=>$subject, 'status'=>$status));
+  return View::make('subject')->with(array('data' => $subject, 'status' => $status));
 });
 
-Route::get('/subject/{id?}', function($id = '')
-{
+Route::get('/subject/{id?}', function ($id = '') {
   $subject = Subjectarea::find($id);
   if (!$subject) {
     $subject = new Subjectarea;
   }
-  return View::make('subject')->with( array('data'=>$subject, 'status'=>array()));
+  return View::make('subject')->with(array('data' => $subject, 'status' => array()));
 });
 
 /**
  * Handle toggle ON/OFF PUT requests for Subjects....
  */
-Route::put('/subject/toggle/{id?}', function($id='') {
+Route::put('/subject/toggle/{id?}', function ($id = '') {
   try {
     $id = intVal($id);
 
@@ -719,40 +731,37 @@ Route::put('/subject/toggle/{id?}', function($id='') {
 });
 
 /*** Subject areas */
-Route::get('/subjectareas', function()
-{    
-    $q = Input::get('q','');
+Route::get('/subjectareas', function () {
+  $q = Input::get('q', '');
 
-    $selectedLevels = Input::get('levels', array(1,2));
-    $pageSize = Input::get('pageSize', 10);
+  $selectedLevels = Input::get('levels', array(1, 2));
+  $pageSize = Input::get('pageSize', 10);
 
-    $subjectAreas = SubjectareaView::where('subject', 'LIKE', "%$q%")
-                                    ->orderBy('subject')
-                                    ->paginate($pageSize);
+  $subjectAreas = SubjectareaView::where('subject', 'LIKE', "%$q%")
+    ->orderBy('subject')
+    ->paginate($pageSize);
 
-    $paginator = Paginator::make($subjectAreas->getItems(), $subjectAreas->getTotal(), $pageSize);
+  $paginator = Paginator::make($subjectAreas->getItems(), $subjectAreas->getTotal(), $pageSize);
 
-    if ($q<>'') {
-      $paginator->addQuery('q', $q);
-    }
+  if ($q <> '') {
+    $paginator->addQuery('q', $q);
+  }
 
-    if ('pageSize'<>10) {
-      $paginator->addQuery('pageSize', $pageSize);
-    }
+  if ('pageSize' <> 10) {
+    $paginator->addQuery('pageSize', $pageSize);
+  }
 
-    $paginator->addQuery('levels', $selectedLevels);
+  $paginator->addQuery('levels', $selectedLevels);
 
-    return View::make('subjectareas')->with( array('data'=>$subjectAreas,
-                                                   'pageSize'=>$pageSize,
-                                                   'total'=>$subjectAreas->getTotal(),
-                                                   'page'=>$paginator->getCurrentPage(),
-                                                   'paginator'=>$paginator));
+  return View::make('subjectareas')->with(array('data' => $subjectAreas,
+    'pageSize' => $pageSize,
+    'total' => $subjectAreas->getTotal(),
+    'page' => $paginator->getCurrentPage(),
+    'paginator' => $paginator));
 });
 
 
-
-Route::delete('/subject/{id?}', function($id)
-{
+Route::delete('/subject/{id?}', function ($id) {
   // $q = Input::get('q','');
   $subject = Subjectarea::find($id);
   $subject->delete();
@@ -765,11 +774,10 @@ Route::delete('/subject/{id?}', function($id)
 /******************************************************* LDCS  ********************************************************/
 
 /*** LD Subject areas */
-Route::get('/ldcs', function()
-{
-  $q = Input::get('q','');
+Route::get('/ldcs', function () {
+  $q = Input::get('q', '');
 
-  $selectedLevels = Input::get('levels', array(1,2));
+  $selectedLevels = Input::get('levels', array(1, 2));
   $pageSize = Input::get('pageSize', 10);
 
   $maxDepth = DB::table('ldcs_view')->max('depth');
@@ -782,32 +790,31 @@ Route::get('/ldcs', function()
 
   $paginator = Paginator::make($subjects->getItems(), $subjects->getTotal(), $pageSize);
 
-  if ($q<>'') {
+  if ($q <> '') {
     $paginator->addQuery('q', $q);
   }
 
-  if ('pageSize'<>10) {
+  if ('pageSize' <> 10) {
     $paginator->addQuery('pageSize', $pageSize);
 
   }
 
   $paginator->addQuery('levels', $selectedLevels);
 
-  return View::make('ldcs')->with( array('data'=>$subjects,
-    'maxDepth'=>$maxDepth,
-    'pageSize'=>$pageSize,
-    'total'=>$subjects->getTotal(),
-    'page'=>$paginator->getCurrentPage(),
-    'selectedLevels'=>$selectedLevels,
-    'paginator'=>$paginator));
+  return View::make('ldcs')->with(array('data' => $subjects,
+    'maxDepth' => $maxDepth,
+    'pageSize' => $pageSize,
+    'total' => $subjects->getTotal(),
+    'page' => $paginator->getCurrentPage(),
+    'selectedLevels' => $selectedLevels,
+    'paginator' => $paginator));
 });
 
 
 /**
  * Delete LDC (shouldn't really be able..._
  */
-Route::delete('/ldc/{id?}', function($id)
-{
+Route::delete('/ldc/{id?}', function ($id) {
   // $q = Input::get('q','');
   $ldcs = Ldcs::find($id);
   $ldcs->delete();
@@ -816,15 +823,14 @@ Route::delete('/ldc/{id?}', function($id)
 
 });
 
-Route::post('/ldc/{id?}', function($id = '')
-{
+Route::post('/ldc/{id?}', function ($id = '') {
   $id = Input::get('id', -1);
   $ldcs = Ldcs::find($id);
 
   // TODO: validate
 
   // find record
-  if (! ($ldcs ) ) {
+  if (!($ldcs)) {
     $ldcs = new Ldcs();
   }
   $ldcs->ldcs_desc = Input::get('ldcs_desc');
@@ -832,21 +838,20 @@ Route::post('/ldc/{id?}', function($id = '')
 
   // try save
   if ($ldcs->save()) {
-    $status = array('close'=>true,);
+    $status = array('close' => true,);
   } else {
     // TODO: Error handing
     $status = array();
   }
-  return View::make('ldc')->with( array('data'=>$ldcs, 'status'=>$status));
+  return View::make('ldc')->with(array('data' => $ldcs, 'status' => $status));
 });
 
-Route::get('/ldc/{id?}', function($id = '')
-{
+Route::get('/ldc/{id?}', function ($id = '') {
   $subject = Ldcs::find($id);
   if (!$subject) {
     $subject = new Ldcs();
   }
-  return View::make('ldc')->with( array('data'=>$subject, 'status'=>array()));
+  return View::make('ldc')->with(array('data' => $subject, 'status' => array()));
 });
 /************************************************** /LDCS **************************************************/
 
