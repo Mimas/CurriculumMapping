@@ -18,6 +18,7 @@
     }
     label {
       display: block;
+      font-weight: 900;
     }
     .jisc {
       color: #ea6000;
@@ -25,6 +26,9 @@
     }
     .norman {
       display: inline !important;
+    }
+    .breathe {
+      margin-top: 12px;
     }
 	</style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -45,17 +49,19 @@
         <div class="container">
             <div class="units-row">
               <div class="unit-100">
-                <h2 class="norman">Learn Direct Classification System Editor - </h2><h2 class="jisc">{{$data->ldsc_desc or '' }}</h2>
+                <h2 class="norman">Learn Direct Classification System Editor - </h2><h2 class="jisc">{{$data->ldcs_desc or '' }}</h2>
               </div>
-                <div class="unit-100">
+                <div class="unit-100 breathe">
                     <label for="subject_area">
                         Learn Direct Code<br/>
-                        <input type="text" class="width-100" id="ldcs_code" name="ldcs_code" value="{{$data->ldsc_code}}" />
+                        <input type="text" class="width-100" id="ldcs_code" name="ldcs_code" value="{{$data->ldcs_code}}" />
                         <input type="hidden" name="id" value="<?php echo $data->id; ?>"
                     </label>
+                </div>
+                <div class="unit-100 breathe">
                     <label for="ldcs_desc">
                         Learn Direct Description<br/>
-                        <textarea class="width-100" rows="5" id="ldcs_desc" name="ldcs_desc">{{$data->ldsc_desc}}</textarea>
+                        <textarea class="width-100" rows="5" id="ldcs_desc" name="ldcs_desc">{{$data->ldcs_desc}}</textarea>
                     </label>
                 </div>
                 <div class="unit-100 text-right">

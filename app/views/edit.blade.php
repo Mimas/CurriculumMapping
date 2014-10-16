@@ -82,7 +82,14 @@
                     </label>
                     <p/>
                     <label for="subject_area">
-                        Subject area<br/>
+                        Subject area (<?php
+                        if (isset($resource['_source']['subject']['ldcode'])) foreach( $resource['_source']['subject']['ldcode'] as $i=>$code ) {
+                          ?>
+                          {{ $code or '' }}, {{$resource['_source']['subject']['ld'][$i] or '' }}
+                        <?php
+                        }
+                        ?>)
+                      <br/>
                         <input name="tags" id="mySingleField" value="" > <!-- only disabled for demonstration purposes -->
                       </p>
                       <input type="hidden" name="uid" value="<?php echo $data->uid; ?> />"
@@ -97,9 +104,13 @@
                   <label for="level">
                         Qualification Levels<p/>
                     <div id="format">
-                      <input type="checkbox" id="check1"><label for="check1">B</label>
-                      <input type="checkbox" id="check2"><label for="check2">I</label>
-                      <input type="checkbox" id="check3"><label for="check3">U</label>
+                      <?php
+                      foreach ($qualifications as $qualification) {
+                      ?>
+                        <input type="checkbox" id="check_{{$qualification->id}}"><label for="check_{{$qualification->id}}">Level {{$qualification->level}}</label>
+                      <?php
+                      }
+                      ?>
                     </div>
 
                   </label>
@@ -112,7 +123,7 @@
 
    </form>
    <script>
-     var sampleTags = ['c++', 'java', 'php', 'coldfusion', 'javascript', 'asp', 'ruby', 'python', 'c', 'scala', 'groovy', 'haskell', 'perl', 'erlang', 'apl', 'cobol', 'go', 'lua'];
+     var sampleTags = <?php echo($tags) ?>;
 
      //-------------------------------
      // Minimal

@@ -18,9 +18,9 @@
             <?php
             for ($i=1; $i<$maxDepth; $i++) {
             ?>
-              {{$i}} <input class="autosubmit" type="checkbox" name="levels[]" <?php if ( in_array($i, $selectedLevels)) echo ' checked ' ?> value="{{$i}}" />
+            {{$i}} <input class="autosubmit" type="checkbox" name="levels[]" <?php if (in_array($i, $selectedLevels)) echo ' checked ' ?> value="{{$i}}" />
             <?php
-              }
+            }
             ?>
             </label>
             </div>
@@ -40,8 +40,8 @@
   <table class="width-90 table-hovered table-stripped">
     <?php foreach ($data as $row): ?>
       <tr>
-        <td class="width-10"> <a class="iframe" href="<?php echo asset(str_singular(Request::path())); ?>/{{$row->id}}">{{ $row->ldsc_code }}</a></td>
-        <td> <a class="iframe" href="<?php echo asset(str_singular(Request::path())); ?>/{{$row->id}}">{{ $row->ldsc_desc }}</a></td>
+        <td class="width-10"> <a class="iframe" href="<?php echo asset(str_singular(Request::path())); ?>/{{$row->id}}">{{ $row->ldcs_code }}</a></td>
+        <td> <a class="iframe" href="<?php echo asset(str_singular(Request::path())); ?>/{{$row->id}}">{{ $row->ldcs_desc }}</a></td>
         <td class="text-right width-30">
           {{Form::open(array('url' => asset('/ldc').'/'.$row->id, 'method' => 'delete')); }}
           <button class="btn btn-smaller btn-red">Delete&nbsp;<i class="fa fa-trash-o"></i></button>

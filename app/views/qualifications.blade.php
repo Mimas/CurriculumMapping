@@ -74,7 +74,7 @@
         <?php echo $paginator->links(); ?>
       </td>
       <td class="text-right">
-        <a href="/subject/0" class="btn btn-small btn-blue iframe">Add new&nbsp;<i class="fa fa-plus"></i></a>
+        <a href="/qualification/0" class="btn btn-small btn-blue iframe">Add new&nbsp;<i class="fa fa-plus"></i></a>
       </td>
     </tr>
   </table>

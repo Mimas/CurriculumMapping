@@ -89,7 +89,6 @@ Route::get('/resources', function() {
 
   $selectedAreas = Input::get('areas', array());
 
-
   /**
    * Set the user's initial checkboxes to whatever they are set as in the User panel
    * but only if the user is not an app admin (i.e. "superuser")
@@ -117,14 +116,14 @@ Route::get('/resources', function() {
   $presenter = new Illuminate\Pagination\BootstrapPresenter($resources);
 
 
-  return View::make('resources')->with(array('data'=>$data,
-                                             'resources'=>$resources,
-                                             'presenter'=>$presenter,
-                                             'subjectAreas'=>$subjectAreas,
-                                             'selectedAreas'=>$selectedAreas,
-                                             'pageSize'=>$pageSize,
-                                             'total'=>$data['hits']['total'],
-                                             'page'=>$page+1,
+  return View::make('resources')->with( array('data'=>$data,
+                                              'resources'=>$resources,
+                                              'presenter'=>$presenter,
+                                              'subjectAreas'=>$subjectAreas,
+                                              'selectedAreas'=>$selectedAreas,
+                                              'pageSize'=>$pageSize,
+                                              'total'=>$data['hits']['total'],
+                                              'page'=>$page+1,
                                              ));
 
 });
@@ -461,8 +460,30 @@ Route::get('/edit/{u?}/{id?}', function($u = '', $id = '')
     $meta = new Mapping;
     $meta->uid = $uid;
   }
+
+  $qualifications = QualificationView::where('activated','=',1)->get();
+
+  if (isset($resource['_source']['subject']['ldcode'])) {      // One level and one level only for now
+    $topLevel = $resource['_source']['subject']['ldcode'][0];
+  } else {
+    $topLevel = '?';
+  }
+
+  $ldcsSubjects = LdcsView::where('ldcs_code', 'like', "$topLevel%.%" )   // Only 2nd level for now
+                          ->whereIn('depth', [2])
+                          ->get();
+
+  $tags = array();
+  foreach( $ldcsSubjects as $subject) {
+    $tags[] = $subject->ldcs_desc;
+  }
+
   $status = array();
-  return View::make('edit')->with( array('data'=>$meta, 'status'=>$status, 'resource'=>$resource));
+  return View::make('edit')->with( array( 'data'=>$meta,
+                                          'status'=>$status,
+                                          'qualifications'=>$qualifications,
+                                          'tags'=>json_encode($tags),
+                                          'resource'=>$resource));
 });
 
 Route::post('/edit/{uuid?}', function($uuid = '')
@@ -624,6 +645,21 @@ Route::put('/qualification/toggle/{id?}', function($id='') {
   return Redirect::to(Input::get('return_to','qualifications'));
 });
 
+Route::get('/qualification/{id?}', function($id = '')
+{
+  $qualification = Qualification::find($id);
+
+  $qualifiers = Qualifier::where('id','>',0)->get();
+
+  if (!$qualification) {
+    $qualification = new Qualification();
+  }
+  return View::make('qualification')
+              ->with( array('data'=>$qualification,
+                      'qualifiers'=>$qualifiers,
+                      'status'=>array()));
+});
+
 
 /**************************************************** Subject areas *************************************************/
 
@@ -738,9 +774,9 @@ Route::get('/ldcs', function()
 
   $maxDepth = DB::table('ldcs_view')->max('depth');
 
-  $subjects = LdcsView::where('ldsc_desc', 'LIKE', "%$q%")
+  $subjects = LdcsView::where('ldcs_desc', 'LIKE', "%$q%")
     ->whereIn('depth', $selectedLevels)
-    ->orderBy('ldsc_code')
+    ->orderBy('ldcs_code')
     ->paginate($pageSize);
 
 
@@ -791,8 +827,8 @@ Route::post('/ldc/{id?}', function($id = '')
   if (! ($ldcs ) ) {
     $ldcs = new Ldcs();
   }
-  $ldcs->ldsc_desc = Input::get('ldcs_desc');
-  $ldcs->ldsc_code = Input::get('ldcs_code');
+  $ldcs->ldcs_desc = Input::get('ldcs_desc');
+  $ldcs->ldcs_desc = Input::get('ldcs_code');
 
   // try save
   if ($ldcs->save()) {
