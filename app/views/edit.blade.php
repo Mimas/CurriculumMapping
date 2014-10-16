@@ -36,19 +36,14 @@
       display: none !important;
     }
 
-
 	</style>
   <link rel="stylesheet" href="<?php echo asset('3rdparty/kube/css/kube.css'); ?>">
-
   <link rel="stylesheet" href="/3rdparty/jquery/jquery-ui.css">
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
-
   <link href="/3rdparty/tagit/css/jquery.tagit.css" rel="stylesheet" type="text/css">
   <link href="/3rdparty/tagit/css/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
-
   <script src="<?php echo (asset('3rdparty/tagit/js/tag-it.js')); ?>" type="text/javascript" charset="utf-8"></script>
-
 
 	<link rel="stylesheet" href="<?php echo asset('3rdparty/font-awesome/css/font-awesome.min.css'); ?>">
     <?php
@@ -133,7 +128,8 @@
      // Single field
      //-------------------------------
      $('#mySingleField').tagit({
-       availableTags: sampleTags
+       availableTags: sampleTags,
+       showAutocompleteOnFocus: true
        // This will make Tag-it submit a single form value, as a comma-delimited field.
      });
    </script>

@@ -26,7 +26,7 @@
             </div>
             <div class="unit-40">
               <div class="text-right" style="float: right;">
-              <span class="total">{{$total}}</span> Subject Areas, page {{$page}} of {{ $paginator->getLastPage() }}</span>&nbsp;&nbsp;|&nbsp;&nbsp;                
+              <span class="total"><?php echo number_format($total); ?></span> Subject Areas, page {{$page}} of {{ $paginator->getLastPage() }}</span>&nbsp;&nbsp;|&nbsp;&nbsp;
               {{ Form::select('pageSize', \Bentleysoft\Helper::pageSizes(), $pageSize, array('class' => 'autoselect inliner')); }}
               </div>
             </div>

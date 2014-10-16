@@ -1,19 +1,28 @@
 @extends('layouts.standard')
 @section('content')
-    <form method="get" action="<?php echo asset('subjectareas') ?>" class="forms">
-        <div class="units-row top44">
-            <div class="unit-90">
-                <div class="input-groups spacer">
-                    <input type="text" name="q" placeholder="Search" value="{{Input::get('q','')}}" />
-                    <span class="btn-append">
-                        <button class="btn">Go</button>
-                    </span>
-                </div>
-
-            </div>
-        </div>
-    </form>
-
+<form method="get" action="<?php echo asset('subjectareas') ?>" class="forms">
+  <div class="units-row top44">
+    <div class="unit-90">
+        <div class="input-groups spacer">
+          <input type="text" name="q" placeholder="Search" value="{{Input::get('q','')}}" />
+          <span class="btn-append">
+            <button class="btn">Go</button>
+          </span>
+      </div>
+    </div>
+  </div>
+  <div class="units-row">
+    <div class="unit-50">
+      &nbsp;
+    </div>
+    <div class="unit-40">
+      <div class="text-right" style="float: right;">
+        <span class="total"><?php echo number_format($total); ?></span> Subject Areas, page {{$page}} of {{ $paginator->getLastPage() }}</span>&nbsp;&nbsp;|&nbsp;&nbsp;
+        {{ Form::select('pageSize', \Bentleysoft\Helper::pageSizes(), $pageSize, array('class' => 'autoselect inliner')); }}
+      </div>
+    </div>
+  </div>
+</form>
 <div class="unit-100 unit-centered">
   @if(Session::has('success'))
   <div class="error row-fluid">

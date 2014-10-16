@@ -10,9 +10,6 @@
     margin-bottom: -5px !important;
   }
 </style>
-<?php
-var_dump(Request::header('stuff'));
-?>
     <form method="get" action="<?php echo asset(Request::path()); ?>" class="forms search">
         <div class="units-row top44">
             <div class="unit-90">
@@ -44,7 +41,7 @@ var_dump(Request::header('stuff'));
             </div>
             <div class="unit-30">
               <div class="text-right pager" style="float: right;">
-              <span class="total">{{$total}}</span> Resources, page {{$page}} of {{ $resources->getLastPage() }}</span>&nbsp;&nbsp;|&nbsp;&nbsp;
+              <span class="total"><?php echo number_format($total); ?></span> Resources, page {{$page}} of {{ $resources->getLastPage() }}</span>&nbsp;&nbsp;|&nbsp;&nbsp;
               {{ Form::select('pageSize', \Bentleysoft\Helper::pageSizes(), $pageSize, array('class' => 'autoselect inliner')); }}
               </div>
             </div>
