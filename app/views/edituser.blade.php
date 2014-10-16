@@ -13,7 +13,7 @@ form {
     </div>
     @endif
   </div>
-  <form method="post" class="forms">
+  <form method="post" class="forms autoform">
     <div class="units-row">
       <div class="unit-50">
         <!-- main content column -->
@@ -23,10 +23,10 @@ form {
                     <input value="{{$user->first_name}}" type="text" name="first_name" class="width-40 <?php if ($errors->has('first_name')) echo 'input-error'; ?>" />
                 </label>
                 <label>Last name *
-                    <input  value="{{$user->last_name}}" type="text" name="last_name" class="width-40 <?php if ($errors->has('last_name')) echo 'input-error'; ?>" />
+                    <input value="{{$user->last_name}}" type="text" name="last_name" class="width-40 <?php if ($errors->has('last_name')) echo 'input-error'; ?>" />
                 </label>
                 <label>Email *
-                    <input  value="{{$user->email}}" type="text" name="email" class="width-40 <?php if ($errors->has('email')) echo 'input-error'; ?>" />
+                    <input value="{{$user->email}}" type="text" name="email" class="width-40 <?php if ($errors->has('email')) echo 'input-error'; ?>" />
                 </label>
                 <label>Password *
                     <input type="password" name="password" class="width-40 <?php if ($errors->has('password')) echo 'input-error'; ?>" />
@@ -47,9 +47,9 @@ form {
           <legend>User's Subject Areas</legend>
           <ul class="blocks-2">
           <?php
-          foreach ($subjectAreas as $area) {
+          if (isset($subjectAreas) ) foreach ($subjectAreas as $area) {
           ?>
-          <li><label>{{$area->subject}} <input type="checkbox" name="area[]"
+          <li><label>{{$area->subject}} <input type="checkbox" name="area[]" class="autosubmit"
                                                 id="area_{{$area->id}}" value="{{$area->id}}"
                                                 <?php if( in_array($area->id, $userSubjects)) echo 'checked="yes";'  ?>
                                         />

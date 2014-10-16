@@ -61,6 +61,11 @@ class Helper {
 		}
 	}
 
+  public static function superUser($id = -1) {
+    return self::userHasAccess(array('application.admin'));
+  }
+
+
   /**
    * Get user's subject areas
    * If a user is not specified then get the current one's

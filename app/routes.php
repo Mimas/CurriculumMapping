@@ -504,14 +504,49 @@ Route::post('/edit/{uuid?}', function($uuid = '')
     return View::make('edit')->with( array('data'=>$meta, 'status'=>$status));
 });
 
+/**
+ * Togle edited on off
+ */
+Route::put('/resource/toggle/{u?}/{id?}', function($u, $id) {
 
+  $uid = Input::get('_id','');
+  if ($uid <>'') {
+    $resource = \Bentleysoft\ES\Service::get($uid);
+
+    if (!$resource) {
+      App::abort(404);
+    }
+    if (isset($resource['_source']['edited']) && $resource['_source']['edited']=='yes') {
+      $edited = 'no';
+    } else {
+      $edited = 'yes';
+    }
+
+    $params = array(
+      'id'=>$uid,
+      'type'=>'learning resource',
+      'index'=>'ciim',
+      'body'=>array('doc'=>array('edited'=>$edited,
+        'admin'=>array('processed'=>time()*1000),
+        )
+      ),
+
+    );
+    $x = time();
+
+    $response = \Es::update($params);
+    if (!$response) ;  // code sniffing avoidance scheme
+  }
+  $url = Input::get('return_to', 'resources');
+
+  return Redirect::to($url, 303)->withInput(array($uid=>$edited), array('stuff'=>'XXXXXXXXXXXXXXXXXX'));
+});
 
 /**
-* Qualifications
+* *************************************************  Qualifications ****************************************************
 */
 Route::get('/qualifications', function()
 {
-
     $q = Input::get('q','');
 
     $selectedQualifications = Input::get('selectedqualifications', array(1));
@@ -566,6 +601,29 @@ Route::delete('/qualification/{id?}', function($id)
   return Redirect::to('qualifications');
 
 });
+
+/**
+ * Handle toggle ON/OFF PUT requests for Subjects....
+ */
+Route::put('/qualification/toggle/{id?}', function($id='') {
+  try {
+    $id = intVal($id);
+
+    $qual = Qualification::find($id);
+
+    $qual->activated = !$qual->activated;
+
+    if ($qual->save()) {
+      return Redirect::to(Input::get('return_to','qualifications'));
+    } else {
+      throw new Exception('Activated flag for user could not be updated...');
+    }
+  } catch (Exception $e) {
+    throw new Exception('Activated flag for user could not be updated.');
+  }
+  return Redirect::to(Input::get('return_to','qualifications'));
+});
+
 
 /**************************************************** Subject areas *************************************************/
 

@@ -44,23 +44,33 @@
   <table class="width-90 table-hovered table-stripped">
     <?php foreach ($data as $row): ?>
       <tr>
-        <td class="width-20">
+        <td class="width-10">
           <a class="iframe" href="<?php echo asset('qualification') ?>/{{$row->id}}">{{ $row->qualifier_short }}</a>
         </td>
-        <td class="width-10">
+        <td>
           {{ $row->level }}
         </td>
         <td class="width-40"> <a class="iframe" href="<?php echo asset('subject') ?>/{{$row->id}}">{{ $row->qualification }}</a></td>
+        <td>
+          {{Form::open(array('url' => asset('/qualification/toggle').'/'.$row->id, 'method' => 'put')); }}
+          <input type="hidden" name="id" value="<?php echo $row->id ?>"/>
+          <input type="hidden" name="return_to" value="<?php echo(Request::fullUrl()) ?>" />
+          <button class="btn btn-smaller  <?php if ($row->activated) echo 'btn-active' ?> ">
+            <?php echo  ($row->activated) ? 'On' : 'Off' ?>
+          </button>
+          {{Form::close();}}
+        </td>
+
         <td class="text-right">
-          {{Form::open(array('url' => asset('/subject').'/'.$row->id, 'method' => 'delete')); }}
+          {{Form::open(array('url' => asset('/qualification').'/'.$row->id, 'method' => 'delete')); }}
           <button class="btn btn-smaller btn-red">Delete&nbsp;<i class="fa fa-trash-o"></i></button>
           {{Form::close();}}
-          <a href="/subject/{{$row->id}}" class="breathe-left iframe btn btn-smaller btn-blue">Edit&nbsp;<i class="fa fa-cog"></i></a>
+          <a href="/qualification/{{$row->id}}" class="breathe-left iframe btn btn-smaller btn-blue">Edit&nbsp;<i class="fa fa-cog"></i></a>
         </td>
       </tr>
     <?php endforeach; ?>
     <tr>
-      <td colspan="3">
+      <td colspan="4">
         <?php echo $paginator->links(); ?>
       </td>
       <td class="text-right">

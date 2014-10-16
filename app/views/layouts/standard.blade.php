@@ -100,6 +100,7 @@
             $(".colorbox").colorbox({iframe:true, width:"80%", height:"80%"});
             $(".autosubmit").click(function() {
                 $('.search').submit();
+                $('.autoform').submit();
               }
             );
             $(".autoselect").change(function() {
@@ -128,26 +129,26 @@
                     <li><a href="/login">Sign In</a></li>
                   <?php endif; ?>
 
-                  <?php if (Bentleysoft\Helper::userHasAccess(array('resource.manage'))): ?>
+                  <?php if (Bentleysoft\Helper::userHasAccess(array('resource.manage')) || Bentleysoft\Helper::superUser()): ?>
                     <li><a href="/resources">Resources</a></li>
                   <?php endif; ?>
-                  <?php if (Bentleysoft\Helper::userHasAccess(array('subjectareas.manage')) || Bentleysoft\Helper::userHasAccess(array('subjectareas.admin')) ): ?>
+                  <?php if (Bentleysoft\Helper::userHasAccess(array('subjectareas.manage')) || Bentleysoft\Helper::userHasAccess(array('subjectareas.admin'))  || Bentleysoft\Helper::superUser() ): ?>
                     <li><a href="/subjectareas">Subjects</a></li>
                   <?php endif; ?>
 
-                  <?php if (Bentleysoft\Helper::userHasAccess(array('subjectareas.admin'))): ?>
-                    <li><a href="/ldcs">LDCS</a></li>
+                  <?php if (Bentleysoft\Helper::userHasAccess(array('subjectareas.admin')) || Bentleysoft\Helper::superUser()): ?>
+                    <li><a href="/ldcs">Classification</a></li>
                   <?php endif; ?>
 
-                  <?php if (Bentleysoft\Helper::userHasAccess(array('qualifications.manage'))): ?>
+                  <?php if (Bentleysoft\Helper::userHasAccess(array('qualifications.manage')) || Bentleysoft\Helper::superUser()): ?>
                     <li><a href="/qualifications">Qualifications</a></li>
                   <?php endif; ?>
 
-                  <?php if (Bentleysoft\Helper::userHasAccess(array('user.create', 'user.delete', 'user.update', 'user.view', 'application.admin' ))): ?>
+                  <?php if (Bentleysoft\Helper::userHasAccess(array('user.create', 'user.delete', 'user.update', 'user.view', 'application.admin' )) || Bentleysoft\Helper::superUser()): ?>
                     <li><a href="/admin/users">Users</a></li>
                   <?php endif; ?>
 
-                  <?php if (Bentleysoft\Helper::userHasAccess(array('redis.admin' ))): ?>
+                  <?php if (Bentleysoft\Helper::userHasAccess(array('redis.admin' )) || Bentleysoft\Helper::superUser() ): ?>
                     <li><a href="/redis">Cache</a></li>
                   <?php endif; ?>
 

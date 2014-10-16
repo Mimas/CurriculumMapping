@@ -233,17 +233,18 @@ class AdminController extends BaseController {
         throw new Exception('User could not be updated.');
       }
 
+      $areas = Input::get('area',array());
+
       // expand pls
-      DB::transaction(function() use ($user)
+      DB::transaction(function() use ($user, $areas)
       {
         DB::table('users_subjectareas')->where('users_id', $user->getId())->delete();
 
-        foreach (Input::get('area') as $i=>$areaId) {
+        foreach ($areas as $i=>$areaId) {
           $id = DB::table('users_subjectareas')->insertGetId(
             array('users_id' =>$user->id, 'subjectareas_id' => $areaId));
         }
       });
-
     }
 
 

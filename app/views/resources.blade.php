@@ -10,6 +10,9 @@
     margin-bottom: -5px !important;
   }
 </style>
+<?php
+var_dump(Request::header('stuff'));
+?>
     <form method="get" action="<?php echo asset(Request::path()); ?>" class="forms search">
         <div class="units-row top44">
             <div class="unit-90">
@@ -54,19 +57,35 @@
         foreach ($data['hits']['hits'] as $row) {
         ?>
           <tr>
-            <td class="width-50"><a href="/view/<?php echo $row['_source']['admin']['uid']; ?>">{{ $row['_source']['summary_title'] }}</a></td>
+            <td class="width-40"><a href="/view/<?php echo $row['_source']['admin']['uid']; ?>">{{ $row['_source']['summary_title'] }}</a></td>
             <td>{{ $row['_source']['admin']['source'] }}</td>
             <td>{{ $row['_source']['audience'][0] or '&nbsp'; }}</td>
             <td>{{ $row['_source']['subject']['ldcode'][0] or 'U' }}</td>
+            <?php
+            if (\Bentleysoft\Helper::superUser()) {    // edited flag, only show if superuser
+            ?>
+            <td>
+              {{Form::open(array('url' => asset('/resource/toggle').'/'.$row['_source']['admin']['uid'], 'method' => 'put')); }}
+              <input type="hidden" name="_id" value="<?php echo $row['_source']['admin']['uid'] ?>"/>
+              <input type="hidden" name="return_to" value="<?php echo(Request::fullUrl()) ?>" />
+              <button class="btn btn-smaller  <?php if (isset($row['_source']['edited'])&& $row['_source']['edited']=='yes') echo 'btn-active' ?> ">
+                <?php echo(isset($row['_source']['edited'])&& $row['_source']['edited']=='yes') ? 'Mapped' : 'Unmapped' ?>
+              </button>
+              {{Form::close();}}
+            </td>
+
+            <?php
+            }
+            ?>
             <td>{{ $row['_type'] }} <?php // echo date('Y-m-d H:i:s', $row['_source']['admin']['processed']/1000); ?></td>
             <td>
               <?php
-              if (isset($row['_source']['edited'])) {
+              if (isset($row['_source']['edited']) && $row['_source']['edited']=='yes') {
                 ?>
                 <a href="/edit/<?php echo $row['_source']['admin']['uid']; ?>" class="iframe btn btn-small">Edit&nbsp;<i class="fa fa-cog"></i></a>
               <?php
-              } else {
-                ?>
+                } else {
+               ?>
                 <a href="/edit/<?php echo $row['_source']['admin']['uid']; ?>" class="iframe btn btn-small btn-blue">Edit&nbsp;<i class="fa fa-cog"></i></a>
               <?php
               }

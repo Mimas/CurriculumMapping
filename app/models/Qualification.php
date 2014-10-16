@@ -6,6 +6,7 @@
  * @property integer qualifier_id
  * @property string level
  * @property string qualification
+ * @property boolean enabled
  * @property integer created_at
  * @property integer updated_at
  *

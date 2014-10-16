@@ -30,6 +30,16 @@
       }
 
     </style>
+    <?php
+    if (isset($status['close'])) {
+      ?>
+      <script>
+        parent.$.fn.colorbox.close();
+      </script>
+    <?php
+    }
+    ?>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
     <link rel="stylesheet" href="<?php echo asset('3rdparty/kube/css/kube.css'); ?>">
