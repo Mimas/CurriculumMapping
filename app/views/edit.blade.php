@@ -31,8 +31,10 @@
       margin-top: 12px;
     }
     #format { margin-top: 2em; }
-
     input[type='checkbox'] {
+      display: none !important;
+    }
+    input[type='radio'] {
       display: none !important;
     }
 
@@ -48,80 +50,144 @@
   <link rel="stylesheet" href="<?php echo asset('3rdparty/font-awesome/css/font-awesome.min.css'); ?>">
   <?php
   if (isset($status['close'])) {
-
     ?>
     <script>
-
       parent.location.reload();
       parent.$.fn.colorbox.close();
-
     </script>
   <?php
   }
   ?>
   <script>
     $(function() {
-      $( "#format" ).buttonset();
+      $(".checks" ).buttonset();
+      $(".radio" ).buttonset();
+      $('#obsolete4').change(function() {
+          if($(this).is(":checked")) {
+            $('#other_comments').removeAttr('disabled');
+          } else {
+            $('#other_comments').attr('disabled', 'yes');
+          }
+        });
+
+      $('input[type=radio][name=currency]').on('change', function(){
+        var flag = $(this).val();
+        if (flag == 0) {
+          $('#current').hide();
+          $('#noncurrent').show();
+        } else {
+          $('#current').show();
+          $('#noncurrent').hide();
+        }
+      });
+      <?php
+      if ($data->currency) {
+      ?>
+      $('#noncurrent').hide();
+      <?php
+      } else {
+      ?>
+      $('#current').hide();
+      <?php
+      }
+      ?>
+
+
     });
   </script>
 </head>
 <body>
-<form method="post" action="<?php echo asset('edit'); ?>" class="forms">
   <div class="container">
-    <div class="units-row">
-      <div class="unit-100">
-        <h2 class="norman">Resource Editor - </h2><h2 class="jisc">{{$resource['_source']['summary_title'] or '' }}</h2>
-      </div>
-      <div class="unit-100 breathe">
-        <label for="currency">
-          Currency<br/>
-          <textarea class="width-100" rows="3" id="currency" name="currency">{{$data->currency}}</textarea>
-        </label>
-        <p/>
-        <label for="subject_area">
-          Subject area (<?php
-          if (isset($resource['_source']['subject']['ldcode'])) foreach( $resource['_source']['subject']['ldcode'] as $i=>$code ) {
-          ?>
-            {{ $code or '' }}, {{$resource['_source']['subject']['ld'][$i] or '' }}
-          <?php
-          }
-          ?>)
-          <br/>
-          <input name="tags" id="mySingleField" value="{{$resourceTags}}" > <!-- only disabled for demonstration purposes -->
-          </p>
-          <input type="hidden" name="uid" value="<?php echo $data->uid; ?>" />
-          <input type="hidden" name="uuid" value="<?php echo $data->uuid; ?>" />
-        </label>
-        <p/>
-        <label for="content_usage">
-          How would you use this content?<br/>
-          <textarea class="width-100" rows="3" id="content_usage" name="content_usage">{{$data->content_usage}}</textarea>
-        </label>
-        <p/>
-        <label for="level">
-          Qualification Level
-          <div id="format">
-            <?php
-            if (isset($qualifications)) foreach ($qualifications as $qualification) {
-              ?>
-              <input type="checkbox" <?php if(in_array($qualification->id, $resourceQualifications)) echo 'checked="checked"' ?> 
-                    id="check_{{$qualification->id}}" name="qualification_{{$qualification->id}}" 
-                />
-              <label for="check_{{$qualification->id}}">Level {{$qualification->level}}</label>
-            <?php
-            }
-            ?>
-          </div>
+    <form method="post" action="<?php echo asset('edit'); ?>" class="forms">
 
-        </label>
+      <div class="units-row">
+        <div class="unit-100">
+          <h2 class="norman">Resource Editor - </h2><h2 class="jisc">{{$resource['_source']['summary_title'] or '' }}</h2>
+        </div>
+        <div class="unit-100 breathe">
+          <label for="currency">
+            Is this content current<br/>
+            <div class="radio">
+              <input type="radio" id="currency1" name="currency" value="1" <?php if($data->currency) echo 'checked="checked"'; ?> /> <label for="currency1">Yes</label>
+              <input type="radio" id="currency2" name="currency" value="0" <?php if(!$data->currency) echo 'checked="checked"'; ?>/> <label for="currency2">No</label>
+            </div>
+          </label>
+          <p/>
+        </div>
       </div>
-      <div class="unit-100 text-right">
-        <button class="btn btn-small btn-yellow">Save <i class="fa fa-check"></i> </button>
+      <div id="noncurrent">
+        <label>Please indicate</label>
+        <div class="checks" id="indicat">
+          <input type="checkbox" id="obsolete1" name="issue[]"  /> <label for="obsolete1">Out of Date</label>
+          <input type="checkbox" id="obsolete2" name="issue[]"  /> <label for="obsolete2">Wrong Subject Area</label>
+          <input type="checkbox" id="obsolete3" name="issue[]"  /> <label for="obsolete3">Quality Issues</label>
+          <input type="checkbox" id="obsolete4" name="issue[]"  /> <label for="obsolete4">Other</label>
+
+          <textarea disabled="disabled" class="width-100" rows="4" id="other_comments" name="other_comments"></textarea>
+
+        </div>
       </div>
-    </div>
+
+      <div id="current">
+        <div class="units-row">
+          <div class="unit-100">
+            <label for="subject_area">
+              Subject area (<?php
+              if (isset($resource['_source']['subject']['ldcode'])) foreach( $resource['_source']['subject']['ldcode'] as $i=>$code ) {
+                ?>
+                {{ $code or '' }}, {{$resource['_source']['subject']['ld'][$i] or '' }}
+              <?php
+              }
+              ?>)
+              <br/>
+              <input name="tags" id="mySingleField" value="{{$resourceTags}}" > <!-- only disabled for demonstration purposes -->
+
+              <input type="hidden" name="uid" value="<?php echo $data->uid; ?>" />
+              <input type="hidden" name="uuid" value="<?php echo $data->uuid; ?>" />
+            </label>
+          </div>
+        </div>
+
+        <div class="units-row">
+          <div class="unit-100"
+            <label for="content_usage">
+              How would you use this content?<br/>
+              <textarea class="width-100" rows="3" id="content_usage" name="content_usage">{{$data->content_usage}}</textarea>
+            </label>
+          </div>
+        </div>
+
+        <div class="units-row">
+          <div class="unit-100">
+            <label for="level">
+              Qualification Level
+              <div class="checks">
+                <?php
+                if (isset($qualifications)) foreach ($qualifications as $qualification) {
+                  ?>
+                  <input type="checkbox" <?php if(in_array($qualification->id, $resourceQualifications)) echo 'checked="checked"' ?>
+                         id="check_{{$qualification->id}}" name="qualification_{{$qualification->id}}"
+                    />
+                  <label for="check_{{$qualification->id}}">Level {{$qualification->level}}</label>
+                <?php
+                }
+                ?>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="units-row">
+        <div class="unit-100 text-right">
+          <button class="btn btn-small btn-yellow">Save <i class="fa fa-check"></i> </button>
+        </div>
+      </div>
+
+    </form>
+
   </div>
 
-</form>
 <script>
   var sampleTags = <?php if (isset($tags)) echo($tags) ?>;
 

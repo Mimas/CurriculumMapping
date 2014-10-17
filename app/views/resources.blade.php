@@ -54,10 +54,18 @@
         foreach ($data['hits']['hits'] as $row) {
         ?>
           <tr>
-            <td class="width-40"><a href="/view/<?php echo $row['_source']['admin']['uid']; ?>">{{ $row['_source']['summary_title'] }}</a></td>
+            <td class="width-30"><a href="/view/<?php echo $row['_source']['admin']['uid']; ?>">{{ $row['_source']['summary_title'] }}</a></td>
             <td>{{ $row['_source']['admin']['source'] }}</td>
             <td>{{ $row['_source']['audience'][0] or '&nbsp'; }}</td>
-            <td>{{ $row['_source']['subject']['ldcode'][0] or 'U' }}</td>
+            <td>
+              <?php
+              if (isset($row['_source']['subject']['ld'][0])) {
+                echo str_limit($row['_source']['subject']['ld'][0], 10, '...' );
+              } else {
+                echo 'Undefined';
+              }
+              ?>
+              </td>
             <?php
             if (\Bentleysoft\Helper::superUser()) {    // edited flag, only show if superuser
             ?>
