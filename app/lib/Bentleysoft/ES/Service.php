@@ -89,7 +89,6 @@ class Service
     $searchParams['size'] = $size;
     $searchParams['from'] = $from;
 
-
     $searchParams['sort'] = array(
       'summary_title:asc',
       'processed:desc',

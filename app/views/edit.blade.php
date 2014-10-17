@@ -81,13 +81,13 @@
         <label for="subject_area">
           Subject area (<?php
           if (isset($resource['_source']['subject']['ldcode'])) foreach( $resource['_source']['subject']['ldcode'] as $i=>$code ) {
-            ?>
+          ?>
             {{ $code or '' }}, {{$resource['_source']['subject']['ld'][$i] or '' }}
           <?php
           }
           ?>)
           <br/>
-          <input name="tags" id="mySingleField" value="" > <!-- only disabled for demonstration purposes -->
+          <input name="tags" id="mySingleField" value="{{$resourceTags}}" > <!-- only disabled for demonstration purposes -->
           </p>
           <input type="hidden" name="uid" value="<?php echo $data->uid; ?>" />
           <input type="hidden" name="uuid" value="<?php echo $data->uuid; ?>" />
@@ -99,12 +99,14 @@
         </label>
         <p/>
         <label for="level">
-          Qualification Levels<p/>
+          Qualification Level
           <div id="format">
             <?php
             if (isset($qualifications)) foreach ($qualifications as $qualification) {
               ?>
-              <input type="checkbox" id="check_{{$qualification->id}}" name="qualification_{{$qualification->id}}" />
+              <input type="checkbox" <?php if(in_array($qualification->id, $resourceQualifications)) echo 'checked="checked"' ?> 
+                    id="check_{{$qualification->id}}" name="qualification_{{$qualification->id}}" 
+                />
               <label for="check_{{$qualification->id}}">Level {{$qualification->level}}</label>
             <?php
             }

@@ -180,6 +180,152 @@ Route::get('/mapped', function () {
 });
 
 
+/** 
+* Get Mapping and show an edit form 
+*/
+Route::get('/edit/{u?}/{id?}', function ($u = '', $id = '') {
+  $uid = "$u/$id";
+
+  $resource = \Bentleysoft\ES\Service::get($uid);
+
+  if (!$resource)  App::abort(404);
+  
+  $resourceQualifications = array();
+  $resourceTags = array();
+
+  $result = Mapping::where('uid', '=', $uid)->get();
+  if ($result && count($result) > 0) {
+    $meta = $result[0];
+
+    // Get attached qualifications, if any
+    $myQuals = $meta->qualifications()->get();
+
+    if (count($myQuals->all())>0) {
+      foreach ($myQuals->all() as $i => $row) {
+        # code...
+        $resourceQualifications[] = $row->id;
+      }
+    }
+
+    $myTags = $meta->tags()->get();
+
+    if (count($myTags->all())>0) {
+      foreach ($myTags->all() as $i => $row) {
+        # code...
+        $resourceTags[] = $row->ldcs_desc;
+      }
+    }
+
+  } else {
+    $meta = new Mapping;
+    $meta->uid = $uid;
+  }
+
+  $qualifications = QualificationView::where('activated', '=', 1)->get();
+
+  $topLevel = (isset($resource['_source']['subject']['ldcode'])) ? $resource['_source']['subject']['ldcode'][0] : '?';
+
+  $ldcsSubjects = LdcsView::where('ldcs_code', 'like', "$topLevel%.%") // Only 2nd level for now
+    ->whereIn('depth', [2])
+    ->get();
+
+  $tags = array();
+  foreach ($ldcsSubjects as $subject) {
+    $tags[] = $subject->ldcs_desc;
+  }
+
+  $status = array();
+  return View::make('edit')->with(array('data' => $meta,
+    'status' => $status,
+    'qualifications' => $qualifications,
+    'tags' => json_encode($tags),
+    'resourceTags'=>implode(',', $resourceTags),
+    'resourceQualifications'=>$resourceQualifications,
+    'resource' => $resource));
+});
+
+/**
+ * Post resource handler, the main handler really
+ * TODO: Move stuff to helper/model and add validation
+ */
+Route::post('/edit/{uu?}/{id?}', function ($uu='', $id = '') {
+
+
+  $uid = Input::get('uid');
+  $result = Mapping::where('uid', '=', $uid)->get();
+
+  if (!($result && count($result) > 0)) {
+    $meta = new Mapping;
+    $meta->uid = $uid;
+  } else {
+    $meta = $result[0];
+
+    MappingQualification::where('mappings_id','=',$meta->id)
+                        ->delete();
+
+    MappingLdcs::where('mappings_id','=',$meta->id)
+      ->delete();
+  }
+  // TODO: validate
+
+  $meta->subject_area = Input::get('subject_area');
+  $meta->level = Input::get('level');
+  $meta->content_usage = Input::get('content_usage');
+
+  if ($meta->save()) {
+    /**
+     * Save the Qualifications
+     */
+    foreach (Input::all() as $key=>$input) {
+      if (strpos($key,'qualification')!==false) {
+        $qid = str_replace('qualification_', '', $key);
+        $metaQual = new MappingQualification();
+
+        $metaQual->mappings_id = $meta->id;
+        $metaQual->qualifications_id = $qid;
+        $metaQual->save();
+      }
+    }
+
+    $tags = explode(',', Input::get('tags', ''));
+
+    foreach ($tags as $tag) {
+      $ldcs = LdcsView::where('ldcs_desc','=',"$tag")->get();
+      if (count($ldcs)>0 ) {
+        $ldc = $ldcs[0];
+        $metaLdcs = new MappingLdcs();
+        $metaLdcs->mappings_id = $meta->id;
+        $metaLdcs->ldcs_id = $ldc->id;
+        $metaLdcs->save();
+      }
+    }
+
+    $params = array(
+      'id' => $meta->uid,
+      'type' => 'learning resource',
+      'index' => 'ciim',
+      'body' => array('doc' => array('edited' => 'yes',
+        'admin' => array('processed' => time() * 1000),
+        )
+      ),
+
+    );
+    $response = \Es::update($params);
+
+    $status = array('close' => true,);
+
+  } else {
+    // TODO: Error handing
+    $status = array(); // add messages, handling etc..
+  }
+
+
+  return View::make('edit')->with(array('data' => $meta,
+                            'status' => $status,
+                            ));
+
+});
+
 /**
  * The Dashboard
  * TODO: Think what kind of Dashboard diferrent people get - or is it the same for all?
@@ -437,111 +583,6 @@ Route::post('download', function () {
 
 });
 
-Route::get('/edit/{u?}/{id?}', function ($u = '', $id = '') {
-  $uid = "$u/$id";
-
-  $resource = \Bentleysoft\ES\Service::get($uid);
-
-  if (!$resource) {
-    App::abort(404);
-  }
-
-  $result = Mapping::where('uid', '=', $uid)->get();
-  if ($result && count($result) > 0) {
-    $meta = $result[0];
-  } else {
-    $meta = new Mapping;
-    $meta->uid = $uid;
-  }
-
-  $qualifications = QualificationView::where('activated', '=', 1)->get();
-
-  if (isset($resource['_source']['subject']['ldcode'])) { // One level and one level only for now
-    $topLevel = $resource['_source']['subject']['ldcode'][0];
-  } else {
-    $topLevel = '?';
-  }
-
-  $ldcsSubjects = LdcsView::where('ldcs_code', 'like', "$topLevel%.%") // Only 2nd level for now
-    ->whereIn('depth', [2])
-    ->get();
-
-  $tags = array();
-  foreach ($ldcsSubjects as $subject) {
-    $tags[] = $subject->ldcs_desc;
-  }
-
-  $status = array();
-  return View::make('edit')->with(array('data' => $meta,
-    'status' => $status,
-    'qualifications' => $qualifications,
-    'tags' => json_encode($tags),
-    'resource' => $resource));
-});
-
-/**
- * Post resource handler, the main handler really
- * TODO: Move stuff to helper/model and add validation
- */
-Route::post('/edit/{uuid?}', function ($uuid = '') {
-  $uid = Input::get('uid');
-  $result = Mapping::where('uid', '=', $uid)->get();
-
-  if (!($result && count($result) > 0)) {
-    $meta = new Mapping;
-    $meta->uid = $uid;
-  } else {
-    $meta = $result[0];
-
-    MappingQualification::where('mappings_id','=',$meta->id)
-                        ->delete();
-
-  }
-  // TODO: validate
-
-  $meta->subject_area = Input::get('subject_area');
-  $meta->level = Input::get('level');
-  $meta->content_usage = Input::get('content_usage');
-
-  if ($meta->save()) {
-    /**
-     * Save the Qualifications
-     */
-    foreach (Input::all() as $key=>$input) {
-      if (strpos($key,'qualification')!==false) {
-        $qid = str_replace('qualification_', '', $key);
-        $metaQual = new MappingQualification();
-
-        $metaQual->mappings_id = $meta->id;
-        $metaQual->qualifications_id = $qid;
-        $metaQual->save();
-      }
-    }
-
-    $params = array(
-      'id' => $meta->uid,
-      'type' => 'learning resource',
-      'index' => 'ciim',
-      'body' => array('doc' => array('edited' => 'yes',
-        'admin' => array('processed' => time() * 1000),
-        )
-      ),
-
-    );
-    $response = \Es::update($params);
-    $status = array('close' => true,);
-
-  } else {
-    // TODO: Error handing
-    $status = array(); // add messages, handling etc..
-  }
-
-
-  return View::make('edit')->with(array('data' => $meta,
-                            'status' => $status,
-                            ));
-
-});
 
 /**
  * Togle edited on off

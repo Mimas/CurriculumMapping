@@ -14,7 +14,7 @@
         </div>
         <div class="units-row">
             <div class="unit-50">
-            <label for="levels">Levels
+            <label for="levels">Hierarchy depth
             <?php
             for ($i=1; $i<$maxDepth; $i++) {
             ?>
