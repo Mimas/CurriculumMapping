@@ -2,7 +2,7 @@
 @section('content')
 <form method="get" action="<?php echo asset('subjectareas') ?>" class="forms">
   <div class="units-row top44">
-    <div class="unit-90">
+    <div class="unit-100">
         <div class="input-groups spacer">
           <input type="text" name="q" placeholder="Search" value="{{Input::get('q','')}}" />
           <span class="btn-append">
@@ -28,7 +28,7 @@
   <div class="error row-fluid">
   </div>
   @endif
-  <table class="width-90 table-hovered table-stripped">
+  <table class="width-100 table-hovered table-stripped">
     <?php foreach ($data as $subject): ?>
       <tr>
         <td> <a class="iframe" href="<?php echo asset('subject') ?>/{{$subject->id}}">{{ $subject->subject }}</a></td>

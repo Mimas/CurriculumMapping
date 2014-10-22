@@ -37,9 +37,18 @@
           </td>
         </tr>
         <?php endforeach; ?>
+        <tr>
+          <td colspan="5">
+            <?php echo $users->links(); ?>
+          </td>
+          <td class="text-right">
+            <a href="/admin/user/0/edit/" class="btn btn-smaller btn-blue">Add User&nbsp;<i class="fa fa-plus"></i></a>
+
+          </td>
+        </tr>
+
         </table>
       <?php echo $users->links(); ?>
-      <a href="/admin/user/0/edit/" class="btn btn-smaller btn-blue">Add User&nbsp;<i class="fa fa-plus"></i></a>
     </div>
 </div>
 @stop

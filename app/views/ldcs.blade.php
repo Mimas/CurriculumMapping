@@ -2,7 +2,7 @@
 @section('content')
     <form method="get" action="<?php echo asset(Request::path()); ?>" class="forms search">
         <div class="units-row top44">
-            <div class="unit-90">
+            <div class="unit-100">
                 <div class="input-groups spacer">
                     <input type="text" name="q" placeholder="Search" value="{{Input::get('q','')}}" />
                     <span class="btn-append">
@@ -13,7 +13,7 @@
             </div> 
         </div>
         <div class="units-row">
-            <div class="unit-50">
+            <div class="unit-60">
             <label for="levels">Hierarchy depth
             <?php
             for ($i=1; $i<$maxDepth; $i++) {
@@ -37,7 +37,7 @@
   <div class="error row-fluid">
   </div>
   @endif
-  <table class="width-90 table-hovered table-stripped">
+  <table class="width-100 table-hovered table-stripped">
     <?php foreach ($data as $row): ?>
       <tr>
         <td class="width-10"> <a class="iframe" href="<?php echo asset(str_singular(Request::path())); ?>/{{$row->id}}">{{ $row->ldcs_code }}</a></td>

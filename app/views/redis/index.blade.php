@@ -11,7 +11,7 @@
         <div class="summary">
         <h4><?php echo (count($data)) ?> key/values</h4>
         </div>
-          <table class="width-90 table-hovered">
+          <table class="width-100 table-hovered">
           <tr>
            <th>Key</th>
            <th class="text-centered">TTL</th>

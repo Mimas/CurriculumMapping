@@ -67,8 +67,10 @@
       $('#obsolete4').change(function() {
           if($(this).is(":checked")) {
             $('#other_comments').removeAttr('disabled');
+            $('#other_comments').css('color', '#000000');
           } else {
             $('#other_comments').attr('disabled', 'yes');
+            $('#other_comments').css('color', '#ffffff');
           }
         });
 
@@ -108,8 +110,8 @@
         </div>
         <div class="unit-100 breathe">
           <label for="currency">
-            Is this content current<br/>
-            <div class="radio">
+            Is this content current
+            <div class="radio breathe">
               <input type="radio" id="currency1" name="currency" value="1" <?php if($data->currency) echo 'checked="checked"'; ?> /> <label for="currency1">Yes</label>
               <input type="radio" id="currency2" name="currency" value="0" <?php if(!$data->currency) echo 'checked="checked"'; ?>/> <label for="currency2">No</label>
             </div>
@@ -120,15 +122,14 @@
       <div id="noncurrent">
         <div class="units-row">
           <div class="unit-100">
-            <label>Please choose one or more from the following options</label>
             <div class="checks" id="indicate">
+              <label>Please choose one or more from the following options</label>
               <input type="checkbox" id="obsolete1" value="Out of Date" {{$data->checked('Out of Date')}} name="issues[]"  /> <label for="obsolete1">Out of Date</label>
               <input type="checkbox" id="obsolete2" value="Wrong Subject Area" {{$data->checked('Wrong Subject Area')}} name="issues[]"  /> <label for="obsolete2">Wrong Subject Area</label>
               <input type="checkbox" id="obsolete3" value="Quality Issues" {{$data->checked('Quality Issues')}} name="issues[]"  /> <label for="obsolete3">Quality Issues</label>
               <input type="checkbox" id="obsolete4" value="Other" name="issues[]" {{$data->checked('Other')}} /> <label for="obsolete4">Other</label>
-
+            </div>
               <textarea  class="width-100" rows="4" id="other_comments" name="other_comments">{{$data->otherText()}}</textarea>
-
             </div>
           </div>
         </div>
@@ -172,7 +173,7 @@
                 if (isset($qualifications)) foreach ($qualifications as $qualification) {
                   ?>
                   <input type="checkbox" <?php if(in_array($qualification->id, $resourceQualifications)) echo 'checked="checked"' ?>
-                         id="check_{{$qualification->id}}" name="qualification_{{$qualification->id}}"
+                      id="check_{{$qualification->id}}" name="qualification_{{$qualification->id}}"
                     />
                   <label for="check_{{$qualification->id}}">Level {{$qualification->level}}</label>
                 <?php

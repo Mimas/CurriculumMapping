@@ -9,6 +9,7 @@
  * @property string subject_area
  * @property string currency
  * @property string level
+ * @property string checksum
  * @property string content_usage
  * @property string created_at
  * @property string updated_at
@@ -65,7 +66,8 @@ class Mapping extends EloquentUserStamp  {
    * @return \Illuminate\Database\Eloquent\Collection|static[]
    */
   public function currentIssues() {
-    $sql = "changeset = (select max(changeset) from mappings_issues where mappings_id=$this->id)";
+    $id = intVal($this->id);
+    $sql = "changeset = (select max(changeset) from mappings_issues where mappings_id=$id)";
     $issues = MappingIssue::whereRaw($sql)->get();
 
     return $issues;

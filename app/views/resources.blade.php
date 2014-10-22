@@ -12,7 +12,7 @@
 </style>
     <form method="get" action="<?php echo asset(Request::path()); ?>" class="forms search">
         <div class="units-row top44">
-            <div class="unit-90">
+            <div class="unit-100">
                 <div class="input-groups spacer">
                     <input type="text" name="q" placeholder="Search" value="{{Input::get('q','')}}" />
                     <span class="btn-append">
@@ -39,7 +39,7 @@
                 ?>
               </ul>
             </div>
-            <div class="unit-30">
+            <div class="unit-40">
               <div class="text-right pager" style="float: right;">
               <span class="total"><?php echo number_format($total); ?></span> Resources, page {{$page}} of {{ $resources->getLastPage() }}</span>&nbsp;&nbsp;|&nbsp;&nbsp;
               {{ Form::select('pageSize', \Bentleysoft\Helper::pageSizes(), $pageSize, array('class' => 'autoselect inliner')); }}
@@ -48,7 +48,7 @@
         </div>
     </form>
     <div style="margin-top: -26px;" class="units-row">
-      <div class="unit-90">
+      <div class="unit-100">
         <table class="table-hovered table-stripped">
         <?php
         foreach ($data['hits']['hits'] as $row) {

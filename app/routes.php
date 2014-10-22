@@ -255,52 +255,59 @@ Route::post('/edit/{uu?}/{id?}', function ($uu='', $id = '') {
   $uid = Input::get('uid');
   $result = Mapping::where('uid', '=', $uid)->get();
 
+  $crc32 = crc32(json_encode($_POST));
+
   if (!($result && count($result) > 0)) {
     $meta = new Mapping;
     $meta->uid = $uid;
-
+    $meta->checksum = 0;
   } else {
     $meta = $result[0];
 
-    MappingLdcs::where('mappings_id','=',$meta->id)
-      ->delete();
   }
   // TODO: validate
 
+  $status = array('close' => true,);
 
-  $meta->subject_area = Input::get('subject_area');
-  $meta->level = Input::get('level');
-  $meta->content_usage = Input::get('content_usage');
-  $meta->currency = Input::get('currency',0);
+  if ($meta->checksum <> $crc32) {
+    $meta->checksum = $crc32;
 
-  if ($meta->save()) {
-    $meta->attachQualifications(Input::all());
-    $meta->attachTags(explode(',', Input::get('tags', '')));
+    MappingLdcs::where('mappings_id','=',$meta->id)
+      ->delete();
 
-    if (!$meta->currency) {
-      $meta->attachIssues(Input::get('issues'), Input::get('other_comments',''));
+    $meta->subject_area = Input::get('subject_area');
+    $meta->level = Input::get('level');
+    $meta->content_usage = Input::get('content_usage');
+    $meta->currency = Input::get('currency',0);
+
+    if ($meta->save()) {
+      $meta->attachQualifications(Input::all());
+      $meta->attachTags(explode(',', Input::get('tags', '')));
+
+      if (!$meta->currency) {
+        $meta->attachIssues(Input::get('issues'), Input::get('other_comments',''));
+      }
+
+      $params = array(
+        'id' => $meta->uid,
+        'type' => 'learning resource',
+        'index' => 'ciim',
+        'body' => array('doc' => array('edited' => 'yes',
+          'admin' => array('processed' => time() * 1000),
+          )
+        ),
+
+      );
+      $response = \Es::update($params);
+
+      if (!$response) {
+
+      }
+    } else {
+      // TODO: Error handing
+      $status = array(); // add messages, handling etc..
     }
-
-
-    $params = array(
-      'id' => $meta->uid,
-      'type' => 'learning resource',
-      'index' => 'ciim',
-      'body' => array('doc' => array('edited' => 'yes',
-        'admin' => array('processed' => time() * 1000),
-        )
-      ),
-
-    );
-    $response = \Es::update($params);
-
-    $status = array('close' => true,);
-
-  } else {
-    // TODO: Error handing
-    $status = array(); // add messages, handling etc..
   }
-
 
   return View::make('edit')->with(array('data' => $meta,
                             'qualifications' => array(),
@@ -308,7 +315,6 @@ Route::post('/edit/{uu?}/{id?}', function ($uu='', $id = '') {
                             'resourceTags'=>implode(',', array()),
                             'resourceIssues'=>array(),
                             'resourceQualifications'=>array(),
-
                             'status' => $status,
                             ));
 

@@ -3,8 +3,11 @@
             <div class="units-row top44">
                 <div class="unit-100">
                     <table class="table-hovered">
-                      <th colspan="2">
+                      <th>
                       <h2>{{ $data['_source']['summary_title'] }}</h2>
+                      </th>
+                      <th class="text-right">
+                        <a href="/edit/<?php echo $data['_source']['admin']['uid']; ?>" class="iframe btn btn-small btn-blue">Edit&nbsp;<i class="fa fa-edit"></i></a>
                       </th>
                       <tr>
                         <td class="bold">Source</td><td>{{$data['_source']['admin']['source'] or '' }}</td>
@@ -25,7 +28,7 @@
                         <td class="bold">Licence</td><td>{{$data['_source']['lifecycle']['publication'][0]['rights']['details'] or ''}}</td>
                       </tr>
                       <tr>
-                        <td class="bold">Licence</td><td>{{$data['_source']['lifecycle']['publication'][0]['rights']['uri'] or ''}}</td>
+                        <td class="bold">Licence Details</td><td><a target="_new" href="{{$data['_source']['lifecycle']['publication'][0]['rights']['uri'] or ''}}">{{$data['_source']['lifecycle']['publication'][0]['rights']['uri'] or ''}}</a></td>
                       </tr>
                       <?php
                       if ( isset($data['_source']['audience']) && $data['_source']['audience'] == 'HE' ) {
@@ -52,7 +55,6 @@
                           </td>
                         </tr>
 
-
                       <?php
                       }
                       ?>
@@ -74,9 +76,8 @@
                         {
                           foreach($bitstreams as $bitstream)
                           {
-                           if ($bitstream->getFormat() <> 'Unknown') {
+                           if ($bitstream->getFormat() <> 'Unknown' && strpos($bitstream->getName(),'license')===false) {  // hide license files...
                             ?>
-
                             <tr data-id='{{$bitstream->getId()}}' data-role='bitstream'>
                               <td data-role='file-name'>{{$bitstream->getName()}}</td>
                               <td data-role='format'>
