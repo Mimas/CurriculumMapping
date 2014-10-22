@@ -37,15 +37,13 @@ class Service
 
     $filter = array();
 
-
-
-
     $must = array();
     $must[] = array("query_string"=>array("query"=>"$pattern"));
 
     $extraTerms = array();
 
     if (! empty($areas)) {
+
       $extraTerms = self::getLdCodesForSubjects($areas);
 
       $must[] = array( 'terms'=>array(
@@ -56,8 +54,6 @@ class Service
     } else {
       $must[] = array( 'terms'=>array('audience'=>array('FE')) );
     }
-
-
 
     // THIS HALF WORKS
     $query = array(
@@ -235,7 +231,7 @@ class Service
         if (!$learnDirect) {
           throw new \Exception("Strange inability to find ldcs for id {$sld->ldcs_id} ");
         }
-        $ret[] = strtolower($learnDirect->ldsc_code);
+        $ret[] = strtolower($learnDirect->ldcs_code);
       }
     }
     return $ret;

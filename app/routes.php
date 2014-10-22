@@ -218,6 +218,7 @@ Route::get('/edit/{u?}/{id?}', function ($u = '', $id = '') {
 
   } else {
     $meta = new Mapping;
+    $meta->currency = 1;
     $meta->uid = $uid;
   }
 
@@ -233,6 +234,7 @@ Route::get('/edit/{u?}/{id?}', function ($u = '', $id = '') {
   foreach ($ldcsSubjects as $subject) {
     $tags[] = $subject->ldcs_desc;
   }
+
 
   $status = array();
   return View::make('edit')->with(array('data' => $meta,
@@ -250,55 +252,35 @@ Route::get('/edit/{u?}/{id?}', function ($u = '', $id = '') {
  */
 Route::post('/edit/{uu?}/{id?}', function ($uu='', $id = '') {
 
-
   $uid = Input::get('uid');
   $result = Mapping::where('uid', '=', $uid)->get();
 
   if (!($result && count($result) > 0)) {
     $meta = new Mapping;
     $meta->uid = $uid;
+
   } else {
     $meta = $result[0];
-
-    MappingQualification::where('mappings_id','=',$meta->id)
-                        ->delete();
 
     MappingLdcs::where('mappings_id','=',$meta->id)
       ->delete();
   }
   // TODO: validate
 
+
   $meta->subject_area = Input::get('subject_area');
   $meta->level = Input::get('level');
   $meta->content_usage = Input::get('content_usage');
+  $meta->currency = Input::get('currency',0);
 
   if ($meta->save()) {
-    /**
-     * Save the Qualifications
-     */
-    foreach (Input::all() as $key=>$input) {
-      if (strpos($key,'qualification')!==false) {
-        $qid = str_replace('qualification_', '', $key);
-        $metaQual = new MappingQualification();
+    $meta->attachQualifications(Input::all());
+    $meta->attachTags(explode(',', Input::get('tags', '')));
 
-        $metaQual->mappings_id = $meta->id;
-        $metaQual->qualifications_id = $qid;
-        $metaQual->save();
-      }
+    if (!$meta->currency) {
+      $meta->attachIssues(Input::get('issues'), Input::get('other_comments',''));
     }
 
-    $tags = explode(',', Input::get('tags', ''));
-
-    foreach ($tags as $tag) {
-      $ldcs = LdcsView::where('ldcs_desc','=',"$tag")->get();
-      if (count($ldcs)>0 ) {
-        $ldc = $ldcs[0];
-        $metaLdcs = new MappingLdcs();
-        $metaLdcs->mappings_id = $meta->id;
-        $metaLdcs->ldcs_id = $ldc->id;
-        $metaLdcs->save();
-      }
-    }
 
     $params = array(
       'id' => $meta->uid,
@@ -321,6 +303,12 @@ Route::post('/edit/{uu?}/{id?}', function ($uu='', $id = '') {
 
 
   return View::make('edit')->with(array('data' => $meta,
+                            'qualifications' => array(),
+                            'tags' => json_encode(array()),
+                            'resourceTags'=>implode(',', array()),
+                            'resourceIssues'=>array(),
+                            'resourceQualifications'=>array(),
+
                             'status' => $status,
                             ));
 

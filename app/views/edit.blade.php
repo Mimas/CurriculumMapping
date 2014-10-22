@@ -30,7 +30,9 @@
     .breathe {
       margin-top: 12px;
     }
+
     #format { margin-top: 2em; }
+
     input[type='checkbox'] {
       display: none !important;
     }
@@ -116,15 +118,19 @@
         </div>
       </div>
       <div id="noncurrent">
-        <label>Please indicate</label>
-        <div class="checks" id="indicat">
-          <input type="checkbox" id="obsolete1" name="issue[]"  /> <label for="obsolete1">Out of Date</label>
-          <input type="checkbox" id="obsolete2" name="issue[]"  /> <label for="obsolete2">Wrong Subject Area</label>
-          <input type="checkbox" id="obsolete3" name="issue[]"  /> <label for="obsolete3">Quality Issues</label>
-          <input type="checkbox" id="obsolete4" name="issue[]"  /> <label for="obsolete4">Other</label>
+        <div class="units-row">
+          <div class="unit-100">
+            <label>Please choose one or more from the following options</label>
+            <div class="checks" id="indicate">
+              <input type="checkbox" id="obsolete1" value="Out of Date" {{$data->checked('Out of Date')}} name="issues[]"  /> <label for="obsolete1">Out of Date</label>
+              <input type="checkbox" id="obsolete2" value="Wrong Subject Area" {{$data->checked('Wrong Subject Area')}} name="issues[]"  /> <label for="obsolete2">Wrong Subject Area</label>
+              <input type="checkbox" id="obsolete3" value="Quality Issues" {{$data->checked('Quality Issues')}} name="issues[]"  /> <label for="obsolete3">Quality Issues</label>
+              <input type="checkbox" id="obsolete4" value="Other" name="issues[]" {{$data->checked('Other')}} /> <label for="obsolete4">Other</label>
 
-          <textarea disabled="disabled" class="width-100" rows="4" id="other_comments" name="other_comments"></textarea>
+              <textarea  class="width-100" rows="4" id="other_comments" name="other_comments">{{$data->otherText()}}</textarea>
 
+            </div>
+          </div>
         </div>
       </div>
 
