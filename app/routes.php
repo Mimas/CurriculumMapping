@@ -59,6 +59,43 @@ Route::get('/koko', function () {
 
 });
 
+Route::get('contact', function() {
+  $user = \Sentry::getUser();
+  if (!$user) {
+    App::abort(401, 'You are not authorized.');
+  }
+
+  return View::make('extras.contact')->with(array('user'=>$user));
+});
+
+/**
+* Special POST case for contact form with re-captcha
+*/
+Route::post("contact", function()
+{
+  $rules =  array( 'name' => array('required'), 'email' => array('required'), 'surname' => array('required'), 'message' => array('required') );
+  
+  $validator = Validator::make(Input::all(), $rules, array('required' => 'The :attribute is required.') );
+
+  if( $validator->fails() ) {
+    $messages = $validator->messages();
+    return Redirect::back()->withInput()->withErrors($messages);
+  } else {
+    $data = array_merge( Input::all(), array('timestamp'=>date('Y-m-d H:i:s' ), 'remote_addr'=>$_SERVER['REMOTE_ADDR'], 'user_agent'=>$_SERVER['HTTP_USER_AGENT'] ));
+
+    Mail::send('emails.enquiry', array('data'=>$data), function($message)
+    {
+      $message->to('petros.diveris@manchester.ac.uk', 'Petros Diveris')
+              ->cc('mark.power@manchester.ac.uk')
+              ->cc('joy.hooper@jisc.ac.uk');
+
+      $message->subject('Curriculum Mapping Tool Contact Form - '.Input::get('name') .' ' .Input::get('surname') );
+      $message->from(Input::get('email'), 'Curriculum Mapping Tool web enquiry form');
+
+    });   
+    return Redirect::back()->withInput()->with(array('success'=>'Your message has been received and and will be answered shortly.'));
+  }
+});
 
 /**
  * Resources

@@ -65,6 +65,17 @@ class Helper {
     return self::userHasAccess(array('application.admin'));
   }
 
+  public static function isMenuSlected($path) {
+    $ret = 'normal';
+
+    $pathBits = explode('/', \Request::path());
+    $actualPath = $pathBits[count($pathBits)-1 ];
+
+    if ($actualPath == $path)
+      $ret = 'active';
+
+    return $ret;
+  }
 
   /**
    * Get user's subject areas

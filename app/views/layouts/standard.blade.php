@@ -48,9 +48,6 @@
       .breathe-left {
         margin-left: 7px !important;
       }
-      .menu a {
-        color: #ea6000 !important;
-      }
       .dashboard {
         font-size: 1.2em;;
       }
@@ -75,6 +72,7 @@
       #logo h2 {
         color: #ea6000;
       }
+
       .navbar {
         font-size: 95% !important;
       }
@@ -85,6 +83,15 @@
         font-weight: 900;
         color: #ea6000;
       }
+      .normal  {
+        color: #ea6000 !important;
+      }
+
+      .active {
+        color: #ea6000 !important;
+        border-bottom: 3px #ea6000 solid;
+      }
+
 
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -127,36 +134,36 @@
               <nav class="navbar navbar-right">
                 <ul class="menu">
                   <?php if(! Sentry::check() && $_SERVER['REQUEST_URI']!=='/login'): ?>
-                    <li><a href="/login">Sign In</a></li>
+                    <li><a class="<?php echo Bentleysoft\Helper::isMenuSlected('login') ?>" href="/login">Sign In</a></li>
                   <?php endif; ?>
 
                   <?php if (Bentleysoft\Helper::userHasAccess(array('resource.manage')) || Bentleysoft\Helper::superUser()): ?>
-                    <li><a href="/resources">Resources</a></li>
+                    <li><a class="<?php echo Bentleysoft\Helper::isMenuSlected('resources') ?>" href="/resources">Resources</a></li>
                   <?php endif; ?>
                   <?php if (Bentleysoft\Helper::userHasAccess(array('subjectareas.manage')) || Bentleysoft\Helper::userHasAccess(array('subjectareas.admin'))  || Bentleysoft\Helper::superUser() ): ?>
-                    <li><a href="/subjectareas">Subjects</a></li>
+                    <li><a class="<?php echo Bentleysoft\Helper::isMenuSlected('subjectareas') ?>" href="/subjectareas">Subjects</a></li>
                   <?php endif; ?>
 
                   <?php if (Bentleysoft\Helper::userHasAccess(array('subjectareas.admin')) || Bentleysoft\Helper::superUser()): ?>
-                    <li><a href="/ldcs">Classification</a></li>
+                    <li><a class="<?php echo Bentleysoft\Helper::isMenuSlected('ldcs') ?>" href="/ldcs">Classification</a></li>
                   <?php endif; ?>
 
                   <?php if (Bentleysoft\Helper::userHasAccess(array('qualifications.manage')) || Bentleysoft\Helper::superUser()): ?>
-                    <li><a href="/qualifications">Qualifications</a></li>
+                    <li><a class="<?php echo Bentleysoft\Helper::isMenuSlected('qualifications') ?>" href="/qualifications">Qualifications</a></li>
                   <?php endif; ?>
 
                   <?php if (Bentleysoft\Helper::userHasAccess(array('user.create', 'user.delete', 'user.update', 'user.view', 'application.admin' )) || Bentleysoft\Helper::superUser()): ?>
-                    <li><a href="/admin/users">Users</a></li>
+                    <li><a class="<?php echo Bentleysoft\Helper::isMenuSlected('users') ?>" href="/admin/users">Users</a></li>
                   <?php endif; ?>
 
                   <?php if (Bentleysoft\Helper::userHasAccess(array('redis.admin' )) || Bentleysoft\Helper::superUser() ): ?>
-                    <li><a href="/redis">Cache</a></li>
+                    <li><a class="<?php echo Bentleysoft\Helper::isMenuSlected('redis') ?>" href="/redis">Cache</a></li>
                   <?php endif; ?>
 
+                  <li><a class="<?php echo Bentleysoft\Helper::isMenuSlected('contact') ?>" href="/contact">Help/Feedback</a></li>
                   <?php if (Sentry::check()): ?>
-                    <li><a href="/logout">Sign Out</a></li>
+                    <li><a class="<?php echo Bentleysoft\Helper::isMenuSlected('logout') ?>" href="/logout">Sign Out</a></li>
                   <?php endif; ?>
-                  <li><a href="/contact">Help/Feedback</a></li>
 
                 </ul>
               </nav>
