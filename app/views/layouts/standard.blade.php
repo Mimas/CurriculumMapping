@@ -89,7 +89,7 @@
 
       .active {
         color: #ea6000 !important;
-        border-bottom: 3px #ea6000 solid;
+        border-bottom: 2px #ea6000 solid;
       }
 
 
@@ -211,10 +211,10 @@
                 <li><a href="/redis">Cache</a></li>
               <?php endif; ?>
 
+                <li><a href="/contact">Help/Feedback</a></li>
               <?php if (Sentry::check()): ?>
                 <li><a href="/logout">Sign Out</a></li>
               <?php endif; ?>
-                <li><a href="/contact">Help/Feedback</a></li>
             </ul>
           </nav>
         <?php
