@@ -614,6 +614,10 @@ Route::post('download', function () {
 
 });
 
+Route::any('preview/{id?}', function($id) {
+  $bitstream = MIMAS\Service\Jorum\Bitstream::find($id, array(), 'json', 'json');
+  return View::make('preview')->with(array('bitstream'=>$bitstream));
+});
 
 /**
  * Togle edited on off

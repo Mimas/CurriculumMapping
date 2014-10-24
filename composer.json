@@ -11,6 +11,7 @@
       "barryvdh/laravel-ide-helper": "1.*",
       "jyggen/curl": "*",
       "nategood/httpful": "*",
+      "phpoffice/phpword": "dev-master",
       "ruflin/Elastica": "dev-master"
 	},
 	"autoload": {

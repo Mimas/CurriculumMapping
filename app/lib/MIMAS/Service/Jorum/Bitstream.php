@@ -418,17 +418,137 @@ class Bitstream extends JorumApi
   }
 
   /**
+   * @param string $url
+   * @return string
+   */
+  protected static function sanitizeMe($url='') {
+    $ret = $url;
+    if (strpos($url, 'vimeo.com')!==false) {
+
+      $bits = explode('/',$url);
+      $ret = $bits[0].'//'.'player.vimeo.com/video/'.$bits[count($bits)-1];
+
+    }
+    return $ret;
+  }
+
+  /**
+   * Fetch the bitstream and return it, along with the mime type
+   * as specified in the Bitstream
+   *
+   * @return \Illuminate\Http\Response
+   *
+   */
+  public function retrieveStream()
+  {
+    $url = parent::$apiUrl . substr($this->getRetrieveLink(), 1);
+
+    $stream = self::ApiCall($url);
+
+    return $stream;
+
+  }
+
+
+  protected static function swapExtensionToPdf($fileName) {
+    $bits = explode('.',$fileName);
+    if (count($bits)>1) {
+      return $bits[0].'.pdf';
+
+    } else {
+      return $fileName . '.pdf';
+    }
+  }
+
+
+  /**
+   * Render!!
+   */
+  public function render() {
+    switch ($this->getMimeType()) {
+      case 'application/msword':
+          $pdfName = self::swapExtensionToPdf($this->getName());
+          $pdfPath = public_path().'/conversions/'.$pdfName;
+
+          if (!file_exists($pdfPath)) {
+
+            if (!file_exists( public_path().'/conversions/originals/'.$this->getName())) {
+              $stream = $this->retrieveStream();
+              file_put_contents(public_path().'/conversions/originals/'.$this->getName(), $stream);
+            }
+
+            $binPath = '/usr/bin/soffice';
+
+            $cmd = "$binPath --headless --convert-to pdf --outdir  "
+              .public_path().'/conversions '
+              .public_path().'/conversions/originals/'.$this->getName();
+
+
+            exec("$cmd");
+
+
+          }
+          return \View::make('conversions.pdf')->with(array('file'=>$pdfName));
+
+        break;
+      case 'image/png:':
+        return $this->retrieve();
+    }
+  }
+
+  public function getPreviewUrl() {
+    $url = '';
+    switch ($this->getBundleName()) {
+      case 'URL_BUNDLE':
+        $url = $this->getName();
+        $url = self::sanitizeMe($url);
+        break;
+      default:
+        $url .= asset('preview/'.$this->getId());
+    }
+    return $url;
+
+  }
+
+  /**
    * Find. Wrapper for findByIdOrHandle
    * @param string $id
    * @param array $options
    * @param string $outputFormat
    * @param string $inputFormat
    * @return \MIMAS\Service\Jorum\Item $item
+   *
    */
   public static function find($id = '', $options = array(), $outputFormat = '', $inputFormat)
   {
     $bitstream = new Bitstream($outputFormat, $inputFormat);
     return $bitstream->findByIdOrHandle($id, $options);
+  }
+
+  /**
+   * @return bool
+   */
+  public function isExternal() {
+    $ret = true;
+    $ret = $ret && strpos($this->getName(),'http://')!==false;
+    return $ret;
+  }
+
+
+  /**
+   * Is the Bitstream content or Metadata related to the Resource?
+   * @return bool
+   */
+  public function isContent() {
+    $ret = true;
+
+    $ret = $ret && $this->getFormat() <> 'Unknown';
+    $ret = $ret && strpos($this->getName(),'license')===false;
+    $ret = $ret && strpos($this->getName(),'imsmanifest')===false;
+    $ret = $ret && strpos($this->getName(),'PreviewIndexBitstream')===false;
+
+    return $ret;
+
   }
 
 }

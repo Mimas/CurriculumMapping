@@ -76,7 +76,7 @@
                         {
                           foreach($bitstreams as $bitstream)
                           {
-                           if ($bitstream->getFormat() <> 'Unknown' && strpos($bitstream->getName(),'license')===false) {  // hide license files...
+                           if ($bitstream->isContent()) {  // hide license files...
                             ?>
                             <tr data-id='{{$bitstream->getId()}}' data-role='bitstream'>
                               <td data-role='file-name'>{{$bitstream->getName()}}</td>
@@ -96,7 +96,14 @@
                                 {{Form::close();}}
 
                               </td>
-                              <td data-role='preview'><a href="http://dspace.jorum.ac.uk/rest{{$bitstream->getRetrieveLink()}}" class="iframe btn btn-smaller btn-blue" rel="group">Preview</a></td>
+                              <td data-role='preview'>
+                                <td data-role='preview'>
+
+                                  <a href="{{$bitstream->getPreviewUrl()}}" class="iframe btn btn-smaller btn-blue" rel="group">Preview&nbsp;<i class="fa fa-search"></i></a>
+
+                              </td>
+
+                              </td>
                             </tr>
 
                         <?php

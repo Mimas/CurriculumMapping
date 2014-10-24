@@ -91,8 +91,6 @@
         color: #ea6000 !important;
         border-bottom: 2px #ea6000 solid;
       }
-
-
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <link rel="stylesheet" href="<?php echo asset('3rdparty/kube/css/kube.css'); ?>">
@@ -152,7 +150,7 @@
                     <li><a class="<?php echo Bentleysoft\Helper::isMenuSlected('qualifications') ?>" href="/qualifications">Qualifications</a></li>
                   <?php endif; ?>
 
-                  <?php if (Bentleysoft\Helper::userHasAccess(array('user.create', 'user.delete', 'user.update', 'user.view', 'application.admin' )) || Bentleysoft\Helper::superUser()): ?>
+                  <?php if (Bentleysoft\Helper::userHasAccess(array('user.create', 'user.delete', 'user.update', 'user.view')) || Bentleysoft\Helper::superUser()): ?>
                     <li><a class="<?php echo Bentleysoft\Helper::isMenuSlected('users') ?>" href="/admin/users">Users</a></li>
                   <?php endif; ?>
 
