@@ -6,4 +6,4 @@
  * Time: 15:59
  */
 ?>
-<iframe id="viewer" src = "/3rdparty/ViewerJS/index.html/#../../conversions/{{$file}}" width="100%" height="760" allowfullscreen webkitallowfullscreen></iframe>
+<iframe id="viewer" src = "/3rdparty/ViewerJS/index.html/#../../resourcecache/{{$file}}" width="100%" height="760" allowfullscreen webkitallowfullscreen></iframe>
