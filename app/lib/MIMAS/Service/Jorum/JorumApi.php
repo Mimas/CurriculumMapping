@@ -261,8 +261,8 @@ class JorumApi implements \JsonSerializable, \IteratorAggregate
 
         $stream = false;
 
-        if (\Config::get('app.apiCache') > 0) { // only try to read from the cache if we have set a an apiCache > 0 in app.php
-            $stream = Cache::get($id);
+        if (\Config::get('app.apiCache') > 0) { // only try to read from the cache if we have set an apiCache > 0 in app.php
+          $stream = \Cache::get($id);
         }
 
         $method = strtoupper(array_key_exists('method', $params) ? $params['method'] : 'get');
@@ -310,7 +310,7 @@ class JorumApi implements \JsonSerializable, \IteratorAggregate
                 $stream = $response->body;
 
                 if (\Config::get('app.apiCache') > 0) {
-                    $expiresAt = \Carbon\Carbon::now()->addSeconds(Config::get('app.apiCache'));
+                    $expiresAt = \Carbon\Carbon::now()->addSeconds(\Config::get('app.apiCache'));
                     \Cache::put($id, $stream, $expiresAt);
                 }
             } else {

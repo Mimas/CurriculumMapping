@@ -82,6 +82,17 @@ return array(
 
 	'cipher' => MCRYPT_RIJNDAEL_128,
 
+  /*
+  |--------------------------------------------------------------------------
+  | API caching (DSPACE)
+  |--------------------------------------------------------------------------
+  |
+  | How long should we cache DSPACE for. Currently set to 10 days because
+  | DSPACE keeps crashing, making development impossible.
+  |
+  */
+  'apiCache' => 864000,
+
 	/*
 	|--------------------------------------------------------------------------
 	| Autoloaded Service Providers

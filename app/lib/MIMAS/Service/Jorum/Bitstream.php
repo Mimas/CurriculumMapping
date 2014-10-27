@@ -477,6 +477,9 @@ class Bitstream extends JorumApi
               file_put_contents(public_path().'/conversions/originals/'.$this->getName(), $stream);
             }
 
+
+
+
             $binPath = '/usr/bin/soffice';
 
             $cmd = "$binPath --headless --convert-to pdf --outdir  "
@@ -484,7 +487,9 @@ class Bitstream extends JorumApi
               .public_path().'/conversions/originals/'.$this->getName();
 
 
-            exec("$cmd");
+            shell_exec('export HOME=/tmp && /usr/bin/soffice --headless -convert-to pdf --outdir ' .public_path().'/conversions '.public_path().'/conversions/originals/'.$this->getName());
+
+            //// exec("$cmd");
 
 
           }
