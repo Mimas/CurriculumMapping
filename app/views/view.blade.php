@@ -66,11 +66,11 @@
 
                         <tbody>
                         <tr data-role='package'></tr>
-                        <th>File name</th>
+                        <th class="width-40">File name</th>
                         <th>File type</th>
                         <th>File size</th>
-                        <th></th>
-                        <th></th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
                         <?php
                         if ($bitstreams && count($bitstreams)>0)
                         {
@@ -94,15 +94,9 @@
                                 <input type="hidden" name="mime" value="{{$bitstream->getMimeType()}}" />
                                 <input type="hidden" name="filename" value="{{$bitstream->getName()}}" />
                                 {{Form::close();}}
-
                               </td>
                               <td data-role='preview'>
-                                <td data-role='preview'>
-
                                   <a href="{{$bitstream->getPreviewUrl()}}" class="iframe btn btn-smaller btn-blue" rel="group">Preview&nbsp;<i class="fa fa-search"></i></a>
-
-                              </td>
-
                               </td>
                             </tr>
 

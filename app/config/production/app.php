@@ -14,5 +14,6 @@ return array(
 	*/
 
 	'debug' => false,
+  'soffice'=> '/usr/bin/soffice',
 
 );

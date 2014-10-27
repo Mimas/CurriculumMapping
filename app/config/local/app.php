@@ -14,5 +14,5 @@ return array(
 	*/
 
 	'debug' => true,
-
+  'soffice'=> '/Applications/LibreOffice.app/Contents/MacOS/soffice',
 );

@@ -8,6 +8,7 @@
 namespace Bentleysoft;
 
 use Cartalyst\Sentry\Facades\CI\Sentry;
+use MIMAS\Service\Jorum\Bitstream;
 use Whoops\Example\Exception;
 
 /**
@@ -155,7 +156,7 @@ class Helper {
    * @internal param $size
    * @return string
    */
-  public static function  formatBytes($bytes, $precision = 2)
+  public static function formatBytes($bytes, $precision = 2)
   {
     $units = array('b', 'Kb', 'Mb', 'Gb', 'Tb');
 
@@ -164,10 +165,79 @@ class Helper {
     $pow = min($pow, count($units) - 1);
 
     // Uncomment one of the following alternatives
-    // $bytes /= pow(1024, $pow);
+    $bytes /= pow(1024, $pow);
     // $bytes /= (1 << (10 * $pow));
 
     return round($bytes, $precision) . ' ' . $units[$pow];
   }
+
+  /**
+   * @param $fileName
+   * @param string $extension
+   * @return string
+   */
+  protected static function swapExtensionTo($fileName, $extension = 'pdf') {
+    $bits = explode('.',$fileName);
+    if (count($bits)>1) {
+      return $bits[0].'.'.$extension;
+    } else {
+      return $fileName.'.'.$extension;
+    }
+  }
+
+
+  /**
+   * Make a PDF file out of an MS Office one (excel / word / ppt /rtf )
+   * @param Bitstream $bitstream
+   * @return mixed
+   */
+  public static function makePdf(Bitstream $bitstream) {
+
+    $originalName = $bitstream->getName();
+    $originalName = str_replace(array(' ','/','&'), '_', $originalName);
+
+    $pdfName = self::swapExtensionTo($originalName, 'pdf');
+    $pdfPath = public_path().'/resourcecache/'.$pdfName;
+
+    if (!file_exists($pdfPath)) {
+
+      if (!file_exists( public_path().'/resourcecache/originals/'.$originalName)) {
+        $stream = $bitstream->retrieveStream();
+        file_put_contents(public_path().'/resourcecache/originals/'.$originalName, $stream);
+      }
+
+      $binPath = \Config::get('app.soffice');
+      shell_exec('export HOME=/tmp && '. $binPath.' --headless -convert-to pdf --outdir ' .public_path().'/resourcecache '.public_path().'/resourcecache/originals/'.$originalName);
+
+      //// exec("$cmd");
+
+    } else {
+    }
+    return $pdfName;
+  }
+
+  /**
+   * Get a stream from DSPACE and make it local (cache it)
+   * @param Bitstream $bitstream
+   * @return mixed
+   */
+  public static function makeLocal(Bitstream $bitstream) {
+
+    $originalName = $bitstream->getName();
+    $originalName = str_replace(array(' ','/'), '_', $originalName);
+
+    $filePath = public_path().'/resourcecache/'.$originalName;
+
+    if (!file_exists($filePath)) {
+      $stream = $bitstream->retrieveStream();
+
+      if (!file_exists( public_path().'/resourcecache/'.$originalName)) {
+        file_put_contents(public_path().'/resourcecache/'.$originalName, $stream);
+      }
+    } else {
+    }
+    return $originalName;
+  }
+
 
 } 

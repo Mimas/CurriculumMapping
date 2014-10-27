@@ -450,54 +450,59 @@ class Bitstream extends JorumApi
   }
 
 
-  protected static function swapExtensionToPdf($fileName) {
-    $bits = explode('.',$fileName);
-    if (count($bits)>1) {
-      return $bits[0].'.pdf';
-
-    } else {
-      return $fileName . '.pdf';
-    }
-  }
-
-
   /**
    * Render!!
    */
   public function render() {
+
     switch ($this->getMimeType()) {
-      case 'application/msword':
-          $pdfName = self::swapExtensionToPdf($this->getName());
-          $pdfPath = public_path().'/conversions/'.$pdfName;
-
-          if (!file_exists($pdfPath)) {
-
-            if (!file_exists( public_path().'/conversions/originals/'.$this->getName())) {
-              $stream = $this->retrieveStream();
-              file_put_contents(public_path().'/conversions/originals/'.$this->getName(), $stream);
-            }
-
-
-
-
-            $binPath = '/usr/bin/soffice';
-
-            $cmd = "$binPath --headless --convert-to pdf --outdir  "
-              .public_path().'/conversions '
-              .public_path().'/conversions/originals/'.$this->getName();
-
-
-            shell_exec('export HOME=/tmp && /usr/bin/soffice --headless -convert-to pdf --outdir ' .public_path().'/conversions '.public_path().'/conversions/originals/'.$this->getName());
-
-            //// exec("$cmd");
-
-
-          }
-          return \View::make('conversions.pdf')->with(array('file'=>$pdfName));
-
+      case 'application/pdf':
+        $pdfName = \Bentleysoft\Helper::makePdf($this);
+        return \View::make('conversions.pdf')->with(array('file'=>$pdfName));
         break;
-      case 'image/png:':
-        return $this->retrieve();
+      case 'application/msword':
+        $pdfName = \Bentleysoft\Helper::makePdf($this);
+        return \View::make('conversions.pdf')->with(array('file'=>$pdfName));
+        break;
+      case 'application/vnd.ms-powerpoint':
+        $pdfName = \Bentleysoft\Helper::makePdf($this);
+        return \View::make('conversions.pdf')->with(array('file'=>$pdfName));
+        break;
+      case 'application/vnd.ms-excel':
+        $pdfName = \Bentleysoft\Helper::makePdf($this);
+        return \View::make('conversions.pdf')->with(array('file'=>$pdfName));
+        break;
+      case 'text/richtext':
+        $pdfName = \Bentleysoft\Helper::makePdf($this);
+        return \View::make('conversions.pdf')->with(array('file'=>$pdfName));
+        break;
+      case 'image/png':
+      case 'image/jpg':
+      case 'image/jpeg':
+        return \View::make('conversions.image')->with(array('bitstream'=>$this));
+
+      case 'application/x-shockwave-flash':
+        $swfName = \Bentleysoft\Helper::makeLocal($this);
+        return \View::make('conversions.swf')->with(array('file'=>$swfName));
+        break;
+
+      case 'text/xml':
+        return \View::make('conversions.xml')->with(array('bitstream'=>$this));
+        break;
+
+      case 'text/html':
+        return \View::make('conversions.html')->with(array('bitstream'=>$this));
+        break;
+      case 'text/plain':
+        return \View::make('conversions.plain')->with(array('bitstream'=>$this));
+        break;
+
+      default:
+        echo $this->getMimeType();
+        echo $this->getBundleName();
+        echo $this->getFormat();
+        die;
+
     }
   }
 
