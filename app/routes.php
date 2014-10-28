@@ -218,21 +218,27 @@ Route::get('/mapped', function () {
 
 
 /** 
-* Get Mapping and show an edit form 
+* Get Mapping and render the edit form 
 */
 Route::get('/edit/{u?}/{id?}', function ($u = '', $id = '') {
-  $uid = "$u/$id";
+
+  $uid = "$u/$id";   // an id, including a jorum/one
 
   $resource = \Bentleysoft\ES\Service::get($uid);
 
-  if (!$resource)  App::abort(404);
+  if (!$resource)  { // nothing found, abort with a 404
+    App::abort(404);
+  }
   
   $resourceQualifications = array();
   $resourceTags = array();
+  $resourceUserTags = array();
 
   $result = Mapping::where('uid', '=', $uid)->get();
+
   if ($result && count($result) > 0) {
-    $meta = $result[0];
+
+    $meta = $result[0];   // Eloquent's where returns an array, we should only have one anyway
 
     // Get attached qualifications, if any
     $myQuals = $meta->qualifications()->get();
@@ -244,14 +250,24 @@ Route::get('/edit/{u?}/{id?}', function ($u = '', $id = '') {
       }
     }
 
+    // Get the 'tags' (that is the LDs) associated with the Mapping
     $myTags = $meta->tags()->get();
-
     if (count($myTags->all())>0) {
-      foreach ($myTags->all() as $i => $row) {
+      foreach ($myTags->all() as $i=>$row) {
         # code...
         $resourceTags[] = $row->ldcs_desc;
       }
     }
+
+    // Get the 'User tags' (that is the LDs) associated with the Mapping
+    $myUserTags = $meta->userTags()->get();
+    if (count($myUserTags->all())>0) {
+      foreach ($myUserTags->all() as $i=>$row) {
+        # code...
+        $resourceUserTags[] = $row->label;
+      }
+    }
+
 
   } else {
     $meta = new Mapping;
@@ -272,13 +288,22 @@ Route::get('/edit/{u?}/{id?}', function ($u = '', $id = '') {
     $tags[] = $subject->ldcs_desc;
   }
 
+  $extraTags = Tag::where('id','>',0)->get();
+
+  $userTags = array();
+  foreach ($extraTags as $tag) {
+    $userTags[] = $tag->label;
+  }
+
 
   $status = array();
   return View::make('edit')->with(array('data' => $meta,
     'status' => $status,
     'qualifications' => $qualifications,
     'tags' => json_encode($tags),
+    'userTags' => json_encode($userTags),
     'resourceTags'=>implode(',', $resourceTags),
+    'resourceUserTags'=>implode(',', $resourceUserTags),
     'resourceQualifications'=>$resourceQualifications,
     'resource' => $resource));
 });
@@ -315,11 +340,14 @@ Route::post('/edit/{uu?}/{id?}', function ($uu='', $id = '') {
     $meta->subject_area = Input::get('subject_area');
     $meta->level = Input::get('level');
     $meta->content_usage = Input::get('content_usage');
+    $meta->desired_content = Input::get('desired_content');
+    $meta->other_resources = Input::get('other_resources');
     $meta->currency = Input::get('currency',0);
 
     if ($meta->save()) {
       $meta->attachQualifications(Input::all());
       $meta->attachTags(explode(',', Input::get('tags', '')));
+      $meta->attachUserTags(explode(',', Input::get('user_tags', '')));
 
       if (!$meta->currency) {
         $meta->attachIssues(Input::get('issues'), Input::get('other_comments',''));
@@ -350,6 +378,7 @@ Route::post('/edit/{uu?}/{id?}', function ($uu='', $id = '') {
                             'qualifications' => array(),
                             'tags' => json_encode(array()),
                             'resourceTags'=>implode(',', array()),
+                            'resourceUserTags'=>implode(',', array()),
                             'resourceIssues'=>array(),
                             'resourceQualifications'=>array(),
                             'status' => $status,
@@ -383,6 +412,10 @@ Route::get('/', function () {
  * to the document - the famous edited flag
  */
 Route::get('/test', function () {
+
+  if (true)
+    return;
+
   // $resource = \Bentleysoft\ES\Service::get('jorum-10949/8919');
 
   // $body = \Es::getSource()

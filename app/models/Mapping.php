@@ -13,12 +13,12 @@
  * @property string content_usage
  * @property string created_at
  * @property string updated_at
+ *
  */
 class Mapping extends EloquentUserStamp  {
   /**
    * The database table used by the model.
-   *
-   * @var string
+    * @var string
    */
   protected $table = 'mappings';
 
@@ -27,7 +27,7 @@ class Mapping extends EloquentUserStamp  {
   */
   public static $rules = array('uuid'=>'required', 'currency'=>'required');
 
-  protected $fillable = array('uuid', 'subject_area', 'uid', 'level', 'content_usage', 'currency');
+  protected $fillable = array('uuid', 'subject_area', 'uid', 'level', 'content_usage', 'currency', 'created_by', 'udpated_by');
 
   private $issues = null;
 
@@ -35,7 +35,6 @@ class Mapping extends EloquentUserStamp  {
   public static function boot()
   {
     parent::boot();
-
   }
 
 
@@ -58,6 +57,15 @@ class Mapping extends EloquentUserStamp  {
    */
   public function tags() {
     $ret =  $this->belongsToMany('LdcsView', 'mappings_ldcs', 'mappings_id', 'ldcs_id');
+    return $ret;
+  }
+
+  /**
+   * Get the linked USER (custom) tags for the Resource's Mappings
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+   */
+  public function userTags() {
+    $ret =  $this->belongsToMany('Tag', 'mappings_tags', 'mappings_id', 'tags_id');
     return $ret;
   }
 
@@ -151,6 +159,40 @@ class Mapping extends EloquentUserStamp  {
     }
     return true;
   }
+
+  /**
+   * Attach custom (user) tags to the Mapping. Delete them first!
+   * See notes in attachQualifications for ways to improve
+   * @param $tags
+   * @return bool
+   *
+   */
+  public function attachUserTags($tags) {
+    // delete
+    MappingTag::where('mappings_id','=',$this->id)
+      ->delete();
+
+    // attach
+    foreach ($tags as $tag) {
+      $userTag = Tag::where('label','=',"$tag")->get();
+
+      if (count($userTag)>0 ) {
+        $userTag = $userTag[0];
+      } else {
+        $userTag = new Tag;
+        $userTag->label = $tag;
+        $userTag->save();
+      }
+
+      $mapTag = new MappingTag;
+      $mapTag->tags_id = $userTag->id;
+      $mapTag->mappings_id = $this->id;
+      $mapTag->save();
+
+    }
+    return true;
+  }
+
 
   /**
    * Attach issues to the Mapping!

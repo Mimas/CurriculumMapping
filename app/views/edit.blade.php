@@ -14,7 +14,7 @@
       padding: 7px;
     }
     .units-row {
-      margin-bottom: 7px !important;
+      margin-bottom: 0px !important;
     }
     label {
       display: block;
@@ -27,6 +27,7 @@
     .norman {
       display: inline !important;
     }
+
     .breathe {
       margin-top: 12px;
     }
@@ -103,14 +104,13 @@
 <body>
   <div class="container">
     <form method="post" action="<?php echo asset('edit'); ?>" class="forms">
-
       <div class="units-row">
         <div class="unit-100">
           <h2 class="norman">Resource Editor - </h2><h2 class="jisc">{{$resource['_source']['summary_title'] or '' }}</h2>
         </div>
         <div class="unit-100 breathe">
           <label for="currency">
-            Is this content current
+            Would you recommend this resource?
             <div class="radio breathe">
               <input type="radio" id="currency1" name="currency" value="1" <?php if($data->currency) echo 'checked="checked"'; ?> /> <label for="currency1">Yes</label>
               <input type="radio" id="currency2" name="currency" value="0" <?php if(!$data->currency) echo 'checked="checked"'; ?>/> <label for="currency2">No</label>
@@ -129,12 +129,10 @@
               <input type="checkbox" id="obsolete3" value="Quality Issues" {{$data->checked('Quality Issues')}} name="issues[]"  /> <label for="obsolete3">Quality Issues</label>
               <input type="checkbox" id="obsolete4" value="Other" name="issues[]" {{$data->checked('Other')}} /> <label for="obsolete4">Other</label>
             </div>
-              <textarea  class="width-100" rows="4" id="other_comments" name="other_comments">{{$data->otherText()}}</textarea>
-            </div>
+            <textarea  class="width-100" rows="4" id="other_comments" name="other_comments">{{$data->otherText()}}</textarea>
           </div>
         </div>
       </div>
-
       <div id="current">
         <div class="units-row">
           <div class="unit-100">
@@ -148,7 +146,6 @@
               ?>)
               <br/>
               <input name="tags" id="mySingleField" value="{{$resourceTags}}" > <!-- only disabled for demonstration purposes -->
-
               <input type="hidden" name="uid" value="<?php echo $data->uid; ?>" />
               <input type="hidden" name="uuid" value="<?php echo $data->uuid; ?>" />
             </label>
@@ -156,10 +153,34 @@
         </div>
 
         <div class="units-row">
-          <div class="unit-100"
-            <label for="content_usage">
-              How would you use this content?<br/>
+          <div class="unit-100">
+            <label for="subject_area">
+              Add custom tags. Please enclose phrases in double quotes. use the tab key to set the tag.
+              <input name="user_tags" id="user_tags" value="{{$resourceUserTags}}" > <!-- only disabled for demonstration purposes -->
+            </label>
+          </div>
+        </div>
+
+        <div class="units-row">
+          <div class="unit-100">
+            <label for="content_usage">How would you use this content?<br/>
               <textarea class="width-100" rows="3" id="content_usage" name="content_usage">{{$data->content_usage}}</textarea>
+            </label>
+          </div>
+        </div>
+
+        <div class="units-row">
+          <div class="unit-100">
+            <label for="other_resources">What other resources do you use?<br/>
+              <textarea class="width-100" rows="3" id="other_resources" name="other_resources">{{$data->other_resources}}</textarea>
+            </label>
+          </div>
+        </div>
+
+        <div class="units-row">
+          <div class="unit-100">
+            <label for="desired_content">What other content (in your subject area) do you want?<br/>
+              <textarea class="width-100" rows="3" id="desired_content" name="desired_content">{{$data->desired_content}}</textarea>
             </label>
           </div>
         </div>
@@ -173,7 +194,7 @@
                 if (isset($qualifications)) foreach ($qualifications as $qualification) {
                   ?>
                   <input type="checkbox" <?php if(in_array($qualification->id, $resourceQualifications)) echo 'checked="checked"' ?>
-                      id="check_{{$qualification->id}}" name="qualification_{{$qualification->id}}"
+                         id="check_{{$qualification->id}}" name="qualification_{{$qualification->id}}"
                     />
                   <label for="check_{{$qualification->id}}">Level {{$qualification->level}}</label>
                 <?php
@@ -183,34 +204,32 @@
             </label>
           </div>
         </div>
-      </div>
 
+      </div><!-- current -->
       <div class="units-row">
         <div class="unit-100 text-right">
           <button class="btn btn-small btn-yellow">Save <i class="fa fa-check"></i> </button>
         </div>
       </div>
 
+
     </form>
-
-  </div>
-
+  </div> <!-- container -->
 <script>
-  var sampleTags = <?php if (isset($tags)) echo($tags) ?>;
+  var subjectTags = <?php if (isset($tags)) echo($tags) ?>;
+  var userTags = <?php if (isset($userTags)) echo($userTags) ?>;
 
-  //-------------------------------
-  // Minimal
-  //-------------------------------
-
-  //-------------------------------
-  // Single field
-  //-------------------------------
   $('#mySingleField').tagit({
-    availableTags: sampleTags,
+    availableTags: subjectTags,
     showAutocompleteOnFocus: true
     // This will make Tag-it submit a single form value, as a comma-delimited field.
   });
+
+  $('#user_tags').tagit({
+    availableTags: userTags
+    // This will make Tag-it submit a single form value, as a comma-delimited field.
+  });
+
 </script>
-</body>
 </body>
 </html>

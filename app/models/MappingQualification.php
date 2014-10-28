@@ -9,7 +9,7 @@
  * @property int updated_at
  *
  */
-class MappingQualification extends Eloquent  {
+class MappingQualification extends EloquentUserStamp  {
 	/**
 	 * The database table used by the model.
 	 *
@@ -24,6 +24,6 @@ class MappingQualification extends Eloquent  {
     /**
     * Mass assignment allowed for the following fields:
     */
-    protected $fillable = array('mappings_id', 'qualifications_id', );
+    protected $fillable = array('mappings_id', 'qualifications_id', 'updated_by', 'created_by' );
 
 }
