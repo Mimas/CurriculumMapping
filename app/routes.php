@@ -122,7 +122,6 @@ Route::get('/resources', function () {
   $subjectAreas = Subjectarea::where('activated', '=', 1)
     ->get();
 
-
   $selectedAreas = Input::get('areas', array());
 
   /**
@@ -135,8 +134,10 @@ Route::get('/resources', function () {
 
   }
 
+  $showMapped = Input::get('show_mapped', '');
+
   // get the data
-  $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query, Input::get('audience', 'FE'), $selectedAreas);
+  $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query, Input::get('audience', 'FE'), $selectedAreas, $showMapped);
 
   $resources = Paginator::make($data['hits']['hits'], $data['hits']['total'], $pageSize);
 
@@ -157,6 +158,7 @@ Route::get('/resources', function () {
     'presenter' => $presenter,
     'subjectAreas' => $subjectAreas,
     'selectedAreas' => $selectedAreas,
+    'showMapped' => $showMapped,
     'pageSize' => $pageSize,
     'total' => $data['hits']['total'],
     'page' => $page + 1,
@@ -360,7 +362,7 @@ Route::post('/edit/{uu?}/{id?}', function ($uu='', $id = '') {
         'id' => $meta->uid,
         'type' => 'learning resource',
         'index' => 'ciim',
-        'body' => array('doc' => array('edited' => 'yes',
+        'body' => array('doc' => array('edited' => true,
           'admin' => array('processed' => time() * 1000),
           )
         ),
@@ -426,7 +428,7 @@ Route::get('/test', function () {
     'id' => 'jorum-10949/8914',
     'type' => 'learning resource',
     'index' => 'ciim',
-    'body' => array('doc' => array('edited' => 'yes',
+    'body' => array('doc' => array('edited' => true,
       'admin' => array('processed' => time() * 1000),
     )
     ),
@@ -663,10 +665,10 @@ Route::put('/resource/toggle/{u?}/{id?}', function ($u, $id) {
     if (!$resource) {
       App::abort(404);
     }
-    if (isset($resource['_source']['edited']) && $resource['_source']['edited'] == 'yes') {
-      $edited = 'no';
+    if (isset($resource['_source']['edited']) && $resource['_source']['edited'] == 'yes' || isset($resource['_source']['edited']) && $resource['_source']['edited'] == true) {
+      $edited = false;
     } else {
-      $edited = 'yes';
+      $edited = true;
     }
 
     $params = array(

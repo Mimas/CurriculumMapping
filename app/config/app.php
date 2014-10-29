@@ -105,7 +105,6 @@ return array(
 	*/
 
 	'providers' => array(
-
 		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
 		'Illuminate\Auth\AuthServiceProvider',
 		'Illuminate\Cache\CacheServiceProvider',
@@ -134,6 +133,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
     'Shift31\LaravelElasticsearch\LaravelElasticsearchServiceProvider',
     'Cartalyst\Sentry\SentryServiceProvider',
+    'PhpConsole\Laravel\ServiceProvider',
     'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 	),
 

@@ -16,33 +16,30 @@ class Service
    * @param string $pattern
    * @param array|string $audience
    * @param array $areas
+   * @param bool $showMapped
    * @internal param int $sice
    * @return mixed
    */
-  public static function browse($from = 0, $size = 20, $pattern = '*', $audience='FE', $areas = array())
+  public static function browse($from = 0, $size = 20, $pattern = '*', $audience='FE', $areas = array(), $showMapped = false)
   {
     $searchParams['index'] = 'ciim';
 
     $searchParams['size'] = $size;
     $searchParams['from'] = $from;
 
-
     $searchParams['sort'] = array(
       'summary_title:asc',
       'processed:desc',
-      'edited:asc'
+      'edited:desc'
     );
 
-    ///    $searchParams['body']['query']['wildcard']['summary_title'] = "*$pattern*";
-
-    $filter = array();
 
     $must = array();
     $must[] = array("query_string"=>array("query"=>"$pattern"));
 
     $extraTerms = array();
 
-    if (! empty($areas)) {
+    if (!empty($areas)) {
 
       $extraTerms = self::getLdCodesForSubjects($areas);
 
@@ -52,15 +49,32 @@ class Service
                         )
                       );
     } else {
-      $must[] = array( 'terms'=>array('audience'=>array('FE')) );
+      $must[] = array( 'terms'=>array(
+        'audience'=>array('FE'),
+
+        )
+      );
+
     }
 
+
     // THIS HALF WORKS
-    $query = array(
-      'bool'=>array(
-          'must'=>$must,  
-        )
+    $bool = array(
+      'bool'=>array('must'=>$must),
     );
+
+    if ($showMapped) {
+      $query = $bool;
+    } else{
+      $query = array(
+        'filtered'=>array(
+          'query'=>$bool,
+          'filter'=>array('not'=> array('exists'=>array('field'=>'edited') )
+          )
+        ),
+
+      );
+    }
 
     $searchParams['body']['query'] = $query;
 
@@ -70,7 +84,7 @@ class Service
   }
 
 
-/**
+  /**
    * @param int $from
    * @param int $size
    * @param string $pattern

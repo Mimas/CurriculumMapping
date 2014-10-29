@@ -9,6 +9,9 @@
   .tight {
     margin-bottom: -5px !important;
   }
+  .breathe {
+    margin-top: 11px;;
+  }
 </style>
     <form method="get" action="<?php echo asset(Request::path()); ?>" class="forms search">
         <div class="units-row top44">
@@ -43,6 +46,9 @@
               <div class="text-right pager" style="float: right;">
               <span class="total"><?php echo number_format($total); ?></span> Resources, page {{$page}} of {{ $resources->getLastPage() }}</span>&nbsp;&nbsp;|&nbsp;&nbsp;
               {{ Form::select('pageSize', \Bentleysoft\Helper::pageSizes(), $pageSize, array('class' => 'autoselect inliner')); }}
+                <label class="breathe" for="hide_mapped">Show edited
+                  <input name="show_mapped" type="checkbox" class="autosubmit" <?php if (isset($showMapped) && $showMapped) echo 'checked="yes";' ?> />
+                </label>
               </div>
             </div>
         </div>
