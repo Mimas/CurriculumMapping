@@ -342,6 +342,9 @@ Route::post('/edit/{uu?}/{id?}', function ($uu='', $id = '') {
     $meta->content_usage = Input::get('content_usage');
     $meta->desired_content = Input::get('desired_content');
     $meta->other_resources = Input::get('other_resources');
+
+    $meta->other_qualifications = Input::get('other_qualifications');
+
     $meta->currency = Input::get('currency',0);
 
     if ($meta->save()) {
@@ -501,10 +504,9 @@ Route::get('/tag', function () {
           'type' => $document['_type'],
           'index' => 'ciim',
           'body' => array('doc' => array('audience' => array('FE'),
-            'admin' => array('processed' => time() * 1000),
-          )
+              'admin' => array('processed' => time() * 1000),
+            )
           ),
-
         );
 
         try {
@@ -514,10 +516,7 @@ Route::get('/tag', function () {
         } catch (Exception $e) {
           echo "Not done {$document['_id']}<br/>";
         }
-
-
       }
-
     }
     $from = $from + $pagesize;
 

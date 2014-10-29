@@ -72,7 +72,6 @@
       #logo h2 {
         color: #ea6000;
       }
-
       .navbar {
         font-size: 95% !important;
       }
@@ -86,7 +85,6 @@
       .normal  {
         color: #ea6000 !important;
       }
-
       .active {
         color: #ea6000 !important;
         border-bottom: 2px #ea6000 solid;
@@ -99,10 +97,9 @@
     <script src="<?php echo asset('3rdparty/colorbox/jquery.colorbox.js');?>"></script>
     <script src="<?php echo asset('3rdparty/highcharts/highcharts.js');?>"></script>
     <script src="<?php echo asset('3rdparty/highcharts/highcharts-more.js');?>"></script>
-
     <script>
         $(document).ready(function(){
-            $(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+            $(".iframe").colorbox({iframe:true, width:"80%", height:"100%"});
             $(".colorbox").colorbox({iframe:true, width:"80%", height:"80%"});
             $(".autosubmit").click(function() {
                 $('.search').submit();

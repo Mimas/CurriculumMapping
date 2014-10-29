@@ -11,6 +11,9 @@
  * @property string level
  * @property string checksum
  * @property string content_usage
+ * @property string other_resources
+ * @property string desired_content
+ * @property string other_qualifications
  * @property string created_at
  * @property string updated_at
  *
@@ -121,7 +124,7 @@ class Mapping extends EloquentUserStamp  {
                         ->delete();
 
     foreach ($qualifications as $key=>$input) {
-      if (strpos($key,'qualification')!==false) {
+      if (strpos($key,'qualification_')!==false) {
         $qid = str_replace('qualification_', '', $key);
         $metaQual = new MappingQualification();
 

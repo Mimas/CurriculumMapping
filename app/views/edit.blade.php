@@ -14,7 +14,7 @@
       padding: 7px;
     }
     .units-row {
-      margin-bottom: 0px !important;
+      margin-bottom: -11px !important;
     }
     label {
       display: block;
@@ -129,9 +129,17 @@
               <input type="checkbox" id="obsolete3" value="Quality Issues" {{$data->checked('Quality Issues')}} name="issues[]"  /> <label for="obsolete3">Quality Issues</label>
               <input type="checkbox" id="obsolete4" value="Other" name="issues[]" {{$data->checked('Other')}} /> <label for="obsolete4">Other</label>
             </div>
-            <textarea  class="width-100" rows="4" id="other_comments" name="other_comments">{{$data->otherText()}}</textarea>
           </div>
         </div>
+        <div class="units-row">
+          <div class="unit-100">
+            <label for="If other, please specify">
+              <textarea  class="width-100" rows="4" id="other_comments" name="other_comments">{{$data->otherText()}}</textarea>
+            </label>
+          </div>
+        </div>
+
+
       </div>
       <div id="current">
         <div class="units-row">
@@ -201,6 +209,14 @@
                 }
                 ?>
               </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="units-row">
+          <div class="unit-100">
+            <label for="other_qualifications">Other qualifications or comments<br/>
+              <textarea class="width-100" rows="3" id="other_qualifications" name="other_qualifications">{{$data->other_qualifications}}</textarea>
             </label>
           </div>
         </div>
