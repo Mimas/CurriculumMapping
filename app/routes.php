@@ -403,7 +403,7 @@ Route::get('/', function () {
 
   $offset = $page * $pageSize;
 
-  $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query, \Illuminate\Support\Facades\Input::get('audience', 'FE'));
+  $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query, \Illuminate\Support\Facades\Input::get('audience', 'FE'), array(), true);
 
   //  $resources = Paginator::make($data['hits']['hits'], $data['hits']['total'], 20);
 
