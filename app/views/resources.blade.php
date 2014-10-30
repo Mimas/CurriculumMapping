@@ -12,6 +12,9 @@
   .breathe {
     margin-top: 11px;;
   }
+  form {
+    display: inline;
+  }
 </style>
     <form method="get" action="<?php echo asset(Request::path()); ?>" class="forms search">
         <div class="units-row top44">
@@ -25,35 +28,35 @@
             </div>
         </div>
         <div class="units-row">
-            <div class="unit-60">
-              <ul class="blocks-3">
-                <?php
-                 foreach ($subjectAreas as $area) {
-                  ?>
-                   <li class="tight"><label>{{$area->subject}}
-                       <input class="autosubmit"
-                          type="checkbox" name="areas[]" id="area_{{$area->id}}" value="{{$area->id}}"
-                         <?php if( in_array($area->id, $selectedAreas)) echo 'checked="yes";'  ?>
-                       />
-                       </label>
-                   </li>
-                <?php
-                }
+          <div class="unit-60">
+            <ul class="blocks-3">
+              <?php
+              foreach ($subjectAreas as $area) {
                 ?>
-              </ul>
-            </div>
-            <div class="unit-40">
-              <div class="text-right pager" style="float: right;">
+                <li class="tight"><label>{{$area->subject}}
+                    <input class="autosubmit"
+                           type="checkbox" name="areas[]" id="area_{{$area->id}}" value="{{$area->id}}"
+                      <?php if( in_array($area->id, $selectedAreas)) echo 'checked="yes";'  ?>
+                      />
+                  </label>
+                </li>
+              <?php
+              }
+              ?>
+            </ul>
+          </div>
+          <div class="unit-40">
+            <div class="text-right pager" style="float: right;">
               <span class="total"><?php echo number_format($total); ?></span> Resources, page {{$page}} of {{ $resources->getLastPage() }}</span>&nbsp;&nbsp;|&nbsp;&nbsp;
               {{ Form::select('pageSize', \Bentleysoft\Helper::pageSizes(), $pageSize, array('class' => 'autoselect inliner')); }}
-                <label class="breathe" for="hide_mapped">Show edited
-                  <input name="show_mapped" type="checkbox" class="autosubmit" <?php if (isset($showMapped) && $showMapped) echo 'checked="yes";' ?> />
-                </label>
-              </div>
+              <label class="breathe" for="hide_mapped">Show edited
+                <input name="show_mapped" type="checkbox" class="autosubmit" <?php if (isset($showMapped) && $showMapped) echo 'checked="yes";' ?> />
+              </label>
             </div>
+          </div>
         </div>
     </form>
-    <div style="margin-top: -26px;" class="units-row">
+    <div class="units-row">
       <div class="unit-100">
         <table class="table-hovered table-stripped">
         <?php
