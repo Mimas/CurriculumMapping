@@ -40,7 +40,6 @@ class Service
     $extraTerms = array();
 
     if (!empty($areas)) {
-
       $extraTerms = self::getLdCodesForSubjects($areas);
 
       $must[] = array( 'terms'=>array(
@@ -57,8 +56,6 @@ class Service
 
     }
 
-
-    // THIS HALF WORKS
     $bool = array(
       'bool'=>array('must'=>$must),
     );

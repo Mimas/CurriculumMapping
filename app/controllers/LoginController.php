@@ -139,6 +139,7 @@ class LoginController extends BaseController
   {
     // Logs the user out
     Sentry::logout();
+    Session::clear();
     return Redirect::to('/login');
   }
 

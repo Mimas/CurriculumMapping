@@ -97,6 +97,16 @@ Route::post("contact", function()
   }
 });
 
+Route::get('session', function() {
+  echo 'session haha';
+
+  // Session::put('ala.kaka',10);
+  // Session::put('ala.zakoula',10);
+
+  var_dump(Session::all());
+
+});
+
 /**
  * Resources
  * browse
@@ -130,7 +140,9 @@ Route::get('/resources', function () {
    * but only if the user is not an app admin (i.e. "superuser")
    */
   if (empty($selectedAreas) && !\Bentleysoft\Helper::userHasAccess(array('application.admin'))) {
-  //  $selectedAreas = \Bentleysoft\Helper::getUserSubjectAreas();
+    if (Session::get('requests.resources',0) <= 1) {
+      $selectedAreas = \Bentleysoft\Helper::getUserSubjectAreas();
+    }
   } else {
 
   }
