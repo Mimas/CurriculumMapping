@@ -101,6 +101,7 @@ Route::post("contact", function()
  * Resources
  * browse
  * pass int pageSize
+ *
  */
 Route::get('/resources', function () {
   // get/set pageSize
@@ -129,7 +130,7 @@ Route::get('/resources', function () {
    * but only if the user is not an app admin (i.e. "superuser")
    */
   if (empty($selectedAreas) && !\Bentleysoft\Helper::userHasAccess(array('application.admin'))) {
-    $selectedAreas = \Bentleysoft\Helper::getUserSubjectAreas();
+  //  $selectedAreas = \Bentleysoft\Helper::getUserSubjectAreas();
   } else {
 
   }
