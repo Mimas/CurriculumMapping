@@ -3,7 +3,6 @@
 <script type="text/javascript">
   $(function () {
     $('#container').highcharts({
-
         chart: {
           type: 'gauge',
           plotBorderWidth: 1,
@@ -114,7 +113,25 @@
         </div>
         @endif
         <div class="welcome">
-        <h3>Welcome to the Curriculum Mapping tool</h3>
+        <h2>Welcome to the pilot trial</h2>
+         <p>
+          Thank you for agreeing to participate in our pilot trail and for sharing your subject expertise and insights.<br/>
+          The trial runs from <span class="bold">Monday 3 November until Friday 5 December.</span>
+         </p>
+          <p>
+          The <span class="bold">purpose of the trial</span> is to map content to relevant subject area and levels. You will also have the opportunity to identify content that is out of date, has quality issues or has been tagged with an inappropriate subject area. We are also keen to find out where the resource gaps are in terms of your particular subject area and what other resources out there, that you find useful.
+          </p>
+          <p>
+          We recommend that you use <span class="bold">Safari, Chrome or Firefox.</span>
+          </p>
+          <p>
+          Once you log, in you will be able to <span class="bold">get in touch with the team</span> by clicking on the <a href="{{asset('contact')}}">‘Help / Feedback’ link</a>, which is on the top right of your screen.
+          </p>
+          <p>
+          Thanks again and happy <a href="{{asset('resources')}}">mapping!</a>
+          </p>
+
+
         </div>
         <div class="dashboard">
           <p>There are <span class="dash-1"><a href="<?php echo asset('resources'); ?>">{{$total}}</a></span> resources in the index in total,

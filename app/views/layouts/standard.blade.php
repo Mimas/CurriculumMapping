@@ -51,6 +51,13 @@
       .dashboard {
         font-size: 1.2em;;
       }
+      .welcome a {
+        text-decoration: none;
+        color: #ea6000;
+        font-weight: 900;
+
+      }
+
       .dash-1 {
         font-size: 1.2em;
       }
