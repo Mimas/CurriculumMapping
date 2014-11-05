@@ -635,7 +635,11 @@ Route::get('/view/{u?}/{id?}', function ($u = '', $id = '') {
     $object = MIMAS\Service\Jorum\Item::find(str_replace('jorum-', '', $uid), array('expand' => 'all'), 'json', 'json');
     $bitstreams = $object->getBitstreams();
   } elseif ($resource['_source']['admin']['source'] == 'ht') {
-    $bitstreams = false;
+
+    $bitstream = new MIMAS\Service\Hairdressing\Bitstream();
+    $bitstream->setBundleName('URL_BUNDLE');
+    $bitstream->setName('http://hairdressing.ac.uk/'.str_replace('ht-', '', $resource['_id']));
+    $bitstreams = array($bitstream);
   }
   $status = array();
 
