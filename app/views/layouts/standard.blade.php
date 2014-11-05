@@ -96,6 +96,9 @@
         color: #ea6000 !important;
         border-bottom: 2px #ea6000 solid;
       }
+      .badge {
+        display: inline !important;
+      }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <link rel="stylesheet" href="<?php echo asset('3rdparty/kube/css/kube.css'); ?>">
@@ -159,7 +162,7 @@
                   <?php endif; ?>
 
                   <?php if (Bentleysoft\Helper::userHasAccess(array('redis.admin' )) || Bentleysoft\Helper::superUser() ): ?>
-                    <li><a class="<?php echo Bentleysoft\Helper::isMenuSlected('redis') ?>" href="/redis">Cache</a></li>
+                    <li><a style="display: inline;" class="<?php echo Bentleysoft\Helper::isMenuSlected('redis') ?>" href="/redis">Cache</a> <span  class="badge badge-small">{{Bentleysoft\Helper::getRedisCount()}}</span></li>
                   <?php endif; ?>
 
                   <li><a class="<?php echo Bentleysoft\Helper::isMenuSlected('contact') ?>" href="/contact">Help/Feedback</a></li>

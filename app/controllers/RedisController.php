@@ -56,12 +56,13 @@ class RedisController extends BaseController {
 	}
 
   /**
-  * Method to delete a key from the datastore
-  * @param string id
-  *
-  * @author Petros Diveris
-  * @version 1
-  */
+   * Method to delete a key from the datastore
+   * @param string id
+   *
+   * @return \Illuminate\Http\RedirectResponse
+   * @author Petros Diveris
+   * @version 1
+   */
   public function getDelete( $key = '' ) {
     self::$redis->del($key);
     return Redirect::to('redis/');
@@ -108,16 +109,17 @@ class RedisController extends BaseController {
   }
 
   /**
-  * Method to edit a value
-  *
-  * TODO: Allow inserting (i.e., no key passed, add key field to the form)
-  *
-  * @param string id
-  *
-  * @author Petros Diveris
-  * @version 1
-  *
-  */    
+   * Method to edit a value
+   *
+   * TODO: Allow inserting (i.e., no key passed, add key field to the form)
+   *
+   * @param string id
+   *
+   * @return $this
+   * @author Petros Diveris
+   * @version 1
+   *
+   */
   public function getEdit( $key = '' )
   { 
     $data = self::$redis->get($key);
@@ -268,6 +270,22 @@ class RedisController extends BaseController {
 
   }
 
+  /**
+   * return ALL keys
+   * @return mixed
+   */
+  public static function getKeys() {
+    return self::$redis->keys('*');
+  }
+
+  /**
+   * Number of keys in REDIS
+   * @return int
+   */
+  public static function getNumKeys() {
+    $x = new RedisController();
+    return count(self::getData());
+  }
 }
 
 

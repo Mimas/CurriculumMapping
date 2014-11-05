@@ -239,5 +239,18 @@ class Helper {
     return $originalName;
   }
 
+  /**
+   * Helper function to get number of entries in REDIS
+   * Probably not needed, it's an indirect way of calling a static
+   * method of a controller with a singleton reference to the connection
+   * Anyway, it works..
+   *
+   * @return int
+   */
+  public static function getRedisCount() {
+    //$num = Controller::call('\Redis@getNumKeys', array());
+    $num = \RedisController::getNumKeys();
+    return $num;
+  }
 
 } 
