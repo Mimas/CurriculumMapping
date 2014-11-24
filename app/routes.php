@@ -267,6 +267,7 @@ Route::get('/edit/{u?}/{id?}', function ($u = '', $id = '') {
 
     // Get the 'tags' (that is the LDs) associated with the Mapping
     $myTags = $meta->tags()->get();
+
     if (count($myTags->all())>0) {
       foreach ($myTags->all() as $i=>$row) {
         # code...
@@ -283,7 +284,6 @@ Route::get('/edit/{u?}/{id?}', function ($u = '', $id = '') {
       }
     }
 
-
   } else {
     $meta = new Mapping;
     $meta->currency = 1;
@@ -293,6 +293,10 @@ Route::get('/edit/{u?}/{id?}', function ($u = '', $id = '') {
   $qualifications = QualificationView::where('activated', '=', 1)->get();
 
   $topLevel = (isset($resource['_source']['subject']['ldcode'])) ? $resource['_source']['subject']['ldcode'][0] : '?';
+
+  if ($topLevel == '?' && isset($resource['_source']['subject'][0]['ldcode'])) {
+    $topLevel = $resource['_source']['subject'][0]['ldcode'][0];
+  }
 
   $ldcsSubjects = LdcsView::where('ldcs_code', 'like', "$topLevel%.%") // Only 2nd level for now
     ->whereIn('depth', [2])
