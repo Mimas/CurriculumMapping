@@ -150,6 +150,10 @@
                 ?>
                 {{ $code or '' }}, {{$resource['_source']['subject']['ld'][$i] or '' }}
               <?php
+              } elseif(isset($resource['_source']['subject'][0]['ldcode']) ) foreach( $resource['_source']['subject'][0]['ldcode'] as $i=>$code )  {
+                ?>
+                {{ $code or '' }}, {{$resource['_source']['subject'][0]['ld'][$i] or '' }}
+              <?php
               }
               ?>)
               <br/>

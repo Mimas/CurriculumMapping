@@ -45,10 +45,15 @@
                         <tr>
                           <td class="bold">LD Code/Subject</td>
                           <td>
+
                             <?php
                             if (isset($data['_source']['subject']['ldcode'])) foreach( $data['_source']['subject']['ldcode'] as $i=>$code ) {
                             ?>
                             {{ $code or '' }}, {{$data['_source']['subject']['ld'][$i] or '' }}<br/>
+                            <?php
+                            } elseif(isset($data['_source']['subject'][0]['ldcode']) ) foreach( $data['_source']['subject'][0]['ldcode'] as $i=>$code )  {
+                            ?>
+                            {{ $code or '' }}, {{$data['_source']['subject'][0]['ld'][$i] or '' }}<br/>
                             <?php
                             }
                             ?>

@@ -70,6 +70,8 @@
               <?php
               if (isset($row['_source']['subject']['ld'][0])) {
                 echo str_limit($row['_source']['subject']['ld'][0], 10, '...' );
+              } elseif(isset($row['_source']['subject'][0]['ld'])) {
+                echo str_limit($row['_source']['subject'][0]['ld'][0], 10, '...' );
               } else {
                 echo 'Undefined';
               }
