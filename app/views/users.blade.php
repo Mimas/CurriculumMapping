@@ -48,7 +48,6 @@
         </tr>
 
         </table>
-      <?php echo $users->links(); ?>
     </div>
 </div>
 @stop
