@@ -18,10 +18,9 @@
  */
 App::before(function($request)
 {
-
   if ($request->path()<>'login'
     && $request->path()<>'logout'
-    && $request->path()<>'quickview'
+    && !(strpos($request->path(), 'quickview')!==false)
     && $request->path()<>'login/reset'
     && !Sentry::check()) {
     return \Illuminate\Support\Facades\Redirect::to('/login');

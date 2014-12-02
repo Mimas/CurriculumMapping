@@ -674,6 +674,34 @@ Route::get('/quickview/{u?}/{id?}', function ($u = '', $id = '') {
   return View::make('quickview')->with(array('data' => $resource, 'status' => $status, 'bitstreams' => $bitstreams));
 });
 
+Route::get('/quickviewjs/{u?}/{id?}', function ($u = '', $id = '') {
+  $uid = "$u/$id";
+
+  $resource = \Bentleysoft\ES\Service::get($uid);
+
+  if (!$resource) {
+    App::abort(404);
+  }
+
+  if ($resource['_source']['admin']['source'] == 'jorum') {
+    $object = MIMAS\Service\Jorum\Item::find(str_replace('jorum-', '', $uid), array('expand' => 'all'), 'json', 'json');
+    $bitstreams = $object->getBitstreams();
+  } elseif ($resource['_source']['admin']['source'] == 'ht') {
+
+    $bitstream = new MIMAS\Service\Hairdressing\Bitstream();
+    $bitstream->setBundleName('URL_BUNDLE');
+    $bitstream->setName('http://hairdressing.ac.uk/'.str_replace('ht-', '', $resource['_id']));
+    $bitstreams = array($bitstream);
+  }
+  $status = array();
+
+  return Response::json(array('data'=>$resource, 'status'=>$status, 'bitstreams'=>$bitstreams ));
+
+
+  // return View::make('quickview')->with(array('data' => $resource, 'status' => $status, 'bitstreams' => $bitstreams));
+});
+
+
 /**
  * Content retrieve (i.e. download) handler
  */
