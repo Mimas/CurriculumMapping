@@ -697,8 +697,6 @@ Route::get('/quickviewjs/{u?}/{id?}', function ($u = '', $id = '') {
 
   return Response::json(array('data'=>$resource, 'status'=>$status, 'bitstreams'=>$bitstreams ));
 
-
-  // return View::make('quickview')->with(array('data' => $resource, 'status' => $status, 'bitstreams' => $bitstreams));
 });
 
 
