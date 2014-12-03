@@ -26,9 +26,11 @@ App::before(function($request)
   if ($request->path()<>'login'
     && $request->path()<>'logout'
     && !(strpos($request->path(), 'quickview')!==false)
+    && !(strpos($request->path(), 'preview')!==false)
     && $request->path()<>'login/reset'
-    && !Sentry::check()) {
-    return \Illuminate\Support\Facades\Redirect::to('/login');
+    && !Sentry::check())
+  {
+     return \Illuminate\Support\Facades\Redirect::to('/login');
   }
 
 });
@@ -61,12 +63,9 @@ Route::filter('auth', function()
 {
   if (Auth::guest())
   {
-    if (Request::ajax())
-    {
+    if (Request::ajax()) {
       return Response::make('Unauthorized', 401);
-    }
-    else
-    {
+    } else {
       return Redirect::guest('login');
     }
   }
