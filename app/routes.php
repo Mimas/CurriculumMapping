@@ -69,12 +69,12 @@ Route::get('contact', function() {
 });
 
 /**
-* Special POST case for contact form with re-captcha
-*/
+ * Special POST case for contact form with re-captcha
+ */
 Route::post("contact", function()
 {
   $rules =  array( 'name' => array('required'), 'email' => array('required'), 'surname' => array('required'), 'message' => array('required') );
-  
+
   $validator = Validator::make(Input::all(), $rules, array('required' => 'The :attribute is required.') );
 
   if( $validator->fails() ) {
@@ -86,13 +86,13 @@ Route::post("contact", function()
     Mail::send('emails.enquiry', array('data'=>$data), function($message)
     {
       $message->to('petros.diveris@manchester.ac.uk', 'Petros Diveris')
-              ->cc('mark.power@manchester.ac.uk')
-              ->cc('joy.hooper@jisc.ac.uk');
+        ->cc('mark.power@manchester.ac.uk')
+        ->cc('joy.hooper@jisc.ac.uk');
 
       $message->subject('Curriculum Mapping Tool Contact Form - '.Input::get('name') .' ' .Input::get('surname') );
       $message->from(Input::get('email'), 'Curriculum Mapping Tool web enquiry form');
 
-    });   
+    });
     return Redirect::back()->withInput()->with(array('success'=>'Your message has been received and and will be answered shortly.'));
   }
 });
@@ -232,9 +232,9 @@ Route::get('/mapped', function () {
 });
 
 
-/** 
-* Get Mapping and render the edit form 
-*/
+/**
+ * Get Mapping and render the edit form
+ */
 Route::get('/edit/{u?}/{id?}', function ($u = '', $id = '') {
 
   $uid = "$u/$id";   // an id, including a jorum/one
@@ -244,7 +244,7 @@ Route::get('/edit/{u?}/{id?}', function ($u = '', $id = '') {
   if (!$resource)  { // nothing found, abort with a 404
     App::abort(404);
   }
-  
+
   $resourceQualifications = array();
   $resourceTags = array();
   $resourceUserTags = array();
@@ -381,7 +381,7 @@ Route::post('/edit/{uu?}/{id?}', function ($uu='', $id = '') {
         'index' => 'ciim',
         'body' => array('doc' => array('edited' => true,
           'admin' => array('processed' => time() * 1000),
-          )
+        )
         ),
 
       );
@@ -397,14 +397,14 @@ Route::post('/edit/{uu?}/{id?}', function ($uu='', $id = '') {
   }
 
   return View::make('edit')->with(array('data' => $meta,
-                            'qualifications' => array(),
-                            'tags' => json_encode(array()),
-                            'resourceTags'=>implode(',', array()),
-                            'resourceUserTags'=>implode(',', array()),
-                            'resourceIssues'=>array(),
-                            'resourceQualifications'=>array(),
-                            'status' => $status,
-                            ));
+    'qualifications' => array(),
+    'tags' => json_encode(array()),
+    'resourceTags'=>implode(',', array()),
+    'resourceUserTags'=>implode(',', array()),
+    'resourceIssues'=>array(),
+    'resourceQualifications'=>array(),
+    'status' => $status,
+  ));
 
 });
 
@@ -523,8 +523,8 @@ Route::get('/tag', function () {
           'type' => $document['_type'],
           'index' => 'ciim',
           'body' => array('doc' => array('audience' => array('FE'),
-              'admin' => array('processed' => time() * 1000),
-            )
+            'admin' => array('processed' => time() * 1000),
+          )
           ),
         );
 
@@ -685,7 +685,17 @@ Route::get('/quickviewjs/{u?}/{id?}', function ($u = '', $id = '') {
 
   if ($resource['_source']['admin']['source'] == 'jorum') {
     $object = MIMAS\Service\Jorum\Item::find(str_replace('jorum-', '', $uid), array('expand' => 'all'), 'json', 'json');
-    $bitstreams = $object->getBitstreams();
+    $allStreams = $object->getBitstreams();
+
+    // Kill lincense and other grap. This will eventuallyhave to be moved into getBitStreams($clean =  true)
+    $bitstreams = array();
+
+    foreach($allStreams as $stream) {
+      if (strpos($stream->getBundleName(), 'LICENSE')===false) {
+        $bitstreams[] = $stream;
+      }
+    }
+
   } elseif ($resource['_source']['admin']['source'] == 'ht') {
 
     $bitstream = new MIMAS\Service\Hairdressing\Bitstream();
@@ -721,7 +731,7 @@ Route::post('download', function () {
 
 Route::any('preview/{id?}', function($id) {
   $bitstream = MIMAS\Service\Jorum\Bitstream::find($id, array(), 'json', 'json');
-return View::make('preview')->with(array('bitstream'=>$bitstream));
+  return View::make('preview')->with(array('bitstream'=>$bitstream));
 });
 
 /**
