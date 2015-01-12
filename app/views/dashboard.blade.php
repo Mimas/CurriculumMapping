@@ -130,14 +130,17 @@
           <p>
           Thanks again and happy <a href="{{asset('resources')}}">mapping!</a>
           </p>
-
+          <?php if (Bentleysoft\Helper::userHasAccess(array('reports.access')) || Bentleysoft\Helper::superUser()): ?>
+            Download activity reports <a href="{{asset('report')}}">here</a> 
+          <?php endif; ?>
 
         </div>
         <div class="dashboard">
           <p>There are <span class="dash-1"><a href="<?php echo asset('resources'); ?>">{{$total}}</a></span> resources in the index in total,
             <span class="dash-2"><a href="<?php echo asset('mapped'); ?>">{{$mapped}}</a></span> of which are mapped.
           </p>
-          <div id="container" style="margin-top: -30px; width: 300px; height: 300px; "></div>
+          <div id="container" style="margin-top: -30px; width: 300px; height: 170px; "></div>
+
         </div>
     </div>
 </div>

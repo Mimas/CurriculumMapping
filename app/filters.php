@@ -27,6 +27,8 @@ App::before(function($request)
     && $request->path()<>'logout'
     && !(strpos($request->path(), 'quickview')!==false)
     && !(strpos($request->path(), 'preview')!==false)
+    && !(strpos($request->path(), 'bitstreams')!==false)
+
     && $request->path()<>'login/reset'
     && !Sentry::check())
   {

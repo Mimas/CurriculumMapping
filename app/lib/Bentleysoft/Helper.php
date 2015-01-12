@@ -253,4 +253,24 @@ class Helper {
     return $num;
   }
 
+ /**
+  * Iterate throw an Eloquent rowset, pick up a field and shove it in an array
+  * Uppon completion, return that array
+  * @param array $rows
+  * @param string $field e.g. 'label'
+  */
+  public static function fieldList($rows, $field) {
+    $ret = array();
+
+    if (count($rows)>0) {
+      foreach ($rows as $i=>$row) {
+        $ret[] = $row->$field;
+      }
+
+    }
+    return $ret;
+  }
+
+
+
 } 

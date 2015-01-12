@@ -143,8 +143,6 @@ Route::get('/resources', function () {
     if (Session::get('requests.resources',0) <= 1) {
       $selectedAreas = \Bentleysoft\Helper::getUserSubjectAreas();
     }
-  } else {
-
   }
 
   $showMapped = Input::get('show_mapped', '');
@@ -245,10 +243,6 @@ Route::get('/edit/{u?}/{id?}', function ($u = '', $id = '') {
     App::abort(404);
   }
 
-  $resourceQualifications = array();
-  $resourceTags = array();
-  $resourceUserTags = array();
-
   $result = Mapping::where('uid', '=', $uid)->get();
 
   if ($result && count($result) > 0) {
@@ -256,39 +250,25 @@ Route::get('/edit/{u?}/{id?}', function ($u = '', $id = '') {
     $meta = $result[0];   // Eloquent's where returns an array, we should only have one anyway
 
     // Get attached qualifications, if any
-    $myQuals = $meta->qualifications()->get();
-
-    if (count($myQuals->all())>0) {
-      foreach ($myQuals->all() as $i => $row) {
-        # code...
-        $resourceQualifications[] = $row->id;
-      }
-    }
+    $resourceQualifications = Bentleysoft\Helper::fieldList($meta->qualifications()->get()->all(), 'id' );
 
     // Get the 'tags' (that is the LDs) associated with the Mapping
-    $myTags = $meta->tags()->get();
+    $resourceTags = Bentleysoft\Helper::fieldList($meta->tags()->get()->all(),'ldcs_desc');
 
-    if (count($myTags->all())>0) {
-      foreach ($myTags->all() as $i=>$row) {
-        # code...
-        $resourceTags[] = $row->ldcs_desc;
-      }
-    }
-
-    // Get the 'User tags' (that is the LDs) associated with the Mapping
-    $myUserTags = $meta->userTags()->get();
-    if (count($myUserTags->all())>0) {
-      foreach ($myUserTags->all() as $i=>$row) {
-        # code...
-        $resourceUserTags[] = $row->label;
-      }
-    }
+    // get user tags
+    $resourceUserTags = Bentleysoft\Helper::fieldList($meta->userTags()->get()->all(), 'label');
 
   } else {
+    $resourceQualifications = array();
+    $resourceTags = array();
+    $resourceUserTags = array();
+
     $meta = new Mapping;
     $meta->currency = 1;
     $meta->uid = $uid;
   }
+
+  $trackingId = Mapping::startTracking($uid);
 
   $qualifications = QualificationView::where('activated', '=', 1)->get();
 
@@ -321,11 +301,38 @@ Route::get('/edit/{u?}/{id?}', function ($u = '', $id = '') {
     'qualifications' => $qualifications,
     'tags' => json_encode($tags),
     'userTags' => json_encode($userTags),
+    'trackingId' => $trackingId,
     'resourceTags'=>implode(',', $resourceTags),
     'resourceUserTags'=>implode(',', $resourceUserTags),
     'resourceQualifications'=>$resourceQualifications,
     'resource' => $resource));
 });
+
+Route::any('/stoptracking/{id?}', function($id) {
+  Mapping::stopTracking($id);
+});
+
+Route::any('report', function() {
+  $history = History::all();
+
+  $output='';
+  foreach ($history as $row) {
+    $row->title = 'Three little birds';
+    $row->docs = 5;
+    $output.=  implode(",",$row->toArray());
+    $output .= "\n";
+
+
+  }
+  $headers = array(
+    'Content-Type' => 'text/csv',
+    'Content-Disposition' => 'attachment; filename="history.csv"',
+  );
+
+
+    return Response::make(rtrim($output, "\n"), 200, $headers);
+});
+
 
 /**
  * Post resource handler, the main handler really
@@ -692,6 +699,7 @@ Route::get('/quickviewjs/{u?}/{id?}', function ($u = '', $id = '') {
 
     foreach($allStreams as $stream) {
       if (strpos($stream->getBundleName(), 'LICENSE')===false) {
+        $stream->previewUrl = $stream->getPreviewUrl();
         $bitstreams[] = $stream;
       }
     }
@@ -701,7 +709,10 @@ Route::get('/quickviewjs/{u?}/{id?}', function ($u = '', $id = '') {
     $bitstream = new MIMAS\Service\Hairdressing\Bitstream();
     $bitstream->setBundleName('URL_BUNDLE');
     $bitstream->setName('http://hairdressing.ac.uk/'.str_replace('ht-', '', $resource['_id']));
+    $bitstream->previewUrl = 'http://hairdressing.ac.uk/'.str_replace('ht-', '', $resource['_id']);
+
     $bitstreams = array($bitstream);
+
   }
   $status = array();
 

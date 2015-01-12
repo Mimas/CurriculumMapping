@@ -25,6 +25,11 @@ class Mapping extends EloquentUserStamp  {
    */
   protected $table = 'mappings';
 
+  /**
+   * @var
+   */
+  protected $tracking = null;
+
  /**
   * Validation rules
   */
@@ -222,11 +227,51 @@ class Mapping extends EloquentUserStamp  {
         if ($issue == 'Other') {
           $mappingIssue->other = $other;
         }
+
         $mappingIssue->save();
       }
 
     }
     return true;
+
+  }
+
+  /**
+   * Start a timer for the mapping
+   */
+  public static function startTracking($uid) {
+    $t = new Tracking();
+
+    try {
+      $user = $user = \Sentry::getUser();
+    } catch (Exception $e) {
+      // TODO: Make use of Sentry specific exceptions?!
+      // do something
+    }
+ 
+    $t->started_at = date('Y-m-d H:i:s');
+    $t->user_id = $user->id;
+    $t->resource = 'Mapping';
+    $t->key_name = 'uid';
+    $t->key = $uid;
+
+    $t->save();
+
+    return $t->id;
+  }
+
+  /**
+   * @throws Exception
+   */
+  public static function stopTracking($id) {
+    $t = Tracking::find($id);
+    
+    if (!$t) {
+      // throw exception
+    }
+
+    $t->ended_at = date('Y-m-d H:i:s');
+    $t->save();
 
   }
 

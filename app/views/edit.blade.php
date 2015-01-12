@@ -63,6 +63,19 @@
   ?>
   <script>
     $(function() {
+      $(window).bind(
+          "beforeunload", 
+          function() { 
+            $.ajax('/stoptracking/{{$trackingId}}', {
+                  success: function(data) {
+                  },
+                  error: function() {
+                  }
+               });
+
+          }
+      );
+
       $(".checks" ).buttonset();
       $(".radio" ).buttonset();
       $('#obsolete4').change(function() {

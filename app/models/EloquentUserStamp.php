@@ -14,6 +14,7 @@ class EloquentUserStamp extends Eloquent {
 
     static::creating(function($model)
     {
+
       //change to Auth::user() if you are using the default auth provider
       try {
         $user = $user = \Sentry::getUser();
