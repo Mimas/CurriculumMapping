@@ -1,4 +1,4 @@
-## CurriculumMapper
+## Curriculum Mapping Tool
 
 Pilot web based application to allow practitioners to browse and edit FE Resources.
 
