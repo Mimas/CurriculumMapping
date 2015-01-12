@@ -1,6 +1,7 @@
 <?php
 /**
  * Pedro Diveris
+ * January 2015
  *
  * This model represents the History View
  * History returns an exportable list of actions
