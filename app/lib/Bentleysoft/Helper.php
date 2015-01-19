@@ -67,13 +67,13 @@ class Helper {
   }
 
   public static function isMenuSlected($path) {
-    $ret = 'normal';
+    $ret = '';
 
     $pathBits = explode('/', \Request::path());
     $actualPath = $pathBits[count($pathBits)-1 ];
 
     if ($actualPath == $path)
-      $ret = 'active';
+      $ret = 'cta';
 
     return $ret;
   }
