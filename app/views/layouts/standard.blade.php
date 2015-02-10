@@ -165,7 +165,7 @@
       }
       @media only screen and (max-width: 767px) {
         header .wrap {
-          background:url(index_files/jisc-logo.png) no-repeat top left;
+          background:url(<?php echo asset('assets/img') ?>/jisc-logo.png) no-repeat top left;
 
         }
         #logo h2

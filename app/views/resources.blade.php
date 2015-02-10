@@ -118,7 +118,7 @@
         <div class="unit-20"><br/></div>
         <div class="unit-60 text-centered">
           <?php
-            echo $resources->links();
+            echo $resources->appends(Input::except('page'))->links();
           ?>
         </div>
         <div class="unit-20"><br/></div>

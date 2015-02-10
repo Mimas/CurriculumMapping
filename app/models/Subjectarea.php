@@ -19,7 +19,7 @@ class Subjectarea extends Eloquent  {
 	 *
 	 * @var string
 	 */
-	protected $table = 'subjectareas';
+	  protected $table = 'subjectareas';
     /**
      * Validation rules
      */

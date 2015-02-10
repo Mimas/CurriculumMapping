@@ -113,19 +113,18 @@
         </div>
         @endif
         <div class="welcome">
-        <h2>Welcome to the pilot trial</h2>
+        <h2>Welcome to our community mapping project!</h2>
          <p>
-          Thank you for agreeing to participate in our pilot trail and for sharing your subject expertise and insights.<br/>
-          The trial runs from <span class="bold">Monday 3 November until Friday 5 December.</span>
+           FE and Skills practitioners have the opportunity to make a difference by mapping resources to priority subject areas and levels.
          </p>
           <p>
-          The <span class="bold">purpose of the trial</span> is to map content to relevant subject area and levels. You will also have the opportunity to identify content that is out of date, has quality issues or has been tagged with an inappropriate subject area. We are also keen to find out where the resource gaps are in terms of your particular subject area and what other resources out there, that you find useful.
+            This tool enables practitioners to identify quality resources and to add value by sharing how they have, or could use these resources to support student learning.
           </p>
           <p>
-          We recommend that you use <span class="bold">Safari, Chrome or Firefox.</span>
+            You will be encouraged to identify any resources that have  ‘quality’ issues and to tell us about resource gaps within your subject area.
           </p>
           <p>
-          Once you log, in you will be able to <span class="bold">get in touch with the team</span> by clicking on the <a href="{{asset('contact')}}">‘Help / Feedback’ link</a>, which is on the top right of your screen.
+            We recommend that you use <strong>Safari, Chrome or Firefox.</strong>
           </p>
           <p>
           Thanks again and happy <a href="{{asset('resources')}}">mapping!</a>
