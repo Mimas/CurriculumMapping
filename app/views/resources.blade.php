@@ -29,7 +29,7 @@
         </div>
         <div class="units-row">
           <div class="unit-60">
-            <ul class="blocks-3">
+            <ul class="blocks-3 small">
               <?php
               foreach ($subjectAreas as $area) {
                 ?>
@@ -49,7 +49,7 @@
             <div class="text-right pager" style="float: right;">
               <span class="total"><?php echo number_format($total); ?></span> Resources, page {{$page}} of {{ $resources->getLastPage() }}</span>&nbsp;&nbsp;|&nbsp;&nbsp;
               {{ Form::select('pageSize', \Bentleysoft\Helper::pageSizes(), $pageSize, array('class' => 'autoselect inliner')); }}
-              <label class="breathe" for="hide_mapped">Show edited
+              <label class="breathe" for="hide_mapped">Show mapped
                 <input name="show_mapped" type="checkbox" class="autosubmit" <?php if (isset($showMapped) && $showMapped) echo 'checked="yes";' ?> />
               </label>
             </div>
@@ -87,22 +87,36 @@
               <button class="btn btn-smaller  <?php if (isset($row['_source']['edited'])&& $row['_source']['edited']=='yes') echo 'btn-active' ?> ">
                 <?php echo(isset($row['_source']['edited'])&& $row['_source']['edited']=='yes') ? 'Mapped' : 'Unmapped' ?>
               </button>
-              {{Form::close();}}
+              {{Form::close()}}
             </td>
-
             <?php
             }
             ?>
-            <td>{{ $row['_type'] }} <?php // echo date('Y-m-d H:i:s', $row['_source']['admin']['processed']/1000); ?></td>
+            <?php
+            if (\Bentleysoft\Helper::superUser() || \Bentleysoft\Helper::userHasAccess(array('resource.curate'))) {    // edited flag, only show if superuser
+            ?>
+            <td>
+              {{Form::open(array('url' => asset('/resource/setunviewable').'/'.$row['_source']['admin']['uid'], 'method' => 'put')); }}
+              <input type="hidden" name="_id" value="<?php echo $row['_source']['admin']['uid'] ?>"/>
+              <input type="hidden" name="return_to" value="<?php echo(Request::fullUrl()) ?>" />
+              <button class="btn btn-smaller  <?php if (Mapping::getUnviewable($row['_source']['admin']['uid'])) echo 'btn-active' ?> ">
+                <?php echo(Mapping::getUnviewable($row['_source']['admin']['uid'])) ? 'Viewable' : 'Not Viewable' ?>
+              </button>
+              {{Form::close()}}
+            </td>
+            <?php
+            }
+            ?>            
+
             <td>
               <?php
               if (isset($row['_source']['edited']) && $row['_source']['edited']=='yes') {
                 ?>
-                <a href="/edit/<?php echo $row['_source']['admin']['uid']; ?>" class="iframe btn btn-small">Edit&nbsp;<i class="fa fa-cog"></i></a>
+                <a href="/edit/<?php echo $row['_source']['admin']['uid']; ?>" class="iframe btn btn-small">Map&nbsp;<i class="fa fa-cog"></i></a>
               <?php
                 } else {
                ?>
-                <a href="/edit/<?php echo $row['_source']['admin']['uid']; ?>" class="iframe btn btn-small btn-blue">Edit&nbsp;<i class="fa fa-cog"></i></a>
+                <a href="/edit/<?php echo $row['_source']['admin']['uid']; ?>" class="iframe btn btn-small btn-blue">Map&nbsp;<i class="fa fa-cog"></i></a>
               <?php
               }
               ?>

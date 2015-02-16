@@ -40,6 +40,17 @@ Route::controller('redis', 'RedisController');
  * pass int pageSize
  */
 Route::get('/koko', function () {
+
+  $mapping = Mapping::where('uid','=','jxrum-10949/15078')->first();
+
+  if ($mapping != null) {
+    echo 'pako';
+  }
+
+  var_dump($mapping);
+
+  return;
+
   // get/set pageSize
   $pageSize = Input::get('pageSize', 25);
 
@@ -746,7 +757,7 @@ Route::any('preview/{id?}', function($id) {
 });
 
 /**
- * Togle edited on off
+ * Toggle edited on off
  */
 Route::put('/resource/toggle/{u?}/{id?}', function ($u, $id) {
 
@@ -780,8 +791,29 @@ Route::put('/resource/toggle/{u?}/{id?}', function ($u, $id) {
   }
   $url = Input::get('return_to', 'resources');
 
-  return Redirect::to($url, 303)->withInput(array($uid => $edited), array('stuff' => 'XXXXXXXXXXXXXXXXXX'));
+  return Redirect::to($url, 303)->withInput(array($uid => $edited), array('stuff' => ''));
 });
+
+/**
+ * Toggle edited on off
+ */
+Route::put('/resource/setunviewable/{u?}/{id?}', function ($u, $id) {
+  $uid = Input::get('_id', '');
+  if ($uid <> '') {
+    $resource = \Bentleysoft\ES\Service::get($uid);
+
+    if (!$resource) {
+      App::abort(404);
+    }
+    $flag = Mapping::getUnviewable($uid) ? 1 : 0;
+    Mapping::setUnviewable($uid, $flag);
+
+  }
+  $url = Input::get('return_to', 'resources');
+
+  return Redirect::to($url, 303);  // ->withInput(array($uid => $edited), array('stuff' => ''));
+});
+
 
 /**
  * *************************************************  Qualifications ****************************************************

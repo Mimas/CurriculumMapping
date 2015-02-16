@@ -7,7 +7,7 @@
                       <h2>{{ $data['_source']['summary_title'] }}</h2>
                       </th>
                       <th class="text-right">
-                        <a href="/edit/<?php echo $data['_source']['admin']['uid']; ?>" class="iframe btn btn-small btn-blue">Edit&nbsp;<i class="fa fa-edit"></i></a>
+                        <a href="/edit/<?php echo $data['_source']['admin']['uid']; ?>" class="iframe btn btn-small btn-blue">Map&nbsp;<i class="fa fa-edit"></i></a>
                       </th>
                       <tr>
                         <td class="bold">Source</td><td>{{$data['_source']['admin']['source'] or '' }}</td>

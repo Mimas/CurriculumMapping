@@ -3,11 +3,14 @@
  * Model for Mapping
  * Petros Diveris, Pilot 1
  * MIMAS, Autumn 2014
+
+ * Petros Diveris, Phase 2
+ * JISC, Winter 2015
  *
- * @property string uuid
- * @property string oid
+ * @property string uid
  * @property string subject_area
  * @property string currency
+ * @property string unviewable
  * @property string level
  * @property string checksum
  * @property string content_usage
@@ -156,9 +159,8 @@ class Mapping extends EloquentUserStamp  {
 
     // attach
     foreach ($tags as $tag) {
-      $ldcs = LdcsView::where('ldcs_desc','=',"$tag")->get();
-      if (count($ldcs)>0 ) {
-        $ldc = $ldcs[0];
+      $ldc = LdcsView::where('ldcs_desc','=',"$tag")->first();
+      if (null != $ldc) {
         $metaLdcs = new MappingLdcs();
         $metaLdcs->mappings_id = $this->id;
         $metaLdcs->ldcs_id = $ldc->id;
@@ -182,9 +184,9 @@ class Mapping extends EloquentUserStamp  {
 
     // attach
     foreach ($tags as $tag) {
-      $userTag = Tag::where('label','=',"$tag")->get();
+      $userTag = Tag::where('label','=',"$tag")->first();
 
-      if (count($userTag)>0 ) {
+      if (null != $userTag) {
         $userTag = $userTag[0];
       } else {
         $userTag = new Tag;
@@ -274,5 +276,40 @@ class Mapping extends EloquentUserStamp  {
     $t->save();
 
   }
+
+  /**
+   * @param $uid
+   * @return bool
+   */
+  public static function getUnviewable($uid) {
+    $mapping = Mapping::where('uid','=',"$uid")->first();
+    $ret = !($mapping<>null && $mapping->unviewable==1);
+    return $ret;
+  }
+
+  /**
+   * @param $uid
+   * @param int $unviewable
+   * @throws Exception
+   * @return bool
+   */
+  public static function setUnviewable($uid,$unviewable=0) {
+    $mapping = Mapping::where('uid','=',"$uid")->first();
+
+    if ($mapping!=null) {
+    } else {
+      $mapping = new Mapping;
+      $mapping->uid = $uid;
+    }
+    $mapping->unviewable = $unviewable;
+
+    if (!$mapping->save()) {
+      // throw exception
+      throw new Exception("Couldn't save the 'viewable' flag for this resource [$uid] ");
+    }
+
+    return true;
+  }
+
 
 }
