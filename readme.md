@@ -12,4 +12,4 @@ It is using Laravel 4, Cartalyst Sentry, Highcharts and Kube CSS. And handcrafte
 
 ### License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+The Curriculum Mapping Tool is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
