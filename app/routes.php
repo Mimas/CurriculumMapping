@@ -41,13 +41,8 @@ Route::controller('redis', 'RedisController');
  */
 Route::get('/koko', function () {
 
-  $mapping = Mapping::where('uid','=','jxrum-10949/15078')->first();
-
-  if ($mapping != null) {
-    echo 'pako';
-  }
-
-  var_dump($mapping);
+  $x = \Sentry::getUser();
+  var_dump($x);
 
   return;
 

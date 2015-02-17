@@ -131,10 +131,11 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
+    'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
+    'Barryvdh\Debugbar\ServiceProvider',
     'Shift31\LaravelElasticsearch\LaravelElasticsearchServiceProvider',
     'Cartalyst\Sentry\SentryServiceProvider',
     'PhpConsole\Laravel\ServiceProvider',
-    'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 	),
 
 	/*

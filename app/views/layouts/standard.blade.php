@@ -193,7 +193,7 @@
           ?>
           <nav class="navbar navbar-right">
             <ul class="menu">
-              <?php if(! Sentry::check() && $_SERVER['REQUEST_URI']!=='/login'): ?>
+              <?php if(\Sentry::getUser() == null && $_SERVER['REQUEST_URI']!=='/login'): ?>
                 <li><a class="<?php echo \Bentleysoft\Helper::isMenuSlected('login') ?>" href="/login">Sign In</a></li>
               <?php endif; ?>
 
@@ -221,7 +221,7 @@
               <?php endif; ?>
 
               <li><a class="<?php echo \Bentleysoft\Helper::isMenuSlected('contact') ?>" href="/contact">Help/Feedback</a></li>
-              <?php if (Sentry::check()): ?>
+              <?php if (\Sentry::getUser()!=null): ?>
                 <li><a class="<?php echo \Bentleysoft\Helper::isMenuSlected('logout') ?>" href="/logout">Sign Out</a></li>
               <?php endif; ?>
 
@@ -249,7 +249,7 @@
           ?>
           <nav class="navbar navbar-right">
             <ul class="menu">
-              <?php if(! Sentry::check() && $_SERVER['REQUEST_URI']!=='/login'): ?>
+              <?php if(\Sentry::getUser() == null && $_SERVER['REQUEST_URI']!=='/login'): ?>
                 <li><a href="/login">Sign In</a></li>
               <?php endif; ?>
 
@@ -277,7 +277,7 @@
               <?php endif; ?>
 
                 <li><a href="/contact">Help/Feedback</a></li>
-              <?php if (Sentry::check()): ?>
+              <?php if (!\Sentry::getUser() == null): ?>
                 <li><a href="/logout">Sign Out</a></li>
               <?php endif; ?>
             </ul>

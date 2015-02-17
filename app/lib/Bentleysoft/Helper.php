@@ -24,38 +24,60 @@ class Helper {
    * @throws \Exception
    * @return bool
    */
+
+  static $user = null;
+  static $users = array();
+
 	public static function userHasAccess(array $rights, $id = -1) {
 		$ret = false;
 
-		$x = new \Sentry;
+    /**
+     * TODO: Remove the if (false) check after you have thoroughly checked and confirmed that it indeed obsolete
+     */
 
-		if (! \Sentry::check()) {
-			// TODO: Throw Exception
+    if (  false && ! \Sentry::check()) {
       throw new \Exception("Not authorised");
 		} else {
 			try {
+        if (null == self::$user) {
+				  if ($id == -1) {  // the current user
+					  self::$user = \Sentry::getUser();
 
-				if ($id == -1) {  // the current user
-					$user = \Sentry::getUser();
-
-				} else { // or the user being managed...
-
-					$user = \Sentry::findUserById($id);
-				}
+  				} else { // or the user being managed...
+  					self::$user = \Sentry::findUserById($id);
+	  			}
+        }
 			} catch (Exception $e) {
 				// TODO: Make use of Sentry specific exceptions?!
 				return false;
 			}
 			try {
-				$users = \Sentry::findAllUsersWithAccess( $rights );
+        $rightsKey = md5(serialize($rights));
+        $expiresAt = \Carbon\Carbon::now()->addSeconds(60*60*2);
+        if ($expiresAt);
+
+        $users = \Cache::get('user_rights');
+
+        if (!$users ) {
+          $users = array();
+        }
+
+        if (! array_key_exists($rightsKey, $users)) {
+          $tmp = \Sentry::findAllUsersWithAccess( $rights );
+          $users[$rightsKey] = $tmp;
+
+          \Cache::put('user_rights', $users, $expiresAt);
+        }
+
+				// $users = \Sentry::findAllUsersWithAccess( $rights );
 			} catch (Exception $e) {
 				// TODO: Make it Sentry Exception
 				return false;
 			}
 
-			foreach ($users as $u) {
+			foreach ($users[$rightsKey] as $u) {
 				# code...
-				if ($u->email == $user->email)
+				if ($u->email == self::$user->email)
 					return true;
 			}
 			return false;
@@ -87,12 +109,13 @@ class Helper {
    */
   public static function getUserSubjectAreas($id=-1) {
     if ($id<0) {
-      if (! \Sentry::check()) {
+      if (false && ! \Sentry::check()) {
         // TODO: Throw Exception
         throw new \Exception("Not authorised");
       } else {
         try {
           if ($id == -1) {  // the current user
+
             $user = \Sentry::getUser();
             $id = $user->getId();
           }
@@ -253,12 +276,13 @@ class Helper {
     return $num;
   }
 
- /**
-  * Iterate throw an Eloquent rowset, pick up a field and shove it in an array
-  * Uppon completion, return that array
-  * @param array $rows
-  * @param string $field e.g. 'label'
-  */
+  /**
+   * Iterate throw an Eloquent rowset, pick up a field and shove it in an array
+   * Uppon completion, return that array
+   * @param array $rows
+   * @param string $field e.g. 'label'
+   * @return array
+   */
   public static function fieldList($rows, $field) {
     $ret = array();
 
