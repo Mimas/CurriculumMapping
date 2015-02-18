@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="units-row">
-            <div class="unit-60">
+            <div class="unit-60 small">
               <ul class="blocks-3">
               <?php
               foreach ($qualifiers as $i=>$qualifier) {
@@ -42,6 +42,16 @@
   </div>
   @endif
   <table class="width-100 table-hovered table-stripped">
+    <thead>
+    <tr>
+      <th>Code</th>
+      <th class="text-centered">Level</th>
+      <th>Qualification</th>
+      <th class="text-centered">Show in mapping</th>
+      <th >Actions</th>
+    </tr>
+    </thead>
+
     <?php foreach ($data as $row): ?>
       <tr>
         <td class="width-10">

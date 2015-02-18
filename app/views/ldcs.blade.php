@@ -38,6 +38,14 @@
   </div>
   @endif
   <table class="width-100 table-hovered table-stripped">
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Subject Area</th>
+        <th class="text-centered">Actions</th>
+      </tr>
+    </thead>
+
     <?php foreach ($data as $row): ?>
       <tr>
         <td class="width-10"> <a class="iframe" href="<?php echo asset(str_singular(Request::path())); ?>/{{$row->id}}">{{ $row->ldcs_code }}</a></td>

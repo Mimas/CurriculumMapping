@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="units-row">
-    <div class="unit-50">
+    <div class="unit-60">
       &nbsp;
     </div>
     <div class="unit-40">
@@ -29,12 +29,20 @@
   </div>
   @endif
   <table class="width-100 table-hovered table-stripped">
+    <thead>
+    <tr>
+      <th>Subject area</th>
+      <th>Visible/Invisible</th>
+      <th class="text-centered">Actions</th>
+    </tr>
+    </thead>
+
     <?php foreach ($data as $subject): ?>
       <tr>
         <td> <a class="iframe" href="<?php echo asset('subject') ?>/{{$subject->id}}">{{ $subject->subject }}</a></td>
         <td>
           {{Form::open(array('url' => 'subject/toggle/'.$subject->id, 'method' => 'PUT')); }}
-          <button class="btn btn-smaller {{$subject->activated == 1 ? 'btn-active' : '' }}">{{$subject->activated == 1 ? 'Active' : 'Inactive' }}</button>
+          <button class="btn btn-smaller {{$subject->activated == 1 ? 'btn-active' : '' }}">{{$subject->activated == 1 ? 'Visible' : 'Invisible' }}</button>
           {{Form::close();}}
         </td>
 
