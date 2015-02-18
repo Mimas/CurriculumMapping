@@ -2,13 +2,17 @@
 @section('content')
             <div class="units-row top44">
                 <div class="unit-100">
-                    <table class="table-hovered">
+                  <table class="table-hovered">
+                    <tr>
                       <th>
-                      <h2>{{ $data['_source']['summary_title'] }}</h2>
+                        <h2>{{ $data['_source']['summary_title'] }}</h2>
                       </th>
                       <th class="text-right">
                         <a href="/edit/<?php echo $data['_source']['admin']['uid']; ?>" class="iframe btn btn-small btn-blue">Map&nbsp;<i class="fa fa-edit"></i></a>
                       </th>
+                    </tr>
+                   </table>
+                    <table class="table-hovered">
                       <tr>
                         <td class="bold">Source</td><td>{{$data['_source']['admin']['source'] or '' }}</td>
                       </tr>

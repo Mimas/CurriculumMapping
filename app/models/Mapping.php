@@ -10,7 +10,7 @@
  * @property string uid
  * @property string subject_area
  * @property string currency
- * @property string unviewable
+ * @property string viewable
  * @property string level
  * @property string checksum
  * @property string content_usage
@@ -271,7 +271,6 @@ class Mapping extends EloquentUserStamp  {
     if (!$t) {
       // throw exception
     }
-
     $t->ended_at = date('Y-m-d H:i:s');
     $t->save();
 
@@ -281,19 +280,32 @@ class Mapping extends EloquentUserStamp  {
    * @param $uid
    * @return bool
    */
-  public static function getUnviewable($uid) {
+  public static function getCurrent($uid) {
     $mapping = Mapping::where('uid','=',"$uid")->first();
-    $ret = !($mapping<>null && $mapping->unviewable==1);
+
+    return ( ($mapping==null || $mapping->current==1) );
     return $ret;
   }
 
   /**
    * @param $uid
-   * @param int $unviewable
+   * @return bool
+   *
+   */
+  public static function getViewable($uid) {
+    $mapping = Mapping::where('uid','=',"$uid")->first();
+    $ret = ($mapping<>null && $mapping->viewable==1);
+    return $ret;
+  }
+
+  /**
+   * @param $uid
+   * @param int $viewable
    * @throws Exception
    * @return bool
+   *
    */
-  public static function setUnviewable($uid,$unviewable=0) {
+  public static function setViewable($uid,$viewable=1) {
     $mapping = Mapping::where('uid','=',"$uid")->first();
 
     if ($mapping!=null) {
@@ -301,7 +313,7 @@ class Mapping extends EloquentUserStamp  {
       $mapping = new Mapping;
       $mapping->uid = $uid;
     }
-    $mapping->unviewable = $unviewable;
+    $mapping->viewable = $viewable;
 
     if (!$mapping->save()) {
       // throw exception

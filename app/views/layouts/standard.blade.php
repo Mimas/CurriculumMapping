@@ -237,7 +237,6 @@
 <section>
 &nbsp;
 </section>
-
     <div class="wrap">
         @yield('content')
     </div>
@@ -256,7 +255,7 @@
               <?php if (Bentleysoft\Helper::userHasAccess(array('resource.manage')) || Bentleysoft\Helper::superUser()): ?>
                 <li><a href="/resources">Resources</a></li>
               <?php endif; ?>
-              <?php if (Bentleysoft\Helper::userHasAccess(array('subjectareas.manage')) || Bentleysoft\Helper::userHasAccess(array('subjectareas.admin'))  || Bentleysoft\Helper::superUser() ): ?>
+              <?php if (Bentleysoft\Helper::userHasAccess(array('subjectareas.manage', 'subjectareas.admin')) || Bentleysoft\Helper::userHasAccess(array('subjectareas.admin'))  || Bentleysoft\Helper::superUser() ): ?>
                 <li><a href="/subjectareas">Subjects</a></li>
               <?php endif; ?>
 

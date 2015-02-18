@@ -59,28 +59,44 @@
     <div class="units-row">
       <div class="unit-100">
         <table class="table-hovered table-stripped">
+          <thead>
+          <tr>
+            <th>Title</th>
+            <th class="text-centered">Source</th>
+            <th>Subject Area</th>
+            <th class="text-centered">Current</th>
+            <th class="text-centered">Status</th>
+            <th class="text-centered">Viewable</th>
+            <th class="text-centered">Action</th>
+          </tr>
+          </thead>
         <?php
         foreach ($data['hits']['hits'] as $row) {
         ?>
           <tr>
-            <td class="width-30"><a href="/view/<?php echo $row['_source']['admin']['uid']; ?>">{{ $row['_source']['summary_title'] }}</a></td>
-            <td>{{ $row['_source']['admin']['source'] }}</td>
-            <td>{{ $row['_source']['audience'][0] or '&nbsp'; }}</td>
-            <td>
+            <td class="small width-20"><a href="/view/<?php echo $row['_source']['admin']['uid']; ?>">{{ $row['_source']['summary_title'] }}</a></td>
+            <td class="text-centered small">
+              {{ $row['_source']['admin']['source'] }}
+            </td>
+
+            <td class="width-20 small">
               <?php
               if (isset($row['_source']['subject']['ld'][0])) {
-                echo str_limit($row['_source']['subject']['ld'][0], 10, '...' );
+                echo str_limit($row['_source']['subject']['ld'][0], 41, '...' );
               } elseif(isset($row['_source']['subject'][0]['ld'])) {
-                echo str_limit($row['_source']['subject'][0]['ld'][0], 10, '...' );
+                echo str_limit($row['_source']['subject'][0]['ld'][0], 41, '...' );
               } else {
                 echo 'Undefined';
               }
               ?>
               </td>
+            <td class="text-centered">
+              <?php echo (Mapping::getCurrent($row['_source']['admin']['uid'])) ? 'yes' : 'no' ?>
+            </td>
+            <td class="text-centered">
             <?php
             if (\Bentleysoft\Helper::superUser()) {    // edited flag, only show if superuser
             ?>
-            <td>
               {{Form::open(array('url' => asset('/resource/toggle').'/'.$row['_source']['admin']['uid'], 'method' => 'put')); }}
               <input type="hidden" name="_id" value="<?php echo $row['_source']['admin']['uid'] ?>"/>
               <input type="hidden" name="return_to" value="<?php echo(Request::fullUrl()) ?>" />
@@ -88,27 +104,34 @@
                 <?php echo(isset($row['_source']['edited'])&& $row['_source']['edited']=='yes') ? 'Mapped' : 'Unmapped' ?>
               </button>
               {{Form::close()}}
-            </td>
+            <?php
+            } else {
+            ?>
+            <i class="fa <?php if (isset($row['_source']['edited'])&& $row['_source']['edited']=='yes') echo('fa-map-marker');?>"></i>
             <?php
             }
             ?>
+            </td>
+            <td class="text-centered">
             <?php
-            if (\Bentleysoft\Helper::superUser() || \Bentleysoft\Helper::userHasAccess(array('resource.curate'))) {    // edited flag, only show if superuser
+            if (\Bentleysoft\Helper::superUser()) {    // edited flag, only show if superuser
             ?>
-            <td>
-              {{Form::open(array('url' => asset('/resource/setunviewable').'/'.$row['_source']['admin']['uid'], 'method' => 'put')); }}
+              {{Form::open(array('url' => asset('/resource/setviewable').'/'.$row['_source']['admin']['uid'], 'method' => 'put')); }}
               <input type="hidden" name="_id" value="<?php echo $row['_source']['admin']['uid'] ?>"/>
               <input type="hidden" name="return_to" value="<?php echo(Request::fullUrl()) ?>" />
-              <button class="btn btn-smaller  <?php if (Mapping::getUnviewable($row['_source']['admin']['uid'])) echo 'btn-active' ?> ">
-                <?php echo(Mapping::getUnviewable($row['_source']['admin']['uid'])) ? 'Viewable' : 'Not Viewable' ?>
+              <button class="btn btn-smaller  <?php if (Mapping::getViewable($row['_source']['admin']['uid'])) echo 'btn-active' ?> ">
+                <?php echo(Mapping::getViewable($row['_source']['admin']['uid'])) ? 'Viewable' : 'Not Viewable' ?>
               </button>
               {{Form::close()}}
-            </td>
+            <?php
+              } else {
+              ?>
+              <i class="fa <?php if (Mapping::getViewable($row['_source']['admin']['uid'])) echo('fa-certificate');?>"></i>
             <?php
             }
-            ?>            
-
-            <td>
+            ?>
+            </td>
+            <td class="text-centered">
               <?php
               if (isset($row['_source']['edited']) && $row['_source']['edited']=='yes') {
                 ?>

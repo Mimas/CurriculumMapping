@@ -28,8 +28,8 @@ class Helper {
   static $user = null;
   static $users = array();
 
-	public static function userHasAccess(array $rights, $id = -1) {
-		$ret = false;
+  public static function userHasAccess(array $rights, $id = -1) {
+    $ret = false;
 
     /**
      * TODO: Remove the if (false) check after you have thoroughly checked and confirmed that it indeed obsolete
@@ -37,21 +37,21 @@ class Helper {
 
     if (  false && ! \Sentry::check()) {
       throw new \Exception("Not authorised");
-		} else {
-			try {
+    } else {
+      try {
         if (null == self::$user) {
-				  if ($id == -1) {  // the current user
-					  self::$user = \Sentry::getUser();
+          if ($id == -1) {  // the current user
+            self::$user = \Sentry::getUser();
 
-  				} else { // or the user being managed...
-  					self::$user = \Sentry::findUserById($id);
-	  			}
+          } else { // or the user being managed...
+            self::$user = \Sentry::findUserById($id);
+          }
         }
-			} catch (Exception $e) {
-				// TODO: Make use of Sentry specific exceptions?!
-				return false;
-			}
-			try {
+      } catch (Exception $e) {
+        // TODO: Make use of Sentry specific exceptions?!
+        return false;
+      }
+      try {
         $rightsKey = md5(serialize($rights));
         $expiresAt = \Carbon\Carbon::now()->addSeconds(60*60*2);
         if ($expiresAt);
@@ -69,20 +69,22 @@ class Helper {
           \Cache::put('user_rights', $users, $expiresAt);
         }
 
-				// $users = \Sentry::findAllUsersWithAccess( $rights );
-			} catch (Exception $e) {
-				// TODO: Make it Sentry Exception
-				return false;
-			}
+        // $users = \Sentry::findAllUsersWithAccess( $rights );
+      } catch (Exception $e) {
+        // TODO: Make it Sentry Exception
+        return false;
+      }
 
-			foreach ($users[$rightsKey] as $u) {
-				# code...
-				if ($u->email == self::$user->email)
-					return true;
-			}
-			return false;
-		}
-	}
+      if (null != self::$user) {
+        foreach ($users[$rightsKey] as $u) {
+          # code...
+          if (null!==$u && $u->email == self::$user->email)
+            return true;
+        }
+      }
+      return false;
+    }
+  }
 
   public static function superUser($id = -1) {
     return self::userHasAccess(array('application.admin'));
@@ -139,26 +141,26 @@ class Helper {
 
 
 
-	/**
-	 * Create a temporary file with a unique random name, write to it and return the filename
-	 *
-	 * @author      Petros Diveris
-	 * @copyright   
-	 * @license     
-	 * @param       string  $contents  Text stream to write
-	 * @param       string  $dir 
-	 * @return      string  filename
-	 * 
-	 * @author pd
-	 */
-	public static function writeTempFile($contents,  $dir = '/tmp') {
-		$fname = $dir . '/' . \Config::get('app.shortname', 'partisan'). '-'. uniqid();
-		if ( $result = file_put_contents($fname, $contents) ) {
-			return($fname);
-		} else {
-			return(false);
-		}
-	}
+  /**
+   * Create a temporary file with a unique random name, write to it and return the filename
+   *
+   * @author      Petros Diveris
+   * @copyright
+   * @license
+   * @param       string  $contents  Text stream to write
+   * @param       string  $dir
+   * @return      string  filename
+   *
+   * @author pd
+   */
+  public static function writeTempFile($contents,  $dir = '/tmp') {
+    $fname = $dir . '/' . \Config::get('app.shortname', 'partisan'). '-'. uniqid();
+    if ( $result = file_put_contents($fname, $contents) ) {
+      return($fname);
+    } else {
+      return(false);
+    }
+  }
 
   /**
    * Paginator supported page sizes.. Just a helper
@@ -278,7 +280,7 @@ class Helper {
 
   /**
    * Iterate throw an Eloquent rowset, pick up a field and shove it in an array
-   * Uppon completion, return that array
+   * Upon completion, return that array
    * @param array $rows
    * @param string $field e.g. 'label'
    * @return array

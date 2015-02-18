@@ -792,7 +792,7 @@ Route::put('/resource/toggle/{u?}/{id?}', function ($u, $id) {
 /**
  * Toggle edited on off
  */
-Route::put('/resource/setunviewable/{u?}/{id?}', function ($u, $id) {
+Route::put('/resource/setviewable/{u?}/{id?}', function ($u, $id) {
   $uid = Input::get('_id', '');
   if ($uid <> '') {
     $resource = \Bentleysoft\ES\Service::get($uid);
@@ -800,8 +800,10 @@ Route::put('/resource/setunviewable/{u?}/{id?}', function ($u, $id) {
     if (!$resource) {
       App::abort(404);
     }
-    $flag = Mapping::getUnviewable($uid) ? 1 : 0;
-    Mapping::setUnviewable($uid, $flag);
+
+    $flag = !Mapping::getViewable($uid) ? 1 : 0;
+
+    Mapping::setViewable($uid, $flag);
 
   }
   $url = Input::get('return_to', 'resources');
