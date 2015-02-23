@@ -90,8 +90,9 @@ class Service
 
     if ($showViewable && $showUnviewable) {
       $verb = 'or';
+
       if (isset($filter['or'])||isset($filter['adn'])) {
-        $verb = 'and';
+     //   $verb = 'and';
       }
 
       echo " $verb viewable OR unviewable ";
