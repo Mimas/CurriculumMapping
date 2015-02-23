@@ -186,7 +186,6 @@
         <div class="unit-35" id="logo">
           <h2>Curriculum Mapping Tool</h2>
         </div> </a>
-
       <div class="unit-65 text-right">
         <?php
         if (!isset($error)) {

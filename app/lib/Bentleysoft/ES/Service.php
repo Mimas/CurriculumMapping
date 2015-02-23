@@ -17,10 +17,19 @@ class Service
    * @param array|string $audience
    * @param array $areas
    * @param bool $showMapped
-   * @internal param int $sice
+   * @param bool $showUnmapped
+   * @param bool $showViewable
+   * @param bool $showUnviewable
    * @return mixed
    */
-  public static function browse($from = 0, $size = 20, $pattern = '*', $audience='FE', $areas = array(), $showMapped = false)
+  public static function browse($from = 0, $size = 20,
+                                $pattern = '*',
+                                $audience='FE',
+                                $areas = array(),
+                                $showMapped = true,
+                                $showUnmapped = true,
+                                $showViewable = false,
+                                $showUnviewable = false)
   {
     $searchParams['index'] = 'ciim';
 
@@ -49,8 +58,7 @@ class Service
                       );
     } else {
       $must[] = array( 'terms'=>array(
-        'audience'=>array('FE'),
-
+        'audience'=>array($audience),
         )
       );
 
@@ -60,22 +68,79 @@ class Service
       'bool'=>array('must'=>$must),
     );
 
+    $filter = array();
+
+    // $filter['or'][] = array('exists'=>array('field'=>'published') );
+
+    if ($showMapped && $showUnmapped) {
+      echo "mapped OR unmapped ";
+      $filter['or'][] = array("term"=>array("edited"=>true));
+      $filter['or'][] = array("term"=>array("edited"=>false));
+      $filter['or'][] = array("missing"=>array("field"=>"edited"));
+    } elseif ( $showMapped ) {
+      echo " AND mapped ";
+      $filter['and'][] = array("term"=>array("edited"=>true));
+    } elseif ($showUnmapped ) {
+      echo " AND unmapped ";
+      $filter['and'][] = array("term"=>array("edited"=>false));
+      $filter['or'][] = array("missing"=>array("field"=>"edited"));
+    }
+
+
+
+    if ($showViewable && $showUnviewable) {
+      $verb = 'or';
+      if (isset($filter['or'])||isset($filter['adn'])) {
+        $verb = 'and';
+      }
+
+      echo " $verb viewable OR unviewable ";
+
+      $filter[$verb][] = array("term"=>array("viewable"=>true));
+      $filter['or'][] = array("term"=>array("viewable"=>false));
+      $filter['or'][] = array("missing"=>array("field"=>"viewable"));
+    } elseif ( $showViewable ) {
+      echo "  AND viewable ";
+
+      $filter['and'][] = array("term"=>array("viewable"=>true));
+    } elseif ($showUnviewable ) {
+      echo " AND unviewable";
+
+      $filter['and'][] = array("term"=>array("viewable"=>false));
+      $filter['or'][] = array("missing"=>array("field"=>"viewable"));
+
+    }
+
+
+
+    $query = array(
+      'filtered'=>array(
+         'query'=>$bool,
+         'filter'=>$filter
+       )
+    );
+
+    /*
     if ($showMapped) {
       $query = $bool;
     } else{
       $query = array(
         'filtered'=>array(
           'query'=>$bool,
-          'filter'=>array('not'=> array('exists'=>array('field'=>'edited') )
+          'filter'=>array('not'=> array('exists'=>array('field'=>'edited'),
+                          'term'=>array('edited'=>true),
+
+
+           )
           )
         ),
 
       );
     }
-
+    */
     $searchParams['body']['query'] = $query;
-
     $result = \Es::search($searchParams);
+
 
     return ($result);
   }
@@ -130,6 +195,63 @@ class Service
   * Get the "mapped" resources - the main bit of the beast...
   */
   public static function mapped($from = 0, $size = 20, $pattern = '*')
+  {
+
+    $searchParams['index'] = 'ciim';
+
+    $searchParams['size'] = $size;
+    $searchParams['from'] = $from;
+
+    $searchParams['sort'] = array(
+      'processed:desc',
+      'edited:asc'
+    );
+
+    $extraTerms = array();
+
+    if (!empty($areas)) {
+      $extraTerms = self::getLdCodesForSubjects($areas);
+
+      $must[] = array( 'terms'=>array(
+                          'audience'=>array('FE'),
+                          'subject.ldcode'=>$extraTerms,
+                        )
+                      );
+    } else {
+      $must[] = array( 'terms'=>array(
+        'audience'=>array('FE'),
+
+        )
+      );
+
+    }
+
+    $bool = array(
+      'bool'=>array('must'=>$must),
+    );
+
+    $query = array(
+      'filtered'=>array(
+        'query'=>$bool,
+        'filter'=>array('term'=>array('edited'=>true)
+          )
+        ),
+
+      );
+
+    $searchParams['body']['query'] = $query;
+    $result = \Es::search($searchParams);
+
+
+    return ($result);
+
+  }
+  
+
+  /**
+  * Get the "mapped" resources - the main bit of the beast...
+  */
+  public static function mappedX($from = 0, $size = 20, $pattern = '*')
   {
 
     $searchParams['index'] = 'ciim';

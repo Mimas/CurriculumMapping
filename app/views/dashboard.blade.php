@@ -113,7 +113,7 @@
         </div>
         @endif
         <div class="welcome">
-        <h2>Welcome to our community mapping project!</h2>
+        <h2>Welcome to our FE &amp; Skills community mapping project!</h2>
          <p>
            FE and Skills practitioners have the opportunity to make a difference by mapping resources to priority subject areas and levels.
          </p>

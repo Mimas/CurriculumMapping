@@ -123,6 +123,9 @@ Route::get('/resources', function () {
   // get/set pageSize
   $pageSize = Input::get('pageSize', 25);
 
+
+
+
   // our query string
   $query = Input::get('q', '*');
   if ($query == '') {
@@ -151,10 +154,15 @@ Route::get('/resources', function () {
     }
   }
 
-  $showMapped = Input::get('show_mapped', '');
+  $showMapped = Input::get('show_mapped', '') <> '';
+  $showUnmapped = Input::get('show_unmapped', '') <> '';
+  $showViewable = Input::get('show_viewable', '') <> '';
+  $showUnviewable = Input::get('show_unviewable', '') <> '';
 
   // get the data
-  $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query, Input::get('audience', 'FE'), $selectedAreas, $showMapped);
+  $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query,
+                Input::get('audience', 'FE'), $selectedAreas, $showMapped, $showUnmapped, $showViewable, $showUnviewable
+              );
 
   $resources = Paginator::make($data['hits']['hits'], $data['hits']['total'], $pageSize);
 
@@ -176,6 +184,9 @@ Route::get('/resources', function () {
     'subjectAreas' => $subjectAreas,
     'selectedAreas' => $selectedAreas,
     'showMapped' => $showMapped,
+    'showUnmapped' => $showUnmapped,
+    'showViewable' => $showViewable,
+    'showUnviewable' => $showUnviewable,
     'pageSize' => $pageSize,
     'total' => $data['hits']['total'],
     'page' => $page + 1,
@@ -437,7 +448,12 @@ Route::get('/', function () {
 
   //  $resources = Paginator::make($data['hits']['hits'], $data['hits']['total'], 20);
 
-  $mapped = Mapping::where('id', '>', 0)->get()->count();
+  $mappedResources = Bentleysoft\ES\Service::mapped($offset, $pageSize, $query);
+
+  $mapped = $mappedResources['hits']['total'];
+
+  // $mapped = Mapping::where('id', '>', 0)->get()->count();
+
 
   return \Illuminate\Support\Facades\View::make('dashboard')->with(array('total' => $data['hits']['total'], 'mapped' => $mapped));
 });
@@ -751,6 +767,33 @@ Route::any('preview/{id?}', function($id) {
   return View::make('preview')->with(array('bitstream'=>$bitstream));
 });
 
+
+Route::get('remap', function() {
+  $dbMapped = Mapping::get();
+
+  foreach ($dbMapped as $key => $map) {
+    echo $map->uid."<br/>";
+    $params = array(
+      'id' => $map->uid,
+      'type' => 'learning resource',
+      'index' => 'ciim',
+      'body' => array('doc' => array('edited' => true,
+        'admin' => array('processed' => time() * 1000),
+      )
+      ),
+
+    );
+    $x = time();
+
+    $response = \Es::update($params);    
+    var_export($response);
+    # code...
+  }
+
+
+  echo 'asa';
+});
+
 /**
  * Toggle edited on off
  */
@@ -800,15 +843,30 @@ Route::put('/resource/setviewable/{u?}/{id?}', function ($u, $id) {
     if (!$resource) {
       App::abort(404);
     }
+    if (isset($resource['_source']['viewable']) && $resource['_source']['viewable'] == 'yes' || isset($resource['_source']['viewable']) && $resource['_source']['viewable'] == true) {
+      $viewable = false;
+    } else {
+      $viewable = true;
+    }
 
-    $flag = !Mapping::getViewable($uid) ? 1 : 0;
+    $params = array(
+      'id' => $uid,
+      'type' => 'learning resource',
+      'index' => 'ciim',
+      'body' => array('doc' => array('viewable' => $viewable,
+        'admin' => array('processed' => time() * 1000),
+      )
+      ),
 
-    Mapping::setViewable($uid, $flag);
+    );
+    $x = time();
 
+    $response = \Es::update($params);
+    if (!$response) ; // code sniffing avoidance scheme
   }
   $url = Input::get('return_to', 'resources');
 
-  return Redirect::to($url, 303);  // ->withInput(array($uid => $edited), array('stuff' => ''));
+  return Redirect::to($url, 303)->withInput(array($uid => $viewable), array('stuff' => ''));
 });
 
 

@@ -49,9 +49,29 @@
             <div class="text-right pager" style="float: right;">
               <span class="total"><?php echo number_format($total); ?></span> Resources, page {{$page}} of {{ $resources->getLastPage() }}</span>&nbsp;&nbsp;|&nbsp;&nbsp;
               {{ Form::select('pageSize', \Bentleysoft\Helper::pageSizes(), $pageSize, array('class' => 'autoselect inliner')); }}
-              <label class="breathe" for="hide_mapped">Show mapped
-                <input name="show_mapped" type="checkbox" class="autosubmit" <?php if (isset($showMapped) && $showMapped) echo 'checked="yes";' ?> />
-              </label>
+              <ul class="forms-inline-list small">
+                <li>  
+                  <label class="breathe" for="show_mapped">Mapped
+                    <input name="show_mapped" type="checkbox" class="autosubmit" <?php if (isset($showMapped) && $showMapped) echo 'checked="yes";' ?> />
+                  </label>
+                </li>                              
+                <li>  
+                  <label class="breathe" for="hide_mapped">Unmapped
+                    <input name="show_unmapped" type="checkbox" class="autosubmit" <?php if (isset($showUnmapped) && $showUnmapped) echo 'checked="yes";' ?> />
+                  </label>
+                </li>
+
+                <li>
+                  <label class="breathe" for="show_viewable">Viewable
+                    <input name="show_viewable" type="checkbox" class="autosubmit" <?php if (isset($showViewable) && $showViewable)  echo 'checked="yes";' ?> />
+                  </label>
+                </li>
+                <li>
+                  <label class="breathe" for="show_unviewable">Non Viewable
+                    <input name="show_unviewable" type="checkbox" class="autosubmit" <?php if (isset($showUnviewable) && $showUnviewable) echo 'checked="yes";' ?> />
+                  </label>
+                </li>
+            </ul>
             </div>
           </div>
         </div>
@@ -100,7 +120,7 @@
               {{Form::open(array('url' => asset('/resource/toggle').'/'.$row['_source']['admin']['uid'], 'method' => 'put')); }}
               <input type="hidden" name="_id" value="<?php echo $row['_source']['admin']['uid'] ?>"/>
               <input type="hidden" name="return_to" value="<?php echo(Request::fullUrl()) ?>" />
-              <button class="btn btn-smaller  <?php if (isset($row['_source']['edited'])&& $row['_source']['edited']=='yes') echo 'btn-active' ?> ">
+              <button class="btn btn-smaller  <?php if (isset($row['_source']['edited'])&& $row['_source']['edited']) echo 'btn-active' ?> ">
                 <?php echo(isset($row['_source']['edited'])&& $row['_source']['edited']=='yes') ? 'Mapped' : 'Unmapped' ?>
               </button>
               {{Form::close()}}
@@ -119,8 +139,8 @@
               {{Form::open(array('url' => asset('/resource/setviewable').'/'.$row['_source']['admin']['uid'], 'method' => 'put')); }}
               <input type="hidden" name="_id" value="<?php echo $row['_source']['admin']['uid'] ?>"/>
               <input type="hidden" name="return_to" value="<?php echo(Request::fullUrl()) ?>" />
-              <button class="btn btn-smaller  <?php if (Mapping::getViewable($row['_source']['admin']['uid'])) echo 'btn-active' ?> ">
-                <?php echo(Mapping::getViewable($row['_source']['admin']['uid'])) ? 'Viewable' : 'Not Viewable' ?>
+              <button class="btn btn-smaller  <?php if (isset($row['_source']['viewable'])&& $row['_source']['viewable']) ?> echo 'btn-active' ?> ">
+                <?php echo(isset($row['_source']['viewable'])&& $row['_source']['viewable']=='yes') ? 'Viewable' : 'Not Viewable' ?>
               </button>
               {{Form::close()}}
             <?php
