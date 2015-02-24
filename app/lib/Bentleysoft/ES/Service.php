@@ -46,8 +46,6 @@ class Service
     $must = array();
     $must[] = array("query_string"=>array("query"=>"$pattern"));
 
-    $extraTerms = array();
-
     if (!empty($areas)) {
       $extraTerms = self::getLdCodesForSubjects($areas);
 
@@ -68,51 +66,42 @@ class Service
       'bool'=>array('must'=>$must),
     );
 
-    $filter = array();
-
-    // $filter['or'][] = array('exists'=>array('field'=>'published') );
+    $filters = array();
 
     if ($showMapped && $showUnmapped) {
-      echo "mapped OR unmapped ";
-      $filter['or'][] = array("term"=>array("edited"=>true));
-      $filter['or'][] = array("term"=>array("edited"=>false));
-      $filter['or'][] = array("missing"=>array("field"=>"edited"));
+      $filters[0]['or'][] = array("term"=>array("edited"=>true));
+      $filters[0]['or'][] = array("term"=>array("edited"=>false));
+      $filters[0]['or'][] = array("term"=>array("edited"=>'no'));
+      $filters[0]['or'][] = array("missing"=>array("field"=>"edited"));
     } elseif ( $showMapped ) {
-      echo " AND mapped ";
-      $filter['and'][] = array("term"=>array("edited"=>true));
+      $filters[0]['or'][] = array("term"=>array("edited"=>true));
     } elseif ($showUnmapped ) {
-      echo " AND unmapped ";
-      $filter['and'][] = array("term"=>array("edited"=>false));
-      $filter['or'][] = array("missing"=>array("field"=>"edited"));
+      $filters[0]['or'][] = array('not'=>array(
+         "term"=>array("edited"=>true)
+        )
+      );
+      $filters[0]['or'][] = array("missing"=>array("field"=>"edited"));
     }
-
 
 
     if ($showViewable && $showUnviewable) {
-      $verb = 'or';
-
-      if (isset($filter['or'])||isset($filter['adn'])) {
-     //   $verb = 'and';
-      }
-
-      echo " $verb viewable OR unviewable ";
-
-      $filter[$verb][] = array("term"=>array("viewable"=>true));
-      $filter['or'][] = array("term"=>array("viewable"=>false));
-      $filter['or'][] = array("missing"=>array("field"=>"viewable"));
+      $filters[1]['or'][] = array("term"=>array("viewable"=>true));
+      $filters[1]['or'][] = array("term"=>array("viewable"=>false));
+      $filters[1]['or'][] = array("missing"=>array("field"=>"viewable"));
     } elseif ( $showViewable ) {
-      echo "  AND viewable ";
-
-      $filter['and'][] = array("term"=>array("viewable"=>true));
+      $filters[1]['or'][] = array("term"=>array("viewable"=>true));
     } elseif ($showUnviewable ) {
-      echo " AND unviewable";
-
-      $filter['and'][] = array("term"=>array("viewable"=>false));
-      $filter['or'][] = array("missing"=>array("field"=>"viewable"));
-
+      $filters[1]['or'][] = array("term"=>array("viewable"=>false));
+      $filters[1]['or'][] = array("missing"=>array("field"=>"viewable"));
+    } else {
+      $filters[1]['or'][] = array("exists"=>array("field"=>'uid'));
     }
 
+    foreach ($filters as $i=>$flt) {
+      if ($i==666);
 
+      $filter['and'][] = $flt;
+    }
 
     $query = array(
       'filtered'=>array(
@@ -121,27 +110,8 @@ class Service
        )
     );
 
-    /*
-    if ($showMapped) {
-      $query = $bool;
-    } else{
-      $query = array(
-        'filtered'=>array(
-          'query'=>$bool,
-          'filter'=>array('not'=> array('exists'=>array('field'=>'edited'),
-                          'term'=>array('edited'=>true),
-
-
-           )
-          )
-        ),
-
-      );
-    }
-    */
     $searchParams['body']['query'] = $query;
     $result = \Es::search($searchParams);
-
 
     return ($result);
   }
