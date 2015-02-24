@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d8ac0a78-c758-4d48-bc67-cb96cb24ef01" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/Bentleysoft/ES/Service.php" afterPath="$PROJECT_DIR$/lib/Bentleysoft/ES/Service.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../vendor/elasticsearch/elasticsearch/src/Elasticsearch/Transport.php" afterPath="$PROJECT_DIR$/../vendor/elasticsearch/elasticsearch/src/Elasticsearch/Transport.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/Mapping.php" afterPath="$PROJECT_DIR$/models/Mapping.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/resources.blade.php" afterPath="$PROJECT_DIR$/views/resources.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes.php" afterPath="$PROJECT_DIR$/routes.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/layouts/standard.blade.php" afterPath="$PROJECT_DIR$/views/layouts/standard.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/view.blade.php" afterPath="$PROJECT_DIR$/views/view.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="app.iws" />
@@ -26,7 +29,99 @@
     <favorites_list name="app" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="edit.blade.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/edit.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="68" column="45" selection-start="1798" selection-end="1806" vertical-scroll-proportion="-7.86" vertical-offset="627" max-vertical-offset="4110">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="routes.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="858" column="51" selection-start="23138" selection-end="23138" vertical-scroll-proportion="-5.92" vertical-offset="12574" max-vertical-offset="17505">
+              <folding>
+                <element signature="e#6#391#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="view.blade.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/view.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="125" column="0" selection-start="7101" selection-end="7101" vertical-scroll-proportion="-37.5" vertical-offset="975" max-vertical-offset="2235">
+              <folding>
+                <marker date="1424795434000" expanded="true" signature="674:766" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="701:766" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="701:736" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="864:899" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="864:934" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="1039:1074" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="1039:1105" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="1197:1231" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="1197:1262" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="1401:1436" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="1401:1469" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="1614:1649" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="1614:1680" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="1810:1845" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="1810:1907" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="2273:2307" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="2273:2402" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="2367:2520" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="2367:2402" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="2661:2836" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="2661:2698" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="2756:2835" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="2756:2836" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="3741:3777" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="3782:3865" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="3898:3977" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="3898:3937" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="4632:5347" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="4773:4928" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="5178:5347" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="5884:5927" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="6129:6313" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="6129:7269" placeholder="..." />
+                <marker date="1424795434000" expanded="true" signature="6313:6423" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Mapping.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/Mapping.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="187" column="0" selection-start="4792" selection-end="4792" vertical-scroll-proportion="-19.208334" vertical-offset="2344" max-vertical-offset="5010">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="resources.blade.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/resources.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="152" column="32" selection-start="6880" selection-end="6880" vertical-scroll-proportion="-22.541666" vertical-offset="1739" max-vertical-offset="2895">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="standard.blade.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/views/layouts/standard.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="83" column="17" selection-start="1793" selection-end="1793" vertical-scroll-proportion="0.23622048" vertical-offset="975" max-vertical-offset="4575">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -50,17 +145,17 @@
         <option value="$PROJECT_DIR$/config/packages/cartalyst/sentry/config.php" />
         <option value="$PROJECT_DIR$/filters.php" />
         <option value="$PROJECT_DIR$/lib/Bentleysoft/Helper.php" />
-        <option value="$PROJECT_DIR$/views/view.blade.php" />
-        <option value="$PROJECT_DIR$/models/Mapping.php" />
         <option value="$PROJECT_DIR$/views/qualifications.blade.php" />
         <option value="$PROJECT_DIR$/views/ldcs.blade.php" />
         <option value="$PROJECT_DIR$/views/subjectareas.blade.php" />
-        <option value="$PROJECT_DIR$/views/layouts/standard.blade.php" />
-        <option value="$PROJECT_DIR$/routes.php" />
-        <option value="$PROJECT_DIR$/views/resources.blade.php" />
         <option value="$PROJECT_DIR$/lib/MIMAS/Service/Jorum/JorumApi.php" />
         <option value="$PROJECT_DIR$/lib/Bentleysoft/ES/Service.php" />
         <option value="$PROJECT_DIR$/../vendor/elasticsearch/elasticsearch/src/Elasticsearch/Transport.php" />
+        <option value="$PROJECT_DIR$/models/Mapping.php" />
+        <option value="$PROJECT_DIR$/views/view.blade.php" />
+        <option value="$PROJECT_DIR$/routes.php" />
+        <option value="$PROJECT_DIR$/views/resources.blade.php" />
+        <option value="$PROJECT_DIR$/views/layouts/standard.blade.php" />
       </list>
     </option>
   </component>
@@ -70,10 +165,10 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="234" />
+    <option name="x" value="400" />
     <option name="y" value="23" />
-    <option name="width" value="2095" />
-    <option name="height" value="1191" />
+    <option name="width" value="1964" />
+    <option name="height" value="1277" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -111,74 +206,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="External Libraries" />
               <option name="myItemType" value="com.jetbrains.php.config.PhpExternalLibrariesNodePatcher$PatchedExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PHP" />
-              <option name="myItemType" value="com.jetbrains.php.config.PhpExternalLibrariesNodePatcher$PatchedLibraryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vendor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.jetbrains.php.config.PhpExternalLibrariesNodePatcher$PatchedExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PHP" />
-              <option name="myItemType" value="com.jetbrains.php.config.PhpExternalLibrariesNodePatcher$PatchedLibraryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vendor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="elasticsearch" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="elasticsearch" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.jetbrains.php.config.PhpExternalLibrariesNodePatcher$PatchedExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PHP" />
-              <option name="myItemType" value="com.jetbrains.php.config.PhpExternalLibrariesNodePatcher$PatchedLibraryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="vendor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="elasticsearch" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="elasticsearch" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Elasticsearch" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -323,19 +350,24 @@
       <created>1424711875653</created>
       <updated>1424711875653</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Filters working properly in cumulative way.&#10;&#10;* It means that sets of filters added in an AND array.&#10;* Fixed the problem of broken queries when subfilter was empty.&#10;* When checking for a custom ES mapping being false, check for both FALSE and 'missing'=&gt;('field'=&gt;'fieldname')&#10;* Cast 'yes' to true and 'no' to false&#10;&#10;Finally, removed debug var_dumps (see previous commits)&#10;&#10;">
+      <created>1424779335050</created>
+      <updated>1424779335050</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="234" y="23" width="2095" height="1191" extended-state="0" />
+    <frame x="400" y="23" width="1964" height="1277" extended-state="0" />
     <editor active="false" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32976827" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19713604" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21028513" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -345,7 +377,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32976827" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -373,24 +404,13 @@
     <MESSAGE value="Swapped the getUnviewable to getViewable&#10;Made a series of appearance improvements&#10;" />
     <MESSAGE value="Added headings to the various grids" />
     <MESSAGE value="This commit includes an apparently working filter based query generator.&#10;&#10;NB: Debug var_dumps are still on, NOR have I checked the numbers returned from ES!&#10;  &#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="This commit includes an apparently working filter based query generator.&#10;&#10;NB: Debug var_dumps are still on, NOR have I checked the numbers returned from ES!&#10;  &#10;" />
+    <MESSAGE value="Filters working properly in cumulative way.&#10;&#10;* It means that sets of filters added in an AND array.&#10;* Fixed the problem of broken queries when subfilter was empty.&#10;* When checking for a custom ES mapping being false, check for both FALSE and 'missing'=&gt;('field'=&gt;'fieldname')&#10;* Cast 'yes' to true and 'no' to false&#10;&#10;Finally, removed debug var_dumps (see previous commits)&#10;&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Filters working properly in cumulative way.&#10;&#10;* It means that sets of filters added in an AND array.&#10;* Fixed the problem of broken queries when subfilter was empty.&#10;* When checking for a custom ES mapping being false, check for both FALSE and 'missing'=&gt;('field'=&gt;'fieldname')&#10;* Cast 'yes' to true and 'no' to false&#10;&#10;Finally, removed debug var_dumps (see previous commits)&#10;&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="327" column="0" selection-start="8861" selection-end="8861" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="16065">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/Mapping.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="245" column="9" selection-start="5867" selection-end="5921" vertical-scroll-proportion="0.0" vertical-offset="3675" max-vertical-offset="4260" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/History.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="15" column="25" selection-start="409" selection-end="409" vertical-scroll-proportion="0.0" vertical-offset="225" max-vertical-offset="690" />
@@ -409,7 +429,9 @@
     <entry file="file://$PROJECT_DIR$/routes.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="327" column="0" selection-start="8861" selection-end="8861" vertical-scroll-proportion="0.0" vertical-offset="4905" max-vertical-offset="15930">
-          <folding />
+          <folding>
+            <element signature="e#6#391#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -436,7 +458,9 @@
     <entry file="file://$PROJECT_DIR$/routes.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="310" column="0" selection-start="8536" selection-end="8536" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="15465">
-          <folding />
+          <folding>
+            <element signature="e#6#391#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -478,11 +502,6 @@
     <entry file="file://$PROJECT_DIR$/models/Qualifier.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1190" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/edit.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="11" selection-start="1969" selection-end="1969" vertical-scroll-proportion="-0.0" vertical-offset="1125" max-vertical-offset="4110" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/models/History.php">
@@ -542,12 +561,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/Bentleysoft/Helper.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="248" column="35" selection-start="6297" selection-end="6297" vertical-scroll-proportion="0.17289719" vertical-offset="3430" max-vertical-offset="4500" />
+        <state line="248" column="35" selection-start="6297" selection-end="6297" vertical-scroll-proportion="0.17289719" vertical-offset="3430" max-vertical-offset="4500">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/models/Subjectarea.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="0" selection-start="629" selection-end="629" vertical-scroll-proportion="0.44859812" vertical-offset="0" max-vertical-offset="1070" />
+        <state line="32" column="0" selection-start="629" selection-end="629" vertical-scroll-proportion="0.44859812" vertical-offset="0" max-vertical-offset="1070">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/AdminController.php">
@@ -558,18 +581,6 @@
     <entry file="file://$PROJECT_DIR$/filters.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="0" selection-start="528" selection-end="528" vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="1830" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/Mapping.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="307" column="36" selection-start="7176" selection-end="7187" vertical-scroll-proportion="0.635514" vertical-offset="3925" max-vertical-offset="4995">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/view.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="0" selection-start="597" selection-end="597" vertical-scroll-proportion="0.18448439" vertical-offset="0" max-vertical-offset="1965" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/ldcs.blade.php">
@@ -602,13 +613,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/app.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="99" column="3" selection-start="3208" selection-end="3208" vertical-scroll-proportion="0.6448598" vertical-offset="795" max-vertical-offset="3210">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/production/app.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="19" column="0" selection-start="482" selection-end="482" vertical-scroll-proportion="0.26635513" vertical-offset="0" max-vertical-offset="1070">
@@ -619,20 +623,6 @@
     <entry file="file://$PROJECT_DIR$/lib/Bentleysoft/ES/Service.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6375">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/resources.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="26" selection-start="2526" selection-end="2526" vertical-scroll-proportion="0.0" vertical-offset="900" max-vertical-offset="2835">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="868" column="67" selection-start="23422" selection-end="23422" vertical-scroll-proportion="0.63925236" vertical-offset="12336" max-vertical-offset="17370">
           <folding />
         </state>
       </provider>
@@ -660,16 +650,109 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/layouts/standard.blade.php">
+    <entry file="file://$PROJECT_DIR$/../vendor/elasticsearch/elasticsearch/src/Elasticsearch/Transport.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="199" column="109" selection-start="5438" selection-end="5438" vertical-scroll-proportion="0.32523364" vertical-offset="2637" max-vertical-offset="4485">
+        <state line="161" column="0" selection-start="4265" selection-end="4265" vertical-scroll-proportion="0.3084112" vertical-offset="1935" max-vertical-offset="3840">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../vendor/elasticsearch/elasticsearch/src/Elasticsearch/Transport.php">
+    <entry file="file://$PROJECT_DIR$/../vendor/laravel/framework/src/Illuminate/Html/composer.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="161" column="0" selection-start="4265" selection-end="4265" vertical-scroll-proportion="0.3084112" vertical-offset="1935" max-vertical-offset="3840">
+        <state line="23" column="35" selection-start="547" selection-end="547" vertical-scroll-proportion="0.32485875" vertical-offset="0" max-vertical-offset="1062">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/app.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="183" column="49" selection-start="6988" selection-end="6988" vertical-scroll-proportion="0.5621469" vertical-offset="2148" max-vertical-offset="3210">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/Mapping.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="187" column="0" selection-start="4792" selection-end="4792" vertical-scroll-proportion="-19.208334" vertical-offset="2344" max-vertical-offset="5010">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../vendor/laravel/framework/src/Illuminate/Http/Request.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="67" column="18" selection-start="1112" selection-end="1112" vertical-scroll-proportion="0.3399654" vertical-offset="582" max-vertical-offset="9180">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/edit.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="68" column="45" selection-start="1798" selection-end="1806" vertical-scroll-proportion="-7.86" vertical-offset="627" max-vertical-offset="4110">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="858" column="51" selection-start="23138" selection-end="23138" vertical-scroll-proportion="-5.92" vertical-offset="12574" max-vertical-offset="17505">
+          <folding>
+            <element signature="e#6#391#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/view.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="125" column="0" selection-start="7101" selection-end="7101" vertical-scroll-proportion="-37.5" vertical-offset="975" max-vertical-offset="2235">
+          <folding>
+            <marker date="1424795434000" expanded="true" signature="674:766" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="701:766" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="701:736" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="864:899" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="864:934" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="1039:1074" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="1039:1105" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="1197:1231" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="1197:1262" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="1401:1436" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="1401:1469" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="1614:1649" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="1614:1680" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="1810:1845" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="1810:1907" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="2273:2307" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="2273:2402" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="2367:2520" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="2367:2402" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="2661:2836" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="2661:2698" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="2756:2835" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="2756:2836" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="3741:3777" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="3782:3865" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="3898:3977" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="3898:3937" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="4632:5347" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="4773:4928" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="5178:5347" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="5884:5927" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="6129:6313" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="6129:7269" placeholder="..." />
+            <marker date="1424795434000" expanded="true" signature="6313:6423" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/resources.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="152" column="32" selection-start="6880" selection-end="6880" vertical-scroll-proportion="-22.541666" vertical-offset="1739" max-vertical-offset="2895">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/layouts/standard.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="83" column="17" selection-start="1793" selection-end="1793" vertical-scroll-proportion="0.23622048" vertical-offset="975" max-vertical-offset="4575">
           <folding />
         </state>
       </provider>

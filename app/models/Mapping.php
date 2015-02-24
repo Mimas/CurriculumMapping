@@ -179,15 +179,14 @@ class Mapping extends EloquentUserStamp  {
    */
   public function attachUserTags($tags) {
     // delete
-    MappingTag::where('mappings_id','=',$this->id)
-      ->delete();
+    MappingTag::where('mappings_id','=',$this->id)->delete();
 
     // attach
     foreach ($tags as $tag) {
       $userTag = Tag::where('label','=',"$tag")->first();
 
       if (null != $userTag) {
-        $userTag = $userTag[0];
+
       } else {
         $userTag = new Tag;
         $userTag->label = $tag;
@@ -201,6 +200,8 @@ class Mapping extends EloquentUserStamp  {
 
     }
     return true;
+
+
   }
 
 

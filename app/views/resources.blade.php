@@ -111,7 +111,11 @@
               ?>
               </td>
             <td class="text-centered">
-              <?php echo (Mapping::getCurrent($row['_source']['admin']['uid'])) ? 'yes' : 'no' ?>
+              <?php if (Mapping::getCurrent($row['_source']['admin']['uid'])) { ?>
+                <i class="fa fa-check traffic-green"></i>
+              <?php } else { ?>
+                <i class="fa fa-exclamation-triangle"></i>
+              <?php } ?>
             </td>
             <td class="text-centered">
             <?php
@@ -139,14 +143,14 @@
               {{Form::open(array('url' => asset('/resource/setviewable').'/'.$row['_source']['admin']['uid'], 'method' => 'put')); }}
               <input type="hidden" name="_id" value="<?php echo $row['_source']['admin']['uid'] ?>"/>
               <input type="hidden" name="return_to" value="<?php echo(Request::fullUrl()) ?>" />
-              <button class="btn btn-smaller  <?php if (isset($row['_source']['viewable'])&& $row['_source']['viewable']) ?> echo 'btn-active' ?> ">
+              <button class="btn btn-smaller <?php if (isset($row['_source']['viewable'])&& $row['_source']['viewable']) echo 'btn-active btn-yellow' ?> ">
                 <?php echo(isset($row['_source']['viewable'])&& $row['_source']['viewable']=='yes') ? 'Viewable' : 'Not Viewable' ?>
               </button>
               {{Form::close()}}
             <?php
               } else {
               ?>
-              <i class="fa <?php if (Mapping::getViewable($row['_source']['admin']['uid'])) echo('fa-certificate');?>"></i>
+              <i class="traffic-amber fa <?php if (isset($row['_source']['viewable'])&& $row['_source']['viewable']) echo('fa-eye');?>"></i>
             <?php
             }
             ?>

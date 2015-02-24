@@ -12,6 +12,7 @@
                       </th>
                     </tr>
                    </table>
+
                     <table class="table-hovered">
                       <tr>
                         <td class="bold">Source</td><td>{{$data['_source']['admin']['source'] or '' }}</td>
@@ -80,6 +81,7 @@
                         <th>File size</th>
                         <th>&nbsp;</th>
                         <th>&nbsp;</th>
+                        <th>&nbsp;</th>
                         <?php
                         if ($bitstreams && count($bitstreams)>0)
                         {
@@ -97,7 +99,7 @@
                                 <?php echo \Bentleysoft\Helper::formatBytes($bitstream->getSizeBytes())?>
                               </td>
                               <td data-role='download'>
-                                {{Form::open(array('url' => 'download', 'method' => 'post')); }}
+                                {{Form::open(array('url' => 'download', 'method' => 'post'), array('class'=>'forms')); }}
                                 <button class="btn btn-smaller">Download&nbsp;<i class="fa fa-download-o"></i></button>
                                 <input type="hidden" name="link" value="{{$bitstream->getRetrieveLink()}}" />
                                 <input type="hidden" name="mime" value="{{$bitstream->getMimeType()}}" />
@@ -107,8 +109,24 @@
                               <td data-role='preview'>
                                   <a href="{{$bitstream->getPreviewUrl()}}" class="iframe btn btn-smaller btn-blue" rel="group">Preview&nbsp;<i class="fa fa-search"></i></a>
                               </td>
-                            </tr>
+                              <td>
 
+                                {{Form::open(array('url' => asset('/resource/setviewable').'/'.$data['_source']['admin']['uid'], 'method' => 'put', 'class'=>'forms autoform') ); }}
+                                  <ul class="forms-inline-list">
+                                    Can view
+                                    <li>
+                                      <input type="checkbox"
+                                          name="viewable"
+                                          class="autosubmit"
+                                        <?php if (isset($data['_source']['viewable'])&&$data['_source']['viewable']) echo 'checked' ?> />
+                                    </li>
+                                   </ul>
+                                <input type="hidden" name="_id" value="<?php echo $data['_source']['admin']['uid'] ?>"/>
+                                <input type="hidden" name="return_to" value="<?php  echo Request::fullUrl(); ?>"/>
+                                <input type="hidden" name="origin" value="viewer"/>
+                                {{Form::close()}}
+                              </td>
+                            </tr>
                         <?php
                             }
                           }

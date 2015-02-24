@@ -393,6 +393,7 @@ Route::post('/edit/{uu?}/{id?}', function ($uu='', $id = '') {
     if ($meta->save()) {
       $meta->attachQualifications(Input::all());
       $meta->attachTags(explode(',', Input::get('tags', '')));
+
       $meta->attachUserTags(explode(',', Input::get('user_tags', '')));
 
       if (!$meta->currency) {
@@ -410,7 +411,6 @@ Route::post('/edit/{uu?}/{id?}', function ($uu='', $id = '') {
 
       );
       $response = \Es::update($params);
-
       if (!$response) {
 
       }
@@ -420,9 +420,12 @@ Route::post('/edit/{uu?}/{id?}', function ($uu='', $id = '') {
     }
   }
 
+  $trackingId = 69;
+
   return View::make('edit')->with(array('data' => $meta,
     'qualifications' => array(),
     'tags' => json_encode(array()),
+    'trackingId' => $trackingId,
     'resourceTags'=>implode(',', array()),
     'resourceUserTags'=>implode(',', array()),
     'resourceIssues'=>array(),
@@ -837,18 +840,24 @@ Route::put('/resource/toggle/{u?}/{id?}', function ($u, $id) {
  */
 Route::put('/resource/setviewable/{u?}/{id?}', function ($u, $id) {
   $uid = Input::get('_id', '');
+
+
   if ($uid <> '') {
     $resource = \Bentleysoft\ES\Service::get($uid);
 
     if (!$resource) {
       App::abort(404);
     }
-    if (isset($resource['_source']['viewable']) && $resource['_source']['viewable'] == 'yes' || isset($resource['_source']['viewable']) && $resource['_source']['viewable'] == true) {
-      $viewable = false;
-    } else {
-      $viewable = true;
-    }
 
+    if (Input::get('origin','')=='') {  // coming from browser
+      if (isset($resource['_source']['viewable']) && $resource['_source']['viewable'] == 'yes' || isset($resource['_source']['viewable']) && $resource['_source']['viewable'] == true) {
+        $viewable = false;
+      } else {
+        $viewable = true;
+      }
+    } else {
+      $viewable = Input::get('viewable', '') <> '';
+    }
     $params = array(
       'id' => $uid,
       'type' => 'learning resource',
