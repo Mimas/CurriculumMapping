@@ -81,13 +81,18 @@
         <table class="table-hovered table-stripped">
           <thead>
           <tr>
-            <th>Title</th>
-            <th class="text-centered">Source</th>
-            <th>Subject Area</th>
-            <th class="text-centered">Current</th>
-            <th class="text-centered">Status</th>
-            <th class="text-centered">Viewable</th>
-            <th class="text-centered">Action</th>
+            <th class="small">Title</th>
+            <th class="text-centered small">Source</th>
+            <th class="small">Subject Area</th>
+            <th class="text-centered small">Current</th>
+            <th class="text-centered small">Mapped</th>
+            <th class="text-centered small">Viewable</th>
+            <th class="text-centered small">Action</th>
+            <?php if (\Bentleysoft\Helper::userHasAccess(array('resource.manage')) || \Bentleysoft\Helper::superUser()): ?>
+            <th class="text-centered small">
+            Good to go!
+            </th>
+            <?php endif; ?>
           </tr>
           </thead>
         <?php
@@ -157,17 +162,25 @@
             </td>
             <td class="text-centered">
               <?php
-              if (isset($row['_source']['edited']) && $row['_source']['edited']=='yes') {
+              if (isset($row['_source']['edited']) && $row['_source']['edited']) {
                 ?>
-                <a href="/edit/<?php echo $row['_source']['admin']['uid']; ?>" class="iframe btn btn-small">Map&nbsp;<i class="fa fa-cog"></i></a>
+                <a href="/edit/<?php echo $row['_source']['admin']['uid']; ?>" class="iframe btn btn-small">Map&nbsp;<i class="fa fa-map-marker"></i></a>
               <?php
                 } else {
                ?>
-                <a href="/edit/<?php echo $row['_source']['admin']['uid']; ?>" class="iframe btn btn-small btn-blue">Map&nbsp;<i class="fa fa-cog"></i></a>
+                <a href="/edit/<?php echo $row['_source']['admin']['uid']; ?>" class="iframe btn btn-small btn-blue">Map&nbsp;<i class="fa fa-map-marker"></i></a>
               <?php
               }
               ?>
             </td>
+            <?php if (\Bentleysoft\Helper::userHasAccess(array('resource.manage')) || \Bentleysoft\Helper::superUser()): ?>
+            <td class="text-centered traffic-green">
+              <?php if (isset($row['_source']['fewindow']) && $row['_source']['fewindow']): ?>
+              <i class="fa fa-check biggs"></i>
+              <?php else: ?>
+              <?php endif; ?>
+            </td>
+            <?php endif; ?>
           </tr>
         <?php
         }

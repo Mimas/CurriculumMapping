@@ -136,7 +136,7 @@
         </div>
         <div class="dashboard">
           <p>There are <span class="dash-1"><a href="<?php echo asset('resources'); ?>">{{$total}}</a></span> resources in the index in total,
-            <span class="dash-2"><a href="<?php echo asset('mapped'); ?>">{{$mapped}}</a></span> of which are mapped.
+            <span class="dash-2"><a href="<?php echo asset('resources'); ?>?show_mapped=on">{{$mapped}}</a></span> of which are mapped.
           </p>
           <div id="container" style="margin-top: -30px; width: 300px; height: 170px; "></div>
 

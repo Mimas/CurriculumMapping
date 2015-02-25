@@ -40,7 +40,9 @@
     input[type='radio'] {
       display: none !important;
     }
-
+    .ui-state-active {
+      background: #2575ed !important;
+    }
   </style>
   <link rel="stylesheet" href="<?php echo asset('3rdparty/kube/css/kube.css'); ?>">
   <link rel="stylesheet" href="/3rdparty/jquery/jquery-ui.css">
@@ -99,7 +101,7 @@
         }
       });
       <?php
-      if ($data->currency) {
+      if (null == $data->currency || $data->currency) {
       ?>
       $('#noncurrent').hide();
       <?php
@@ -109,8 +111,6 @@
       <?php
       }
       ?>
-
-
     });
   </script>
 </head>
@@ -125,8 +125,10 @@
           <label for="currency">
             Would you recommend this resource?
             <div class="radio breathe">
-              <input type="radio" id="currency1" name="currency" value="1" <?php if($data->currency) echo 'checked="checked"'; ?> /> <label for="currency1">Yes</label>
-              <input type="radio" id="currency2" name="currency" value="0" <?php if(!$data->currency) echo 'checked="checked"'; ?>/> <label for="currency2">No</label>
+              <input type="radio" id="currency1" name="currency" value="1" <?php if($data->currency) echo 'checked="checked"'; ?> /> 
+              <label for="currency1">Yes</label>
+              <input type="radio" id="currency2" name="currency" value="0" <?php if(!$data->currency) echo 'checked="checked"'; ?>/> 
+              <label for="currency2">No</label>
             </div>
           </label>
           <p/>
@@ -151,8 +153,6 @@
             </label>
           </div>
         </div>
-
-
       </div>
       <div id="current">
         <div class="units-row">

@@ -97,6 +97,9 @@
         .traffic-green {
           color: #2c9f42;
         }
+        .biggs {
+          font-size: 1.7em !important;
+        }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <link rel="stylesheet" href="<?php echo asset('3rdparty/kube/css/kube.css'); ?>">

@@ -836,11 +836,10 @@ Route::put('/resource/toggle/{u?}/{id?}', function ($u, $id) {
 });
 
 /**
- * Toggle edited on off
+ * Toggle Viewable on off
  */
 Route::put('/resource/setviewable/{u?}/{id?}', function ($u, $id) {
   $uid = Input::get('_id', '');
-
 
   if ($uid <> '') {
     $resource = \Bentleysoft\ES\Service::get($uid);
@@ -864,10 +863,10 @@ Route::put('/resource/setviewable/{u?}/{id?}', function ($u, $id) {
       'index' => 'ciim',
       'body' => array('doc' => array('viewable' => $viewable,
         'admin' => array('processed' => time() * 1000),
-      )
+        )
       ),
-
     );
+
     $x = time();
 
     $response = \Es::update($params);
@@ -877,6 +876,43 @@ Route::put('/resource/setviewable/{u?}/{id?}', function ($u, $id) {
 
   return Redirect::to($url, 303)->withInput(array($uid => $viewable), array('stuff' => ''));
 });
+
+
+/**
+ * Toggle Publish aka "Good to Go"
+ */
+Route::put('/resource/publish/{u?}/{id?}', function ($u, $id) {
+
+  $uid = Input::get('_id', '');
+
+  if ($uid <> '') {
+    $resource = \Bentleysoft\ES\Service::get($uid);
+
+    if (!$resource) {
+      App::abort(404);
+    }
+
+    if (Input::get('origin','')=='viewer') {  // coming from viewer
+      $promote = Input::get('action') == 'publish';
+    }
+    $params = array(
+      'id' => $uid,
+      'type' => 'learning resource',
+      'index' => 'ciim',
+      'body' => array('doc' => array('fewindow' => $promote,
+        'admin' => array('processed' => time() * 1000),
+        )
+      ),
+    );
+
+    $response = \Es::update($params);
+    if (!$response) ; // code sniffing avoidance scheme
+  }
+  $url = Input::get('return_to', 'resources');
+
+  return Redirect::to($url, 303)->withInput(array($uid => $promote), array('stuff' => ''));
+});
+
 
 
 /**

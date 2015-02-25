@@ -8,7 +8,21 @@
                         <h2>{{ $data['_source']['summary_title'] }}</h2>
                       </th>
                       <th class="text-right">
-                        <a href="/edit/<?php echo $data['_source']['admin']['uid']; ?>" class="iframe btn btn-small btn-blue">Map&nbsp;<i class="fa fa-edit"></i></a>
+                        <a href="/edit/<?php echo $data['_source']['admin']['uid']; ?>" class="iframe btn btn-small btn-blue">Map&nbsp;<i class="fa fa-map-marker"></i></a>
+                        {{Form::open(array('url' => asset('/resource/publish').'/'.$data['_source']['admin']['uid'], 'method' => 'put', 'class'=>'forms autoform') ); }}
+                        <input type="hidden" name="_id" value="<?php echo $data['_source']['admin']['uid'] ?>"/>
+                        <input type="hidden" name="return_to" value="<?php  echo Request::fullUrl(); ?>"/>
+                        <input type="hidden" name="origin" value="viewer"/>
+
+                        <?php if (isset($data['_source']['fewindow'])&& $data['_source']['fewindow']) { ?>
+                        <button class="btn btn-red">Unpublish&nbsp;<i class="fa fa-thumbs-down"></i></button>
+                        <input type="hidden" name="action" value="unpublish" />
+                        <?php } else { ?>
+                        <button class="btn btn-green">Publish&nbsp;<i class="fa fa-thumbs-up"></i></button>
+                        <input type="hidden" name="action" value="publish" />
+                        <?php } ?>
+
+                        {{Form::close()}}
                       </th>
                     </tr>
                    </table>
@@ -70,16 +84,30 @@
                       ?>
                       </table>
                       <table class='table-hovered' data-role='bitstreams' id='files'>
-                        <th colspan="5">
+                        <th colspan="3">
                           <h3>Resource contents</h3>
                         </th>
-
+                        <th colspan="2">
+                        {{Form::open(array('url' => asset('/resource/setviewable').'/'.$data['_source']['admin']['uid'], 'method' => 'put', 'class'=>'forms autoform') ); }}
+                          <ul class="forms-inline-list">
+                            <h4 style="display: inline;">Can view</h4>
+                              <li>
+                                <input type="checkbox"
+                                  name="viewable"
+                                  class="autosubmit"
+                                  <?php if (isset($data['_source']['viewable'])&&$data['_source']['viewable']) echo 'checked' ?> />
+                                </li>
+                          </ul>
+                          <input type="hidden" name="_id" value="<?php echo $data['_source']['admin']['uid'] ?>"/>
+                          <input type="hidden" name="return_to" value="<?php  echo Request::fullUrl(); ?>"/>
+                          <input type="hidden" name="origin" value="viewer"/>
+                        {{Form::close()}}
+                        </th>
                         <tbody>
                         <tr data-role='package'></tr>
                         <th class="width-40">File name</th>
                         <th>File type</th>
                         <th>File size</th>
-                        <th>&nbsp;</th>
                         <th>&nbsp;</th>
                         <th>&nbsp;</th>
                         <?php
@@ -108,23 +136,6 @@
                               </td>
                               <td data-role='preview'>
                                   <a href="{{$bitstream->getPreviewUrl()}}" class="iframe btn btn-smaller btn-blue" rel="group">Preview&nbsp;<i class="fa fa-search"></i></a>
-                              </td>
-                              <td>
-
-                                {{Form::open(array('url' => asset('/resource/setviewable').'/'.$data['_source']['admin']['uid'], 'method' => 'put', 'class'=>'forms autoform') ); }}
-                                  <ul class="forms-inline-list">
-                                    Can view
-                                    <li>
-                                      <input type="checkbox"
-                                          name="viewable"
-                                          class="autosubmit"
-                                        <?php if (isset($data['_source']['viewable'])&&$data['_source']['viewable']) echo 'checked' ?> />
-                                    </li>
-                                   </ul>
-                                <input type="hidden" name="_id" value="<?php echo $data['_source']['admin']['uid'] ?>"/>
-                                <input type="hidden" name="return_to" value="<?php  echo Request::fullUrl(); ?>"/>
-                                <input type="hidden" name="origin" value="viewer"/>
-                                {{Form::close()}}
                               </td>
                             </tr>
                         <?php
