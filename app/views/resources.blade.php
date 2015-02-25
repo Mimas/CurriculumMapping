@@ -16,6 +16,11 @@
     display: inline;
   }
 </style>
+<?php
+if (isset($stuff))
+  echo $stuff;
+
+?>
     <form method="get" action="<?php echo asset(Request::path()); ?>" class="forms search">
         <div class="units-row top44">
             <div class="unit-100">
@@ -174,11 +179,21 @@
               ?>
             </td>
             <?php if (\Bentleysoft\Helper::userHasAccess(array('resource.manage')) || \Bentleysoft\Helper::superUser()): ?>
-            <td class="text-centered traffic-green">
-              <?php if (isset($row['_source']['fewindow']) && $row['_source']['fewindow']): ?>
-              <i class="fa fa-check biggs"></i>
-              <?php else: ?>
-              <?php endif; ?>
+            <td class="text-centered">
+              {{Form::open(array('url' => asset('/resource/publish').'/'.$row['_source']['admin']['uid'], 'method' => 'put', 'class'=>'forms') ); }}
+              <input type="hidden" name="_id" value="<?php echo $row['_source']['admin']['uid'] ?>"/>
+              <input type="hidden" name="return_to" value="<?php  echo Request::fullUrl(); ?>"/>
+              <input type="hidden" name="origin" value="resources"/>
+              <button class="naked_button" type="submit">
+                <?php if (isset($row['_source']['fewindow']) && $row['_source']['fewindow']): ?>
+                  <i class="fa fa-check biggs traffic-green"></i>
+                  <input type="hidden" name="action" value="unpublish" />
+                <?php else: ?>
+                  <i class="fa fa-thumbs-up traffic-grey"></i>
+                  <input type="hidden" name="action" value="publish" />
+                <?php endif; ?>
+              </button>
+              {{Form::close()}}
             </td>
             <?php endif; ?>
           </tr>

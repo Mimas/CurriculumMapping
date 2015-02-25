@@ -161,8 +161,8 @@ Route::get('/resources', function () {
 
   // get the data
   $data = Bentleysoft\ES\Service::browse($offset, $pageSize, $query,
-                Input::get('audience', 'FE'), $selectedAreas, $showMapped, $showUnmapped, $showViewable, $showUnviewable
-              );
+    Input::get('audience', 'FE'), $selectedAreas, $showMapped, $showUnmapped, $showViewable, $showUnviewable
+  );
 
   $resources = Paginator::make($data['hits']['hits'], $data['hits']['total'], $pageSize);
 
@@ -347,7 +347,7 @@ Route::any('report', function() {
   );
 
 
-    return Response::make(rtrim($output, "\n"), 200, $headers);
+  return Response::make(rtrim($output, "\n"), 200, $headers);
 });
 
 
@@ -404,6 +404,7 @@ Route::post('/edit/{uu?}/{id?}', function ($uu='', $id = '') {
         'id' => $meta->uid,
         'type' => 'learning resource',
         'index' => 'ciim',
+        'refresh' => true,
         'body' => array('doc' => array('edited' => true,
           'admin' => array('processed' => time() * 1000),
         )
@@ -477,6 +478,7 @@ Route::get('/test', function () {
     'id' => 'jorum-10949/8914',
     'type' => 'learning resource',
     'index' => 'ciim',
+    'refresh' => true,
     'body' => array('doc' => array('edited' => true,
       'admin' => array('processed' => time() * 1000),
     )
@@ -554,6 +556,7 @@ Route::get('/tag', function () {
           'id' => $document['_id'],
           'type' => $document['_type'],
           'index' => 'ciim',
+          'refresh' => true,
           'body' => array('doc' => array('audience' => array('FE'),
             'admin' => array('processed' => time() * 1000),
           )
@@ -780,6 +783,7 @@ Route::get('remap', function() {
       'id' => $map->uid,
       'type' => 'learning resource',
       'index' => 'ciim',
+      'refresh' => true,
       'body' => array('doc' => array('edited' => true,
         'admin' => array('processed' => time() * 1000),
       )
@@ -788,7 +792,7 @@ Route::get('remap', function() {
     );
     $x = time();
 
-    $response = \Es::update($params);    
+    $response = \Es::update($params);
     var_export($response);
     # code...
   }
@@ -819,6 +823,7 @@ Route::put('/resource/toggle/{u?}/{id?}', function ($u, $id) {
       'id' => $uid,
       'type' => 'learning resource',
       'index' => 'ciim',
+      'refresh' => true,
       'body' => array('doc' => array('edited' => $edited,
         'admin' => array('processed' => time() * 1000),
       )
@@ -861,9 +866,10 @@ Route::put('/resource/setviewable/{u?}/{id?}', function ($u, $id) {
       'id' => $uid,
       'type' => 'learning resource',
       'index' => 'ciim',
+      'refresh' => true,
       'body' => array('doc' => array('viewable' => $viewable,
         'admin' => array('processed' => time() * 1000),
-        )
+      )
       ),
     );
 
@@ -892,25 +898,26 @@ Route::put('/resource/publish/{u?}/{id?}', function ($u, $id) {
       App::abort(404);
     }
 
-    if (Input::get('origin','')=='viewer') {  // coming from viewer
-      $promote = Input::get('action') == 'publish';
-    }
+    $promote = Input::get('action') == 'publish';
     $params = array(
       'id' => $uid,
       'type' => 'learning resource',
       'index' => 'ciim',
+      'refresh' => true,
       'body' => array('doc' => array('fewindow' => $promote,
         'admin' => array('processed' => time() * 1000),
-        )
+      )
       ),
     );
 
     $response = \Es::update($params);
+
+    $data = Bentleysoft\ES\Service::browse(0, 50, '', Input::get('audience', 'FE'), array());
+
     if (!$response) ; // code sniffing avoidance scheme
   }
   $url = Input::get('return_to', 'resources');
-
-  return Redirect::to($url, 303)->withInput(array($uid => $promote), array('stuff' => ''));
+  return Redirect::to($url, 303)->withInput(array($uid => $promote), array('stuff' => 'refresh'));
 });
 
 
