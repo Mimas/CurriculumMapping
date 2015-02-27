@@ -686,7 +686,7 @@ Route::get('/view/{u?}/{id?}', function ($u = '', $id = '') {
   return View::make('view')
              ->with(array('data'=>$resource,
                           'status'=>$status,
-                          'bestPreviewUrl'=>MIMAS\Helpers::bestPreviewUrl($bitstreams),
+                          'bestPreviewUrl'=>MIMAS\Helpers::mainPreviewUrl($bitstreams),
                           'bitstreams'=>$bitstreams)
              );
 });
@@ -776,8 +776,11 @@ Route::post('download', function () {
 
 Route::any('preview/{id?}', function($id) {
   $bitstream = MIMAS\Service\Jorum\Bitstream::find($id, array(), 'json', 'json');
-  return View::make('preview')->with(array('bitstream'=>$bitstream));
-
+  if ($bitstream->getMimeType()=='application/zip') {
+    return View::make('blankview')->with(array('bitstream'=>$bitstream));
+  } else {
+    return View::make('preview')->with(array('bitstream'=>$bitstream));
+  }
 });
 
 

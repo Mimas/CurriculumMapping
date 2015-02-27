@@ -151,6 +151,8 @@ class JorumApi implements \JsonSerializable, \IteratorAggregate
 
       // NOPE, staging is DEAD
       self::$apiUrl = 'http://dspace.jorum.ac.uk/rest/';
+      self::$apiUrl = 'http://ec2-54-76-21-26.eu-west-1.compute.amazonaws.com/rest/';
+
       // self::$apiUrl = 'http://10.99.120.145:8080/rest/';
 
       /**

@@ -2,12 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d8ac0a78-c758-4d48-bc67-cb96cb24ef01" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/blankview.blade.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/layouts/naked.blade.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/conversions/zip.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/MIMAS/Service/Jorum/Bitstream.php" afterPath="$PROJECT_DIR$/lib/MIMAS/Service/Jorum/Bitstream.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/MIMAS/Helpers.php" afterPath="$PROJECT_DIR$/lib/MIMAS/Helpers.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/preview.blade.php" afterPath="$PROJECT_DIR$/views/preview.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/MIMAS/Service/Jorum/JorumApi.php" afterPath="$PROJECT_DIR$/lib/MIMAS/Service/Jorum/JorumApi.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/layouts/plain.blade.php" afterPath="$PROJECT_DIR$/views/layouts/plain.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/resources.blade.php" afterPath="$PROJECT_DIR$/views/resources.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes.php" afterPath="$PROJECT_DIR$/routes.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/layouts/standard.blade.php" afterPath="$PROJECT_DIR$/views/layouts/standard.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/view.blade.php" afterPath="$PROJECT_DIR$/views/view.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="app.iws" />
@@ -31,31 +35,105 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="edit.blade.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/edit.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="79" column="0" selection-start="2045" selection-end="2045" vertical-scroll-proportion="0.0" vertical-offset="657" max-vertical-offset="4110">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Helpers.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Helpers.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/MIMAS/Helpers.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="222" column="0" selection-start="6443" selection-end="6443" vertical-scroll-proportion="0.0" vertical-offset="3330" max-vertical-offset="3555">
+            <state line="313" column="46" selection-start="8855" selection-end="8855" vertical-scroll-proportion="0.37716264" vertical-offset="4049" max-vertical-offset="5205">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="view.blade.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="zip.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/zip.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="352" column="31" selection-start="9358" selection-end="9358" vertical-scroll-proportion="0.0" vertical-offset="5280" max-vertical-offset="10350">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="zip.blade.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/conversions/zip.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="50" column="30" selection-start="1675" selection-end="1675" vertical-scroll-proportion="0.0" vertical-offset="750" max-vertical-offset="1080">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="preview.blade.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/preview.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="0" selection-start="309" selection-end="309" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="345">
+              <folding>
+                <marker date="1425055426000" expanded="true" signature="68:189" placeholder="..." />
+                <marker date="1425055426000" expanded="true" signature="75:97" placeholder="{...}" />
+                <marker date="1425055426000" expanded="true" signature="151:181" placeholder="{...}" />
+                <marker date="1425055426000" expanded="true" signature="213:301" placeholder="..." />
+                <marker date="1425055426000" expanded="true" signature="254:294" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="blankview.blade.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/blankview.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="3" column="0" selection-start="71" selection-end="71" vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="150">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Bitstream.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/MIMAS/Service/Jorum/Bitstream.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="499" column="0" selection-start="8705" selection-end="8705" vertical-scroll-proportion="0.0" vertical-offset="7485" max-vertical-offset="8565">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="view.blade.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/view.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="73" column="5" selection-start="4520" selection-end="4520" vertical-scroll-proportion="0.09186352" vertical-offset="990" max-vertical-offset="2490">
+            <state line="0" column="0" selection-start="0" selection-end="48" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2490">
               <folding>
-                <marker date="1424970252000" expanded="true" signature="5479:5516" placeholder="..." />
-                <marker date="1424970252000" expanded="true" signature="5980:6025" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="89:9272" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="128:9253" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="176:1698" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="201:1670" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="228:329" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="375:1644" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="1742:5393" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="1786:5172" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="1842:5141" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="1875:2023" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="2056:2216" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="2249:2392" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="2425:2614" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="2647:2845" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="2878:3059" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="3092:3380" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="3591:3896" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="3697:3862" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="4033:5008" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="4140:4972" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="5218:5364" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="5479:9230" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="5520:5603" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="5644:6714" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="5874:6340" placeholder="..." />
+                <marker date="1424970252000" expanded="false" signature="5915:5931" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="5980:6308" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="6036:6270" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="6746:9199" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="7440:8936" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="7581:7736" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="7788:7930" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="7986:8637" placeholder="..." />
+                <marker date="1424970252000" expanded="true" signature="8692:8902" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -64,16 +142,7 @@
       <file leaf-file-name="routes.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="688" column="62" selection-start="18267" selection-end="18267" vertical-scroll-proportion="0.0" vertical-offset="9858" max-vertical-offset="18270">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="standard.blade.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/layouts/standard.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="88" column="43" selection-start="1939" selection-end="1939" vertical-scroll-proportion="0.0" vertical-offset="1080" max-vertical-offset="4800">
+            <state line="778" column="6" selection-start="21141" selection-end="21141" vertical-scroll-proportion="0.0" vertical-offset="11670" max-vertical-offset="18315">
               <folding />
             </state>
           </provider>
@@ -105,17 +174,23 @@
         <option value="$PROJECT_DIR$/views/qualifications.blade.php" />
         <option value="$PROJECT_DIR$/views/ldcs.blade.php" />
         <option value="$PROJECT_DIR$/views/subjectareas.blade.php" />
-        <option value="$PROJECT_DIR$/lib/MIMAS/Service/Jorum/JorumApi.php" />
         <option value="$PROJECT_DIR$/lib/Bentleysoft/ES/Service.php" />
         <option value="$PROJECT_DIR$/../vendor/elasticsearch/elasticsearch/src/Elasticsearch/Transport.php" />
         <option value="$PROJECT_DIR$/models/Mapping.php" />
         <option value="$PROJECT_DIR$/views/dashboard.blade.php" />
-        <option value="$PROJECT_DIR$/views/resources.blade.php" />
-        <option value="$PROJECT_DIR$/views/preview.blade.php" />
-        <option value="$PROJECT_DIR$/views/layouts/standard.blade.php" />
-        <option value="$PROJECT_DIR$/routes.php" />
-        <option value="$PROJECT_DIR$/lib/MIMAS/Helpers.php" />
         <option value="$PROJECT_DIR$/views/view.blade.php" />
+        <option value="$PROJECT_DIR$/views/resources.blade.php" />
+        <option value="$PROJECT_DIR$/lib/MIMAS/Service/Jorum/Item.php" />
+        <option value="$PROJECT_DIR$/lib/MIMAS/Service/Jorum/JorumApi.php" />
+        <option value="$PROJECT_DIR$/views/layouts/standard.blade.php" />
+        <option value="$PROJECT_DIR$/views/layouts/plain.blade.php" />
+        <option value="$PROJECT_DIR$/views/preview.blade.php" />
+        <option value="$PROJECT_DIR$/views/blankview.blade.php" />
+        <option value="$PROJECT_DIR$/routes.php" />
+        <option value="$PROJECT_DIR$/views/layouts/naked.blade.php" />
+        <option value="$PROJECT_DIR$/lib/MIMAS/Service/Jorum/Bitstream.php" />
+        <option value="$PROJECT_DIR$/views/conversions/zip.blade.php" />
+        <option value="$PROJECT_DIR$/lib/MIMAS/Helpers.php" />
       </list>
     </option>
   </component>
@@ -125,8 +200,8 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="269" />
-    <option name="y" value="28" />
+    <option name="x" value="477" />
+    <option name="y" value="48" />
     <option name="width" value="1964" />
     <option name="height" value="1277" />
   </component>
@@ -195,6 +270,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/views" />
+      <recent name="$PROJECT_DIR$/views/layouts" />
       <recent name="$PROJECT_DIR$/models" />
     </key>
   </component>
@@ -298,11 +375,15 @@
       <created>1424868126680</created>
       <updated>1424868126680</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="First version ohe the Quick view embedded in the main view page">
+      <created>1425035452032</created>
+      <updated>1425035452032</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="269" y="28" width="1964" height="1277" extended-state="0" />
+    <frame x="477" y="48" width="1964" height="1277" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -312,18 +393,18 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16904277" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16904277" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294702" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32976827" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -352,49 +433,13 @@
     <MESSAGE value="A number of fixes included.&#10;Also, a lot of eye candy (currency and other icons)&#10;&#10;What's missing now for tonight is:&#10; 1. Validation&#10; 2. The weird good to go workflow thing (same as viewable but where do we put the button?)&#10; &#10;" />
     <MESSAGE value="Dashboard and other improvements&#10;" />
     <MESSAGE value="Fixed the autosubmit weirdnes (issue #109)&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed the autosubmit weirdnes (issue #109)&#10;" />
+    <MESSAGE value="First version ohe the Quick view embedded in the main view page" />
+    <option name="LAST_COMMIT_MESSAGE" value="First version ohe the Quick view embedded in the main view page" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/models/Mapping.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="245" column="9" selection-start="5867" selection-end="5921" vertical-scroll-proportion="0.0" vertical-offset="3675" max-vertical-offset="4260" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/History.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="0" selection-start="961" selection-end="961" vertical-scroll-proportion="0.0" vertical-offset="555" max-vertical-offset="675" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/Tag.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/dashboard.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="133" column="14" selection-start="4053" selection-end="4053" vertical-scroll-proportion="0.0" vertical-offset="1127" max-vertical-offset="2295" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="310" column="0" selection-start="8536" selection-end="8536" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="15465">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/Mapping.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="244" column="9" selection-start="5867" selection-end="5983" vertical-scroll-proportion="0.0" vertical-offset="3660" max-vertical-offset="4245" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/EloquentUserStamp.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="0" selection-start="309" selection-end="482" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="705" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/Tag.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630" />
@@ -480,11 +525,6 @@
         <state line="180" column="11" selection-start="4921" selection-end="4921" vertical-scroll-proportion="0.0" vertical-offset="2700" max-vertical-offset="3405" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/Bentleysoft/Helper.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="248" column="35" selection-start="6297" selection-end="6297" vertical-scroll-proportion="0.17289719" vertical-offset="3430" max-vertical-offset="4500" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/Subjectarea.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="32" column="0" selection-start="629" selection-end="629" vertical-scroll-proportion="0.44859812" vertical-offset="0" max-vertical-offset="1070" />
@@ -530,11 +570,6 @@
         <state line="20" column="0" selection-start="308" selection-end="579" vertical-scroll-proportion="0.28037384" vertical-offset="0" max-vertical-offset="1070" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/MIMAS/Service/Jorum/JorumApi.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="249" column="0" selection-start="6798" selection-end="6798" vertical-scroll-proportion="0.26635513" vertical-offset="3285" max-vertical-offset="8625" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../vendor/elasticsearch/elasticsearch/src/Elasticsearch/Transport.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="161" column="0" selection-start="4265" selection-end="4265" vertical-scroll-proportion="0.3084112" vertical-offset="1935" max-vertical-offset="3840" />
@@ -565,66 +600,157 @@
         <state line="100" column="25" selection-start="2423" selection-end="2423" vertical-scroll-proportion="-15.666667" vertical-offset="1124" max-vertical-offset="2280" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/Bentleysoft/ES/Service.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="320" column="36" selection-start="7341" selection-end="7341" vertical-scroll-proportion="-16.75" vertical-offset="4323" max-vertical-offset="6375" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../vendor/elasticsearch/elasticsearch/src/Elasticsearch/Endpoints/Update.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="33" column="25" selection-start="728" selection-end="728" vertical-scroll-proportion="2.4583333" vertical-offset="479" max-vertical-offset="1635" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/Bentleysoft/Helper.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="301" column="2" selection-start="7639" selection-end="7639" vertical-scroll-proportion="0.9221453" vertical-offset="3344" max-vertical-offset="4500" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/Bentleysoft/ES/Service.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="282" column="25" selection-start="6563" selection-end="6563" vertical-scroll-proportion="0.3399654" vertical-offset="3762" max-vertical-offset="6375" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/views/resources.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="182" column="140" selection-start="8310" selection-end="8310" vertical-scroll-proportion="-23.791666" vertical-offset="2159" max-vertical-offset="3315" />
+        <state line="126" column="79" selection-start="5135" selection-end="5135" vertical-scroll-proportion="0.31946903" vertical-offset="1529" max-vertical-offset="3450" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/layouts/plain.blade.php">
+    <entry file="file://$PROJECT_DIR$/lib/MIMAS/Service/Jorum/JorumApi.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="33" selection-end="33" vertical-scroll-proportion="-1.25" vertical-offset="0" max-vertical-offset="990" />
+        <state line="170" column="40" selection-start="4278" selection-end="4278" vertical-scroll-proportion="0.07785467" vertical-offset="2295" max-vertical-offset="8655" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/preview.blade.php">
+    <entry file="file://$PROJECT_DIR$/lib/MIMAS/Service/Jorum/Item.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="25" selection-start="178" selection-end="178" vertical-scroll-proportion="0.10380623" vertical-offset="0" max-vertical-offset="1156" />
+        <state line="310" column="27" selection-start="4798" selection-end="4798" vertical-scroll-proportion="0.649654" vertical-offset="3734" max-vertical-offset="4890" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/edit.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="0" selection-start="2045" selection-end="2045" vertical-scroll-proportion="0.0" vertical-offset="657" max-vertical-offset="4110">
-          <folding />
+        <state line="79" column="0" selection-start="2045" selection-end="2045" vertical-scroll-proportion="0.4567474" vertical-offset="657" max-vertical-offset="4110" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/layouts/standard.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="314" column="0" selection-start="10420" selection-end="10420" vertical-scroll-proportion="0.9221453" vertical-offset="3644" max-vertical-offset="4800" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/view.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="48" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="2490">
+          <folding>
+            <marker date="1424970252000" expanded="true" signature="89:9272" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="128:9253" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="176:1698" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="201:1670" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="228:329" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="375:1644" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="1742:5393" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="1786:5172" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="1842:5141" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="1875:2023" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="2056:2216" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="2249:2392" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="2425:2614" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="2647:2845" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="2878:3059" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="3092:3380" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="3591:3896" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="3697:3862" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="4033:5008" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="4140:4972" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="5218:5364" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="5479:9230" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="5520:5603" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="5644:6714" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="5874:6340" placeholder="..." />
+            <marker date="1424970252000" expanded="false" signature="5915:5931" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="5980:6308" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="6036:6270" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="6746:9199" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="7440:8936" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="7581:7736" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="7788:7930" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="7986:8637" placeholder="..." />
+            <marker date="1424970252000" expanded="true" signature="8692:8902" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/preview.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="0" selection-start="309" selection-end="309" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="345">
+          <folding>
+            <marker date="1425055426000" expanded="true" signature="68:189" placeholder="..." />
+            <marker date="1425055426000" expanded="true" signature="75:97" placeholder="{...}" />
+            <marker date="1425055426000" expanded="true" signature="151:181" placeholder="{...}" />
+            <marker date="1425055426000" expanded="true" signature="213:301" placeholder="..." />
+            <marker date="1425055426000" expanded="true" signature="254:294" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="688" column="62" selection-start="18267" selection-end="18267" vertical-scroll-proportion="0.0" vertical-offset="9858" max-vertical-offset="18270">
+        <state line="778" column="6" selection-start="21141" selection-end="21141" vertical-scroll-proportion="0.0" vertical-offset="11670" max-vertical-offset="18315">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/layouts/naked.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="0" selection-start="104" selection-end="104" vertical-scroll-proportion="0.064878896" vertical-offset="0" max-vertical-offset="1156" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/blankview.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="0" selection-start="71" selection-end="71" vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="150">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/layouts/plain.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="9" selection-start="713" selection-end="713" vertical-scroll-proportion="0.4152249" vertical-offset="0" max-vertical-offset="1156" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../vendor/laravel/framework/src/Illuminate/Support/helpers.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="697" column="11" selection-start="12892" selection-end="12892" vertical-scroll-proportion="0.3399654" vertical-offset="10047" max-vertical-offset="15570">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/zip.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="352" column="31" selection-start="9358" selection-end="9358" vertical-scroll-proportion="0.0" vertical-offset="5280" max-vertical-offset="10350">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/conversions/zip.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="50" column="30" selection-start="1675" selection-end="1675" vertical-scroll-proportion="0.0" vertical-offset="750" max-vertical-offset="1080">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/MIMAS/Service/Jorum/Bitstream.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="499" column="0" selection-start="8705" selection-end="8705" vertical-scroll-proportion="0.0" vertical-offset="7485" max-vertical-offset="8565">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/MIMAS/Helpers.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="222" column="0" selection-start="6443" selection-end="6443" vertical-scroll-proportion="0.0" vertical-offset="3330" max-vertical-offset="3555">
+        <state line="313" column="46" selection-start="8855" selection-end="8855" vertical-scroll-proportion="0.37716264" vertical-offset="4049" max-vertical-offset="5205">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/layouts/standard.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="88" column="43" selection-start="1939" selection-end="1939" vertical-scroll-proportion="0.0" vertical-offset="1080" max-vertical-offset="4800">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/view.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="73" column="5" selection-start="4520" selection-end="4520" vertical-scroll-proportion="0.09186352" vertical-offset="990" max-vertical-offset="2490">
-          <folding>
-            <marker date="1424970252000" expanded="true" signature="5479:5516" placeholder="..." />
-            <marker date="1424970252000" expanded="true" signature="5980:6025" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>

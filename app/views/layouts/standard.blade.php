@@ -16,7 +16,7 @@
         .wrap {
           margin: auto;
           width: 80%;
-          max-width: 1200px;
+          max-width: 1280px;
         }
         .welcome {
           padding-top: 32px;

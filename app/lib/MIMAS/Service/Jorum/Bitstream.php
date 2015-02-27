@@ -497,7 +497,7 @@ class Bitstream extends JorumApi
         return \View::make('conversions.plain')->with(array('bitstream'=>$this));
         break;
       case 'application/zip':
-        return \View::make('conversions.zip')->with(array('bitstream'=>$this));
+        return \View::make('conversions.zip')->with(array('bitstream'=>$this, 'vfs'=>\MIMAS\Helpers::zip2vfs($this)));
         break;
       default:
         echo $this->getMimeType();
@@ -555,7 +555,6 @@ class Bitstream extends JorumApi
   public function isContent() {
     $ret = true;
 
-    $ret = $ret && $this->getFormat() <> 'Unknown';
     $ret = $ret && strpos($this->getName(),'license')===false;
     $ret = $ret && strpos($this->getName(),'imsmanifest')===false;
     $ret = $ret && strpos($this->getName(),'PreviewIndexBitstream')===false;

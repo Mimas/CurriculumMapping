@@ -203,7 +203,7 @@ class Helpers
    * @param $bitstreams
    * @return string
    */
-  public static function bestPreviewUrl( $bitstreams) {
+  public static function mainPreviewUrl( $bitstreams) {
     if ($bitstreams) {
       $originals = array();
       $sequenceId = 666;
@@ -224,9 +224,133 @@ class Helpers
       $url = 'http://mapping.mimas.ac.uk/preview/256325';
 
     }
-
     return $url;
+  }
 
+  /**
+   * @param array $bitstreams
+   * @return string
+   */
+  public static function mainPreviewMime( $bitstreams = array()) {
+    if ($bitstreams) {
+      $originals = array();
+      $sequenceId = 666;
+      foreach ($bitstreams as $id => $stream) {
+        # code...
+        if ($stream->getBundleName() == 'ORIGINAL' || $stream->getBundleName()=='URL_BUNDLE') {
+          $originals[$stream->getSequenceId()] = $stream;
+          if ($sequenceId > $stream->getSequenceId()) {
+            $sequenceId = $stream->getSequenceId();
+          }
+        }
+      }
+      if ($sequenceId<>666) {
+        $mime = $originals[$sequenceId]->getMimeType();
+      }
+    } else {
+      $mime = 'Unknown';
+    }
+    return $mime;
+  }
+
+  /**
+   * @param string $mime
+   * @return string
+   */
+  public static function humanMime($mime = '') {
+    $humanMime = $mime;
+    switch ($mime) {
+      case 'application/zip':
+        $humanMime = 'zip';
+        break;
+      case 'application/pdf':
+        $humanMime = 'pdf';
+        break;
+      case 'text/plain':
+        $humanMime = 'text';
+        break;
+      case 'Unknown':
+        $humanMime = 'n/a';
+        break;
+      case 'application/x-shockwave-flash':
+        $humanMime = 'flash';
+        break;
+      case 'application/octet-stream':
+        $humanMime = 'stream';
+        break;
+      case 'application/msword':
+      case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+        $humanMime = 'word';
+        break;
+      case 'text/richtext':
+        $humanMime = 'rtf';
+        break;
+      case 'application/vnd.ms-excel':
+      case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+        $humanMime = 'excel';
+        break;
+      case 'video/quicktime':
+        $humanMime = 'QT';
+        break;
+      case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
+      case 'application/vnd.ms-powerpoint':
+        $humanMime = 'ppt';
+        break;
+      case 'text/html':
+        $humanMime = 'html';
+        break;
+      case 'image/jpeg':
+        $humanMime = 'image';
+        break;
+      case 'image/gif':
+      case 'audio/x-aiff':
+      case 'video/x-flv':
+        $humanMime = $mime;
+        break;
+    }
+    return $humanMime;
+  }
+
+  public static function zip2vfs($bitstream) {
+    $paths = explode('/', str_replace('/retrieve','',  $bitstream->getRetrieveLink()));
+
+    if (count($paths)>2) {
+
+      $root = $paths[1];
+      $packageName = $paths[2];
+
+      $packageRepo =public_path('3rdparty/elfinder/files');
+
+      if (!is_dir( $packageRepo.'/'.$paths[1])) {
+        mkdir("$packageRepo/$root" );
+      }
+      \PhpConsole::debug("$packageRepo/$root");
+
+      if (!file_exists("$packageRepo/$root".'/'.$packageName.'.zip') || !is_dir("$packageRepo/$root/$packageName")) {
+        $url = 'http://dspace.jorum.ac.uk/rest' . $bitstream->getRetrieveLink();
+        $stream = \MIMAS\Service\Jorum\JorumApi::apiCall($url);
+        file_put_contents("$packageRepo/$root/$packageName".'.zip', $stream);
+
+        if (!is_dir("$packageRepo/$root/$packageName")) {
+          mkdir("$packageRepo/$root/$packageName");
+          \PhpConsole::debug("Making dir "."$packageRepo/$root/$packageName");
+
+          $zip = new \ZipArchive;
+          $res = $zip->open("$packageRepo/$root/$packageName".'.zip');
+          if ($res === TRUE) {
+            $zip->extractTo("$packageRepo/$root/$packageName");
+            $zip->close();
+          } else {
+          }
+
+
+        } else {
+          echo \PhpConsole::debug('Barnaby');
+        }
+      }
+      return $packageName;
+    }
+    return '';
   }
 
 }

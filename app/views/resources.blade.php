@@ -89,13 +89,14 @@ if (isset($stuff))
             <th class="small">Title</th>
             <th class="text-centered small">Source</th>
             <th class="small">Subject Area</th>
+            <th class="text-centered small">Type</th>
             <th class="text-centered small">Current</th>
             <th class="text-centered small">Mapped</th>
             <th class="text-centered small">Viewable</th>
             <th class="text-centered small">Action</th>
             <?php if (\Bentleysoft\Helper::userHasAccess(array('resource.manage')) || \Bentleysoft\Helper::superUser()): ?>
             <th class="text-centered small">
-            Good to go!
+            Good
             </th>
             <?php endif; ?>
           </tr>
@@ -119,7 +120,15 @@ if (isset($stuff))
                 echo 'Undefined';
               }
               ?>
-              </td>
+            </td>
+            <td class="text-centered">
+              <?php
+                echo \MIMAS\Helpers::humanMime(
+                  \MIMAS\Helpers::mainPreviewMime( MIMAS\Service\Jorum\Item::find(str_replace('jorum-', '', $row['_source']['admin']['uid']),
+                                                array('expand' => 'all'), 'json', 'json')->getBitstreams())
+                );
+              ?>
+            </td>
             <td class="text-centered">
               <?php if (Mapping::getCurrent($row['_source']['admin']['uid'])) { ?>
                 <i class="fa fa-check traffic-green"></i>
