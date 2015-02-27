@@ -496,7 +496,9 @@ class Bitstream extends JorumApi
       case 'text/plain':
         return \View::make('conversions.plain')->with(array('bitstream'=>$this));
         break;
-
+      case 'application/zip':
+        return \View::make('conversions.zip')->with(array('bitstream'=>$this));
+        break;
       default:
         echo $this->getMimeType();
         echo $this->getBundleName();
@@ -548,6 +550,7 @@ class Bitstream extends JorumApi
   /**
    * Is the Bitstream content or Metadata related to the Resource?
    * @return bool
+   * @todo
    */
   public function isContent() {
     $ret = true;

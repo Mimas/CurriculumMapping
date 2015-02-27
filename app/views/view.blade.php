@@ -26,63 +26,69 @@
                       </th>
                     </tr>
                    </table>
-
-                    <table class="table-hovered">
-                      <tr>
-                        <td class="bold">Source</td><td>{{$data['_source']['admin']['source'] or '' }}</td>
-                      </tr>
-                      <tr>
-                        <td class="bold">Description</td><td>{{$data['_source']['description'][0]['value'] or ''}}</td>
-                      </tr>
-                      <tr>
-                        <td class="bold">Format</td><td>{{ $data['_source']['format'][0] or '' }}</td>
-                      </tr>
-                      <tr>
-                        <td class="bold">Author</td><td>{{$data['_source']['lifecycle']['creation'][0]['author'][0]['name'][0]['value'] or ''}}</td>
-                      </tr>
-                      <tr>
-                        <td class="bold">Publisher</td><td>{{$data['_source']['lifecycle']['publication'][0]['publisher'][0]['name'][0]['value'] or ''}}</td>
-                      </tr>
-                      <tr>
-                        <td class="bold">Licence</td><td>{{$data['_source']['lifecycle']['publication'][0]['rights']['details'] or ''}}</td>
-                      </tr>
-                      <tr>
-                        <td class="bold">Licence Details</td><td><a target="_new" href="{{$data['_source']['lifecycle']['publication'][0]['rights']['uri'] or ''}}">{{$data['_source']['lifecycle']['publication'][0]['rights']['uri'] or ''}}</a></td>
-                      </tr>
-                      <?php
-                      if ( isset($data['_source']['audience']) && $data['_source']['audience'] == 'HE' ) {
-                      ?>
-                      <tr>
-                        <td class="bold">Jacs3 Code/Subject</td>
-                        <td>
-                          {{$data['_source']['subject'][0]['id'] or ''}}/{{$data['_source']['subject'][0]['value'] or ''}}
-                        </td>
-                      </tr>
-                      <?php
-                      } else {
-                      ?>
-                        <tr>
-                          <td class="bold">LD Code/Subject</td>
-                          <td>
-
+                    <div class="units-row">
+                      <div class="unit-50">
+                          <table class="table-hovered">
+                            <tr>
+                              <td class="bold">Source</td><td>{{$data['_source']['admin']['source'] or '' }}</td>
+                            </tr>
+                            <tr>
+                              <td class="bold">Description</td><td>{{$data['_source']['description'][0]['value'] or ''}}</td>
+                            </tr>
+                            <tr>
+                              <td class="bold">Format</td><td>{{ $data['_source']['format'][0] or '' }}</td>
+                            </tr>
+                            <tr>
+                              <td class="bold">Author</td><td>{{$data['_source']['lifecycle']['creation'][0]['author'][0]['name'][0]['value'] or ''}}</td>
+                            </tr>
+                            <tr>
+                              <td class="bold">Publisher</td><td>{{$data['_source']['lifecycle']['publication'][0]['publisher'][0]['name'][0]['value'] or ''}}</td>
+                            </tr>
+                            <tr>
+                              <td class="bold">Licence</td><td>{{$data['_source']['lifecycle']['publication'][0]['rights']['details'] or ''}}</td>
+                            </tr>
+                            <tr>
+                              <td class="bold">Licence Details</td><td><a target="_new" href="{{$data['_source']['lifecycle']['publication'][0]['rights']['uri'] or ''}}">{{$data['_source']['lifecycle']['publication'][0]['rights']['uri'] or ''}}</a></td>
+                            </tr>
                             <?php
-                            if (isset($data['_source']['subject']['ldcode'])) foreach( $data['_source']['subject']['ldcode'] as $i=>$code ) {
+                            if ( isset($data['_source']['audience']) && $data['_source']['audience'] == 'HE' ) {
                             ?>
-                            {{ $code or '' }}, {{$data['_source']['subject']['ld'][$i] or '' }}<br/>
+                            <tr>
+                              <td class="bold">Jacs3 Code/Subject</td>
+                              <td>
+                                {{$data['_source']['subject'][0]['id'] or ''}}/{{$data['_source']['subject'][0]['value'] or ''}}
+                              </td>
+                            </tr>
                             <?php
-                            } elseif(isset($data['_source']['subject'][0]['ldcode']) ) foreach( $data['_source']['subject'][0]['ldcode'] as $i=>$code )  {
+                            } else {
                             ?>
-                            {{ $code or '' }}, {{$data['_source']['subject'][0]['ld'][$i] or '' }}<br/>
+                              <tr>
+                                <td class="bold">LD Code/Subject</td>
+                                <td>
+
+                                  <?php
+                                  if (isset($data['_source']['subject']['ldcode'])) foreach( $data['_source']['subject']['ldcode'] as $i=>$code ) {
+                                  ?>
+                                  {{ $code or '' }}, {{$data['_source']['subject']['ld'][$i] or '' }}<br/>
+                                  <?php
+                                  } elseif(isset($data['_source']['subject'][0]['ldcode']) ) foreach( $data['_source']['subject'][0]['ldcode'] as $i=>$code )  {
+                                  ?>
+                                  {{ $code or '' }}, {{$data['_source']['subject'][0]['ld'][$i] or '' }}<br/>
+                                  <?php
+                                  }
+                                  ?>
+                                </td>
+                              </tr>
+
                             <?php
                             }
                             ?>
-                          </td>
-                        </tr>
-
-                      <?php
-                      }
-                      ?>
-                      </table>
+                            </table>
+                        </div>
+                        <div class="unit-50">
+                          <iframe id="frame" src="<?php echo $bestPreviewUrl ?>" >Browser not compatible.</iframe>
+                        </div>
+                      </div>
                       <table class='table-hovered' data-role='bitstreams' id='files'>
                         <th colspan="3">
                           <h3>Resource contents</h3>

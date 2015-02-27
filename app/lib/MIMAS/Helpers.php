@@ -199,5 +199,34 @@ class Helpers
     return $xml;
   }
 
+  /**
+   * @param $bitstreams
+   * @return string
+   */
+  public static function bestPreviewUrl( $bitstreams) {
+    if ($bitstreams) {
+      $originals = array();
+      $sequenceId = 666;
+      foreach ($bitstreams as $id => $stream) {
+        # code...
+        if ($stream->getBundleName() == 'ORIGINAL' || $stream->getBundleName()=='URL_BUNDLE') {
+          $originals[$stream->getSequenceId()] = $stream;
+          if ($sequenceId > $stream->getSequenceId()) {
+            $sequenceId = $stream->getSequenceId();
+          }
+        }
+      }
+      if ($sequenceId<>666) {
+        $url = $originals[$sequenceId]->getPreviewUrl();
+        $url = str_replace('www.duckduck.go', 'www.duckduckgo.com', $url);
+      }
+    } else {
+      $url = 'http://mapping.mimas.ac.uk/preview/256325';
+
+    }
+
+    return $url;
+
+  }
 
 }

@@ -680,9 +680,15 @@ Route::get('/view/{u?}/{id?}', function ($u = '', $id = '') {
     $bitstream->setName('http://hairdressing.ac.uk/'.str_replace('ht-', '', $resource['_id']));
     $bitstreams = array($bitstream);
   }
+
   $status = array();
 
-  return View::make('view')->with(array('data' => $resource, 'status' => $status, 'bitstreams' => $bitstreams));
+  return View::make('view')
+             ->with(array('data'=>$resource,
+                          'status'=>$status,
+                          'bestPreviewUrl'=>MIMAS\Helpers::bestPreviewUrl($bitstreams),
+                          'bitstreams'=>$bitstreams)
+             );
 });
 
 Route::get('/quickview/{u?}/{id?}', function ($u = '', $id = '') {
@@ -771,6 +777,7 @@ Route::post('download', function () {
 Route::any('preview/{id?}', function($id) {
   $bitstream = MIMAS\Service\Jorum\Bitstream::find($id, array(), 'json', 'json');
   return View::make('preview')->with(array('bitstream'=>$bitstream));
+
 });
 
 
@@ -842,6 +849,7 @@ Route::put('/resource/toggle/{u?}/{id?}', function ($u, $id) {
 
 /**
  * Toggle Viewable on off
+ *
  */
 Route::put('/resource/setviewable/{u?}/{id?}', function ($u, $id) {
   $uid = Input::get('_id', '');

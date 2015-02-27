@@ -107,6 +107,11 @@
           border: 0px; !important;
           background-color: transparent;
         }
+        #frame { width: 100%; height: 440px;
+          border: 0px solid #cca000;
+          position:relative;
+          overflow-y: hidden;
+        }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <link rel="stylesheet" href="<?php echo asset('3rdparty/kube/css/kube.css'); ?>">
