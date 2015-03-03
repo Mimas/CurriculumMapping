@@ -324,8 +324,7 @@ class Helpers
       if (!is_dir( $packageRepo.'/'.$paths[1])) {
         mkdir("$packageRepo/$root" );
       }
-      \PhpConsole::debug("$packageRepo/$root");
-
+      // \PhpConsole::debug("$packageRepo/$root/$packageName");
       if (!file_exists("$packageRepo/$root".'/'.$packageName.'.zip') || !is_dir("$packageRepo/$root/$packageName")) {
         $url = 'http://dspace.jorum.ac.uk/rest' . $bitstream->getRetrieveLink();
         $stream = \MIMAS\Service\Jorum\JorumApi::apiCall($url);
@@ -333,7 +332,6 @@ class Helpers
 
         if (!is_dir("$packageRepo/$root/$packageName")) {
           mkdir("$packageRepo/$root/$packageName");
-          \PhpConsole::debug("Making dir "."$packageRepo/$root/$packageName");
 
           $zip = new \ZipArchive;
           $res = $zip->open("$packageRepo/$root/$packageName".'.zip');
@@ -345,10 +343,10 @@ class Helpers
 
 
         } else {
-          echo \PhpConsole::debug('Barnaby');
+
         }
       }
-      return $packageName;
+      return "$root/$packageName";
     }
     return '';
   }

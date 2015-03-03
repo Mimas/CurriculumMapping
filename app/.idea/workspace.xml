@@ -2,17 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d8ac0a78-c758-4d48-bc67-cb96cb24ef01" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/blankview.blade.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/layouts/naked.blade.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/conversions/zip.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/MIMAS/Service/Jorum/Bitstream.php" afterPath="$PROJECT_DIR$/lib/MIMAS/Service/Jorum/Bitstream.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/MIMAS/Helpers.php" afterPath="$PROJECT_DIR$/lib/MIMAS/Helpers.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/MIMAS/Service/Jorum/JorumApi.php" afterPath="$PROJECT_DIR$/lib/MIMAS/Service/Jorum/JorumApi.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/layouts/plain.blade.php" afterPath="$PROJECT_DIR$/views/layouts/plain.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/resources.blade.php" afterPath="$PROJECT_DIR$/views/resources.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes.php" afterPath="$PROJECT_DIR$/routes.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/layouts/standard.blade.php" afterPath="$PROJECT_DIR$/views/layouts/standard.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/conversions/zip.blade.php" afterPath="$PROJECT_DIR$/views/conversions/zip.blade.php" />
     </list>
     <ignored path="app.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -38,7 +30,7 @@
       <file leaf-file-name="Helpers.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/MIMAS/Helpers.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="313" column="46" selection-start="8855" selection-end="8855" vertical-scroll-proportion="0.37716264" vertical-offset="4049" max-vertical-offset="5205">
+            <state line="324" column="0" selection-start="9142" selection-end="9142" vertical-scroll-proportion="0.5588235" vertical-offset="4004" max-vertical-offset="5175">
               <folding />
             </state>
           </provider>
@@ -56,7 +48,7 @@
       <file leaf-file-name="zip.blade.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/conversions/zip.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="30" selection-start="1675" selection-end="1675" vertical-scroll-proportion="0.0" vertical-offset="750" max-vertical-offset="1080">
+            <state line="51" column="18" selection-start="1744" selection-end="1744" vertical-scroll-proportion="0.0" vertical-offset="765" max-vertical-offset="1065">
               <folding />
             </state>
           </provider>
@@ -242,10 +234,6 @@
               <option name="myItemId" value="External Libraries" />
               <option name="myItemType" value="com.jetbrains.php.config.PhpExternalLibrariesNodePatcher$PatchedExternalLibrariesNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PHP" />
-              <option name="myItemType" value="com.jetbrains.php.config.PhpExternalLibrariesNodePatcher$PatchedLibraryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -263,7 +251,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../vendor" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../public" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FullScreen" value="false" />
     <property name="SearchEverywhereHistory" value="id" />
@@ -379,13 +367,18 @@
       <created>1425035452032</created>
       <updated>1425035452032</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="End of week commit with a more or less functioning embedded previewer in the resource page.&#10;&#10;It currently supports:&#10; &#10;* External video links&#10;* External websites (iframe mode)&#10;* Common office documents&#10;* PDFs&#10;* SWF and Flash&#10;* Zip files&#10;&#10;The viewer needs extending so that when a resource is a 'site' it previews it too.&#10;&#10;Support needs adding now for audio files">
+      <created>1425060195977</created>
+      <updated>1425060195977</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="477" y="48" width="1964" height="1277" extended-state="0" />
     <editor active="false" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32976827" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -401,7 +394,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294702" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32976827" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -434,7 +426,8 @@
     <MESSAGE value="Dashboard and other improvements&#10;" />
     <MESSAGE value="Fixed the autosubmit weirdnes (issue #109)&#10;" />
     <MESSAGE value="First version ohe the Quick view embedded in the main view page" />
-    <option name="LAST_COMMIT_MESSAGE" value="First version ohe the Quick view embedded in the main view page" />
+    <MESSAGE value="End of week commit with a more or less functioning embedded previewer in the resource page.&#10;&#10;It currently supports:&#10; &#10;* External video links&#10;* External websites (iframe mode)&#10;* Common office documents&#10;* PDFs&#10;* SWF and Flash&#10;* Zip files&#10;&#10;The viewer needs extending so that when a resource is a 'site' it previews it too.&#10;&#10;Support needs adding now for audio files" />
+    <option name="LAST_COMMIT_MESSAGE" value="End of week commit with a more or less functioning embedded previewer in the resource page.&#10;&#10;It currently supports:&#10; &#10;* External video links&#10;* External websites (iframe mode)&#10;* Common office documents&#10;* PDFs&#10;* SWF and Flash&#10;* Zip files&#10;&#10;The viewer needs extending so that when a resource is a 'site' it previews it too.&#10;&#10;Support needs adding now for audio files" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -527,7 +520,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/models/Subjectarea.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="0" selection-start="629" selection-end="629" vertical-scroll-proportion="0.44859812" vertical-offset="0" max-vertical-offset="1070" />
+        <state line="32" column="0" selection-start="629" selection-end="629" vertical-scroll-proportion="0.44859812" vertical-offset="0" max-vertical-offset="1070">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/AdminController.php">
@@ -587,7 +582,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/models/Mapping.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="187" column="0" selection-start="4792" selection-end="4792" vertical-scroll-proportion="-19.208334" vertical-offset="2344" max-vertical-offset="5010" />
+        <state line="187" column="0" selection-start="4792" selection-end="4792" vertical-scroll-proportion="-19.208334" vertical-offset="2344" max-vertical-offset="5010">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../vendor/laravel/framework/src/Illuminate/Http/Request.php">
@@ -607,27 +604,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/Bentleysoft/Helper.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="301" column="2" selection-start="7639" selection-end="7639" vertical-scroll-proportion="0.9221453" vertical-offset="3344" max-vertical-offset="4500" />
+        <state line="301" column="2" selection-start="7639" selection-end="7639" vertical-scroll-proportion="0.9221453" vertical-offset="3344" max-vertical-offset="4500">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/Bentleysoft/ES/Service.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="282" column="25" selection-start="6563" selection-end="6563" vertical-scroll-proportion="0.3399654" vertical-offset="3762" max-vertical-offset="6375" />
+        <state line="282" column="25" selection-start="6563" selection-end="6563" vertical-scroll-proportion="0.3399654" vertical-offset="3762" max-vertical-offset="6375">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/resources.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="126" column="79" selection-start="5135" selection-end="5135" vertical-scroll-proportion="0.31946903" vertical-offset="1529" max-vertical-offset="3450" />
+        <state line="126" column="79" selection-start="5135" selection-end="5135" vertical-scroll-proportion="0.31946903" vertical-offset="1529" max-vertical-offset="3450">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/MIMAS/Service/Jorum/JorumApi.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="170" column="40" selection-start="4278" selection-end="4278" vertical-scroll-proportion="0.07785467" vertical-offset="2295" max-vertical-offset="8655" />
+        <state line="170" column="40" selection-start="4278" selection-end="4278" vertical-scroll-proportion="0.07785467" vertical-offset="2295" max-vertical-offset="8655">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/MIMAS/Service/Jorum/Item.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="310" column="27" selection-start="4798" selection-end="4798" vertical-scroll-proportion="0.649654" vertical-offset="3734" max-vertical-offset="4890" />
+        <state line="310" column="27" selection-start="4798" selection-end="4798" vertical-scroll-proportion="0.649654" vertical-offset="3734" max-vertical-offset="4890">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/edit.blade.php">
@@ -637,7 +644,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/views/layouts/standard.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="314" column="0" selection-start="10420" selection-end="10420" vertical-scroll-proportion="0.9221453" vertical-offset="3644" max-vertical-offset="4800" />
+        <state line="314" column="0" selection-start="10420" selection-end="10420" vertical-scroll-proportion="0.9221453" vertical-offset="3644" max-vertical-offset="4800">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/view.blade.php">
@@ -704,7 +713,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/views/layouts/naked.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="104" selection-end="104" vertical-scroll-proportion="0.064878896" vertical-offset="0" max-vertical-offset="1156" />
+        <state line="5" column="0" selection-start="104" selection-end="104" vertical-scroll-proportion="0.064878896" vertical-offset="0" max-vertical-offset="1156">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/blankview.blade.php">
@@ -716,7 +727,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/views/layouts/plain.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="9" selection-start="713" selection-end="713" vertical-scroll-proportion="0.4152249" vertical-offset="0" max-vertical-offset="1156" />
+        <state line="32" column="9" selection-start="713" selection-end="713" vertical-scroll-proportion="0.4152249" vertical-offset="0" max-vertical-offset="1156">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../vendor/laravel/framework/src/Illuminate/Support/helpers.php">
@@ -735,7 +748,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/views/conversions/zip.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="30" selection-start="1675" selection-end="1675" vertical-scroll-proportion="0.0" vertical-offset="750" max-vertical-offset="1080">
+        <state line="51" column="18" selection-start="1744" selection-end="1744" vertical-scroll-proportion="0.0" vertical-offset="765" max-vertical-offset="1065">
           <folding />
         </state>
       </provider>
@@ -749,7 +762,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/MIMAS/Helpers.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="313" column="46" selection-start="8855" selection-end="8855" vertical-scroll-proportion="0.37716264" vertical-offset="4049" max-vertical-offset="5205">
+        <state line="324" column="0" selection-start="9142" selection-end="9142" vertical-scroll-proportion="0.5588235" vertical-offset="4004" max-vertical-offset="5175">
           <folding />
         </state>
       </provider>

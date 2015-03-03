@@ -716,8 +716,9 @@ Route::get('/quickview/{u?}/{id?}', function ($u = '', $id = '') {
 });
 
 Route::get('/quickviewjs/{u?}/{id?}', function ($u = '', $id = '') {
-  $uid = "$u/$id";
+  $uids = explode('-',"$u");
 
+  $uid = $uids[0].'-'.$uids[1].'/'.$uids[2];
   $resource = \Bentleysoft\ES\Service::get($uid);
 
   if (!$resource) {
