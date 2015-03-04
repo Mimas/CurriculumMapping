@@ -123,9 +123,6 @@ Route::get('/resources', function () {
   // get/set pageSize
   $pageSize = Input::get('pageSize', 25);
 
-
-
-
   // our query string
   $query = Input::get('q', '*');
   if ($query == '') {
