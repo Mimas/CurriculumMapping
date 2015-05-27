@@ -158,17 +158,7 @@
         <div class="units-row">
           <div class="unit-100">
             <label for="subject_area">
-              Subject area (<?php
-              if (isset($resource['_source']['subject']['ldcode'])) foreach( $resource['_source']['subject']['ldcode'] as $i=>$code ) {
-                ?>
-                {{ $code or '' }}, {{$resource['_source']['subject']['ld'][$i] or '' }}
-              <?php
-              } elseif(isset($resource['_source']['subject'][0]['ldcode']) ) foreach( $resource['_source']['subject'][0]['ldcode'] as $i=>$code )  {
-                ?>
-                {{ $code or '' }}, {{$resource['_source']['subject'][0]['ld'][$i] or '' }}
-              <?php
-              }
-              ?>)
+              Subject area ({{  $resource['_source']['subject'][0]['id'] or "" }} / {{$resource['_source']['subject'][0]['name'][0]['value']}})
               <br/>
               <input name="tags" id="mySingleField" value="{{$resourceTags}}" > <!-- only disabled for demonstration purposes -->
               <input type="hidden" name="uid" value="<?php echo $data->uid; ?>" />

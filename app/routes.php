@@ -293,7 +293,8 @@ Route::get('/edit/{u?}/{id?}', function ($u = '', $id = '') {
                                       ->orderBy('level')
                                       ->get();
 
-  $topLevel = (isset($resource['_source']['subject']['ldcode'])) ? $resource['_source']['subject']['ldcode'][0] : '?';
+  $topLevel = (isset($resource['_source']['subject'][0]['id'])) ? $resource['_source']['subject'][0]['id'] : '?';
+
 
   if ($topLevel == '?' && isset($resource['_source']['subject'][0]['ldcode'])) {
     $topLevel = $resource['_source']['subject'][0]['ldcode'][0];
@@ -1388,6 +1389,95 @@ Route::get('/importq', function () {
 
     }
   }
- 
+ });
 
-});
+
+Route::get('/ht', function () {
+ // $resource = \Bentleysoft\ES\Service::get('jorum-10949/8919');
+
+  $from = 0;
+  $pagesize = 100;
+
+  $lds = array();
+  /// header('Content-Type: text/csv');
+
+
+  $json = ' {
+
+        "@reference": "literal",
+        "id": "H",
+        "name": [
+          {
+            "primary": true,
+            "type": "preferred",
+            "value": "FAMILY CARE / PERSONAL DEVELOPMENT / PERSONAL CARE and APPEARANCE"
+          }
+        ],
+        "vocabulary": "learn direct"
+    
+  }
+  ';
+  $subject = json_decode($json);
+
+  while (true) {
+    $records = \Bentleysoft\ES\Service::orphans($from, $pagesize);
+
+    foreach ($records['hits']['hits'] as $document) {
+
+      //  if (isset($document['_source']['audience'] ) && $document['_source']['audience'] =='FE' ) {
+      if (true || strpos($document['_id'], 'ht') != false) {
+        echo "{$document['_id']}";
+        echo " | ";
+        echo "{$document['_source']['summary_title']}";
+        echo "<br/>";
+
+
+
+        /// $ldSubject = array();
+        /*
+        if (isset($document['_source']['collection'][0]['name_for_debug'] )) {
+          $ldName = \Bentleysoft\ES\Service::getCorrectLdFromWrongJorumLd($document['_source']['collection'][0]['name_for_debug']);
+          $ldCode = \Bentleysoft\ES\Service::getLdCodeFromLabel($ldName);
+
+          $ldSubject = array(
+            'ld'=>array($ldName),
+            'ldcode'=>array($ldCode),
+            'lddebug'=>$ldCode,
+          );
+
+        } else {
+          $ldSubject = array(
+            'ld'=>'Unknown',
+            'ldcode'=>'U',
+            'lddebug'=>'Z',
+          );
+
+        }
+        */
+        $params = array(
+          'id' => $document['_id'],
+          'type' => $document['_type'],
+          'index' => 'ciim',
+          'refresh' => true,
+          'body' => array('doc' => array('subject' => array($subject),
+            'admin' => array('processed' => time() * 1000),
+          )
+          ),
+        );
+
+        try {
+           $response = \Es::update($params);
+           var_dump($response);
+
+        } catch (Exception $e) {
+          echo "Not done {$document['_id']}<br/>";
+        }
+      }
+    }
+    $from = $from + $pagesize;
+
+    if (count($records['hits']['hits']) < $pagesize) {
+      exit;
+    }
+  }
+ });

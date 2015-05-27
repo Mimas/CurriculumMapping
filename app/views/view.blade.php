@@ -51,7 +51,7 @@
                               <td class="bold">Licence Details</td><td><a target="_new" href="{{$data['_source']['lifecycle']['publication'][0]['rights']['uri'] or ''}}">{{$data['_source']['lifecycle']['publication'][0]['rights']['uri'] or ''}}</a></td>
                             </tr>
                             <?php
-                            if ( isset($data['_source']['audience']) && $data['_source']['audience'] == 'HE' ) {
+                            if ( isset($data['_source']['audience']['sector']) && $data['_source']['audience']['sector'] == 'HE' ) {
                             ?>
                             <tr>
                               <td class="bold">Jacs3 Code/Subject</td>
@@ -65,18 +65,8 @@
                               <tr>
                                 <td class="bold">LD Code/Subject</td>
                                 <td>
-
-                                  <?php
-                                  if (isset($data['_source']['subject']['ldcode'])) foreach( $data['_source']['subject']['ldcode'] as $i=>$code ) {
-                                  ?>
-                                  {{ $code or '' }}, {{$data['_source']['subject']['ld'][$i] or '' }}<br/>
-                                  <?php
-                                  } elseif(isset($data['_source']['subject'][0]['ldcode']) ) foreach( $data['_source']['subject'][0]['ldcode'] as $i=>$code )  {
-                                  ?>
-                                  {{ $code or '' }}, {{$data['_source']['subject'][0]['ld'][$i] or '' }}<br/>
-                                  <?php
-                                  }
-                                  ?>
+                                  {{  $data['_source']['subject'][0]['id'] or "" }} / 
+                                  {{  $data['_source']['subject'][0]['name'][0]['value'] or "Default Message" }}
                                 </td>
                               </tr>
 
