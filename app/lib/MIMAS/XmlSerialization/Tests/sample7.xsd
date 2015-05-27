@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="sample-7" type="Lexa-XmlSerialization-Tests-Sample7-Type"/>
+    <xs:complexType name="Lexa-XmlSerialization-Tests-Sample7-Type">
+        <xs:sequence>
+            <xs:element name="stringElement" type="xs:string" minOccurs="0"/>
+            <xs:element name="intElement" type="xs:integer" minOccurs="0"/>
+            <xs:element name="doubleElement" type="xs:double" minOccurs="0"/>
+            <xs:element name="falseElement" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="trueElement" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="nullElement" type="xs:string" minOccurs="0"/>
+            <xs:element name="dateElement" type="xs:string" minOccurs="0"/>
+            <xs:element name="inner" type="Lexa-XmlSerialization-Tests-Sample8-Type" minOccurs="0"/>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:choice minOccurs="0">
+                    <xs:element name="array-int" type="xs:integer" minOccurs="0"/>
+                    <xs:element name="array-string" type="xs:string" minOccurs="0"/>
+                    <xs:element name="array-obj" type="Lexa-XmlSerialization-Tests-Sample8-Type" minOccurs="0"/>
+                </xs:choice>
+            </xs:choice>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="array2" type="xs:string" minOccurs="0"/>
+            </xs:choice>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:choice minOccurs="0">
+                    <xs:element name="collection-string" type="xs:string" minOccurs="0"/>
+                    <xs:element name="collection-bool" type="xs:boolean" minOccurs="0"/>
+                    <xs:element name="collection-obj" type="Lexa-XmlSerialization-Tests-Sample8-Type" minOccurs="0"/>
+                </xs:choice>
+            </xs:choice>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="stack" type="xs:string" minOccurs="0"/>
+            </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="stringAttr" type="xs:string"/>
+        <xs:attribute name="intAttr" type="xs:integer"/>
+        <xs:attribute name="doubleAttr" type="xs:double"/>
+        <xs:attribute name="falseAttr" type="xs:boolean"/>
+        <xs:attribute name="trueAttr" type="xs:boolean"/>
+        <xs:attribute name="nullAttr" type="xs:string"/>
+        <xs:attribute name="dateAttr" type="xs:string"/>
+    </xs:complexType>
+    <xs:complexType name="Lexa-XmlSerialization-Tests-Sample8-Type">
+        <xs:sequence>
+            <xs:choice minOccurs="0">
+                <xs:element name="element" type="xs:string" minOccurs="0"/>
+                <xs:element name="element-bool" type="xs:boolean" minOccurs="0"/>
+            </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="attr" type="xs:integer"/>
+    </xs:complexType>
+</xs:schema>
