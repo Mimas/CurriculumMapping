@@ -1392,9 +1392,12 @@ Route::get('/importq', function () {
  });
 
 
+/**
+ *
+ * ht handler to add Subject Area to all HT resources ('H')
+ * 
+ */
 Route::get('/ht', function () {
- // $resource = \Bentleysoft\ES\Service::get('jorum-10949/8919');
-
   $from = 0;
   $pagesize = 100;
 
@@ -1431,29 +1434,6 @@ Route::get('/ht', function () {
         echo "{$document['_source']['summary_title']}";
         echo "<br/>";
 
-
-
-        /// $ldSubject = array();
-        /*
-        if (isset($document['_source']['collection'][0]['name_for_debug'] )) {
-          $ldName = \Bentleysoft\ES\Service::getCorrectLdFromWrongJorumLd($document['_source']['collection'][0]['name_for_debug']);
-          $ldCode = \Bentleysoft\ES\Service::getLdCodeFromLabel($ldName);
-
-          $ldSubject = array(
-            'ld'=>array($ldName),
-            'ldcode'=>array($ldCode),
-            'lddebug'=>$ldCode,
-          );
-
-        } else {
-          $ldSubject = array(
-            'ld'=>'Unknown',
-            'ldcode'=>'U',
-            'lddebug'=>'Z',
-          );
-
-        }
-        */
         $params = array(
           'id' => $document['_id'],
           'type' => $document['_type'],
