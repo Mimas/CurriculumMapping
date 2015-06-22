@@ -1,6 +1,14 @@
-## Jisc Hairdressing API
+## Curriculum Mapping Tool
 
-A PHP Dspace like wrapper for the HT resources. The API is REST like and allows deveopers to explore and use the resources of the online Hirdressing Course
+Pilot web based application to allow practitioners to browse and edit FE Resources.
+
+The aim is to map FE Resources to the Curriculum, Subject Areas and Qualification Levels.
+
+The Resources are contained in an Elastic Search repository (not included in this Github repo).
+
+This web application has been rapidly put together as a pilot, so don't expect miracles.
+
+It is using Laravel 4, Cartalyst Sentry, Highcharts and Kube CSS. And handcrafted code.
 
 ### License
 
