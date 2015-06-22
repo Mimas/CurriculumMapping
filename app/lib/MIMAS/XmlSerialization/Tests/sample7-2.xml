@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<sample-7 stringAttr="b&amp;a" intAttr="321" doubleAttr="4.13" falseAttr="true" trueAttr=""
+          nullAttr="NOT NULL" dateAttr="Sep 01, 2010 11:07 pm" garbage="abc">
+
+    <!-- a comment -->
+
+    <stringElement bogus="123">b&amp;a</stringElement>
+    <intElement>
+        321
+    </intElement>
+    <doubleElement>4.13</doubleElement>
+    <falseElement>2</falseElement>
+    <trueElement>FALSE</trueElement>
+    <nullElement>NOT NULL</nullElement>
+    <dateElement>1984-06-14T21:01:00</dateElement>
+
+    <stringElement>
+        <![CDATA[
+
+      <OVERRIDEN>
+
+    ]]>
+        <!-- comment -->
+    </stringElement>
+
+    <inner attr="-5">
+        <element>zyx</element>
+    </inner>
+
+    some text garbage
+
+    <array-int>9</array-int>
+    <array-string>nine</array-string>
+    <array-obj/>
+    <array-obj attr="55">
+        <element>XYZ</element>
+    </array-obj>
+
+    <array2>Single item</array2>
+
+    <bogus/>
+
+    <collection-bool>1</collection-bool>
+    <collection-string>False</collection-string>
+    <collection-obj/>
+    <collection-obj attr="555">
+        <element>X-Y-Z</element>
+    </collection-obj>
+
+    <stack>Single item</stack>
+
+</sample-7>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<sample-7 stringAttr="a&amp;b" intAttr="123" doubleAttr="3.14" falseAttr="false" trueAttr="true" dateAttr="1984-06-14">
+
+    <stringElement>a&amp;b</stringElement>
+    <intElement>123</intElement>
+    <doubleElement>3.14</doubleElement>
+    <falseElement>false</falseElement>
+    <trueElement>true</trueElement>
+    <dateElement>2011-12-13 14:15:16</dateElement>
+
+    <inner attr="5">
+        <element>xyz</element>
+    </inner>
+
+    <array-int>1</array-int>
+    <array-string>one</array-string>
+    <array-obj attr="5">
+        <element>xyz</element>
+    </array-obj>
+
+    <array2>2</array2>
+
+    <collection-bool>false</collection-bool>
+    <collection-string>True</collection-string>
+    <collection-obj attr="5">
+        <element>xyz</element>
+    </collection-obj>
+
+    <stack>B</stack>
+    <stack>A</stack>
+
+</sample-7>
